@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report MustUnderstand="df"
+  xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition"
+  xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner"
+  xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily"
+  xmlns:am="http://schemas.microsoft.com/sqlserver/reporting/authoringmetadata">
+
+  <am:AuthoringMetadata>
+    <am:CreatedBy>
+      <am:Name>ReportGen</am:Name>
+      <am:Version>15.0.0.0</am:Version>
+    </am:CreatedBy>
+    <am:UpdatedBy>
+      <am:Name>ReportGen</am:Name>
+      <am:Version>15.0.0.0</am:Version>
+    </am:UpdatedBy>
+    <am:LastModifiedTimestamp>2025-12-21T00:00:00Z</am:LastModifiedTimestamp>
+  </am:AuthoringMetadata>
+
+  <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
+  <AutoRefresh>0</AutoRefresh>
+
+  <DataSources>
+    <DataSource Name="AccelaDS">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString>Data Source=YOUR_SQL_SERVER;Initial Catalog=YOUR_ACCELA_DB</ConnectString>
+        <IntegratedSecurity>true</IntegratedSecurity>
+      </ConnectionProperties>
+      <rd:SecurityType>Integrated</rd:SecurityType>
+      <rd:DataSourceID>11111111-1111-1111-1111-111111111111</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+
+  <DataSets>
+    <DataSet Name="dsRenewalLetter">
+      <Query>
+        <DataSourceName>AccelaDS</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@AltIdList">
+            <Value>=Parameters!AltIdList.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>
+/* AGR.06 - Private Applicator Renewal Letter */
+
+DECLARE @AltIdList nvarchar(max) = @AltIdList;
+
+WITH CapList AS (
+    SELECT LTRIM(RTRIM(value)) AS B1_ALT_ID
+    FROM STRING_SPLIT(@AltIdList, ',')
+),
+AsitPivot AS (
+    SELECT
+        c.SERV_PROV_CODE,
+        c.B1_PER_ID1,
+        c.B1_PER_ID2,
+        c.B1_PER_ID3,
+        MAX(CASE WHEN c.COLUMN_NAME = 'Classification'     THEN c.ATTRIBUTE_VALUE END) AS [Classification],
+        MAX(CASE WHEN c.COLUMN_NAME = 'Credits Needed By'  THEN c.ATTRIBUTE_VALUE END) AS [Credits Needed By],
+        MAX(CASE WHEN c.COLUMN_NAME = 'Credits Needed'     THEN c.ATTRIBUTE_VALUE END) AS [Credits Needed]
+    FROM BAPPSPECTABLE_VALUE c
+    WHERE 1=1
+      AND c.REC_STATUS = 'A'
+      AND c.GROUP_NAME = 'Certifications and Training'
+      AND c.TABLE_NAME = 'CONTINUING EDUCATION/ EXAMS'
+      AND c.COLUMN_NAME IN ('Classification','Credits Needed By','Credits Needed')
+    GROUP BY
+        c.SERV_PROV_CODE, c.B1_PER_ID1, c.B1_PER_ID2, c.B1_PER_ID3
+)
+SELECT
+    b.B1_ALT_ID AS [Renewal_Number],
+    b.B1_APP_TYPE_ALIAS AS [Renewal_Type_Header],
+    b.B1_APPL_STATUS_DATE AS [For_Period],
+    b1e.EXPIRATION_DATE AS [Through_Date],
+    COALESCE(b3c.B1_FULL_NAME, LTRIM(RTRIM(ISNULL(b3c.B1_FNAME,'') + ' ' + ISNULL(b3c.B1_LNAME,'')))) AS [Applicant_Name],
+    (ISNULL(NULLIF(LTRIM(RTRIM(b3c.B1_ADDRESS1)),'') + ', ','')
+     + ISNULL(NULLIF(LTRIM(RTRIM(b3c.B1_CITY)),'') + ', ','')
+     + ISNULL(NULLIF(LTRIM(RTRIM(b3c.B1_STATE)),'') + ' ','')
+     + ISNULL(NULLIF(LTRIM(RTRIM(b3c.B1_ZIP)),'') , '')
+    ) AS [Applicant_Address],
+    b3c.B1_PHONE1 AS [Phone_Number],
+    b3c.B1_EMAIL  AS [Email_Address],
+    ISNULL(CAST(b3a.B1_HSE_NBR_START AS varchar(20)),'')
+      + ISNULL(NULLIF(' '+LTRIM(RTRIM(b3a.B1_STR_DIR)),' '),'')
+      + ISNULL(NULLIF(' '+LTRIM(RTRIM(b3a.B1_STR_NAME)),' '),'')
+      + ISNULL(NULLIF(' '+LTRIM(RTRIM(b3a.B1_STR_SUFFIX)),' '),'')
+      + ISNULL(NULLIF(' '+LTRIM(RTRIM(b3a.B1_UNIT_TYPE)),' '),'')
+      + ISNULL(NULLIF(' '+LTRIM(RTRIM(b3a.B1_UNIT_START)),' '),'')
+      + ISNULL(NULLIF(', '+LTRIM(RTRIM(b3a.B1_SITUS_CITY)),' '),'')
+      + ISNULL(NULLIF(', '+LTRIM(RTRIM(b3a.B1_SITUS_STATE)),' '),'')
+      + ISNULL(NULLIF(' '+LTRIM(RTRIM(b3a.B1_SITUS_ZIP)),' '),'')
+      AS [Property_Address],
+    b3lp.B1_LICENSE_NBR AS [License_Number],
+    ap.[Classification]    AS [License_Classifications],
+    ap.[Credits Needed By] AS [Recertify_By],
+    ap.[Credits Needed]    AS [Credits_Needed],
+    '$60' AS [Permit_Fees]
+FROM B1PERMIT b
+JOIN CapList cl
+  ON b.B1_ALT_ID = cl.B1_ALT_ID
+INNER JOIN R3APPTYP r3a ON
+    b.SERV_PROV_CODE = r3a.SERV_PROV_CODE
+    AND b.B1_PER_GROUP = r3a.R1_PER_GROUP
+    AND b.B1_PER_TYPE = r3a.R1_PER_TYPE
+    AND b.B1_PER_SUB_TYPE = r3a.R1_PER_SUB_TYPE
+    AND b.B1_PER_CATEGORY = r3a.R1_PER_CATEGORY
+    AND b.REC_STATUS = r3a.REC_STATUS
+LEFT JOIN B1_EXPIRATION b1e ON
+    b.SERV_PROV_CODE = b1e.SERV_PROV_CODE
+    AND b.B1_PER_ID1 = b1e.B1_PER_ID1
+    AND b.B1_PER_ID2 = b1e.B1_PER_ID2
+    AND b.B1_PER_ID3 = b1e.B1_PER_ID3
+    AND b.REC_STATUS = b1e.REC_STATUS
+LEFT JOIN B3CONTACT b3c ON
+    b.SERV_PROV_CODE = b3c.SERV_PROV_CODE
+    AND b.B1_PER_ID1 = b3c.B1_PER_ID1
+    AND b.B1_PER_ID2 = b3c.B1_PER_ID2
+    AND b.B1_PER_ID3 = b3c.B1_PER_ID3
+    AND b.REC_STATUS = b3c.REC_STATUS
+LEFT JOIN B3ADDRES b3a ON
+    b.SERV_PROV_CODE = b3a.SERV_PROV_CODE
+    AND b.B1_PER_ID1 = b3a.B1_PER_ID1
+    AND b.B1_PER_ID2 = b3a.B1_PER_ID2
+    AND b.B1_PER_ID3 = b3a.B1_PER_ID3
+    AND b.REC_STATUS = b3a.REC_STATUS
+LEFT JOIN B3CONTRA b3lp ON
+    b.SERV_PROV_CODE = b3lp.SERV_PROV_CODE
+    AND b.B1_PER_ID1 = b3lp.B1_PER_ID1
+    AND b.B1_PER_ID2 = b3lp.B1_PER_ID2
+    AND b.B1_PER_ID3 = b3lp.B1_PER_ID3
+    AND b.REC_STATUS = b3lp.REC_STATUS
+    AND COALESCE(b3lp.B1_PRINT_FLAG,'N') = 'Y'
+LEFT JOIN AsitPivot ap ON
+    b.SERV_PROV_CODE = ap.SERV_PROV_CODE
+    AND b.B1_PER_ID1 = ap.B1_PER_ID1
+    AND b.B1_PER_ID2 = ap.B1_PER_ID2
+    AND b.B1_PER_ID3 = ap.B1_PER_ID3
+WHERE 1=1
+  AND b.SERV_PROV_CODE = 'AGR'
+  AND b.REC_STATUS = 'A'
+  AND b.B1_PER_GROUP    = 'Licensing'
+  AND b.B1_PER_TYPE     = 'Pesticides'
+  AND b.B1_PER_SUB_TYPE = 'Private Applicator'
+  AND b.B1_PER_CATEGORY = 'License'
+ORDER BY b.B1_ALT_ID;
+        </CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+
+      <Fields>
+        <Field Name="Renewal_Number"><DataField>Renewal_Number</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="For_Period"><DataField>For_Period</DataField><rd:TypeName>System.DateTime</rd:TypeName></Field>
+        <Field Name="Through_Date"><DataField>Through_Date</DataField><rd:TypeName>System.DateTime</rd:TypeName></Field>
+        <Field Name="Applicant_Name"><DataField>Applicant_Name</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Applicant_Address"><DataField>Applicant_Address</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Phone_Number"><DataField>Phone_Number</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Email_Address"><DataField>Email_Address</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Property_Address"><DataField>Property_Address</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="License_Number"><DataField>License_Number</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="License_Classifications"><DataField>License_Classifications</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Recertify_By"><DataField>Recertify_By</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Credits_Needed"><DataField>Credits_Needed</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Permit_Fees"><DataField>Permit_Fees</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+
+  <ReportParameters>
+    <ReportParameter Name="AltIdList">
+      <DataType>String</DataType>
+      <Prompt>AltIdList</Prompt>
+      <Hidden>true</Hidden>
+      <AllowBlank>true</AllowBlank>
+    </ReportParameter>
+  </ReportParameters>
+
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+
+          <Textbox Name="ReportTitle">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Private Applicator Renewal Letter</Value>
+                    <Style>
+                      <FontFamily>Segoe UI Light</FontFamily>
+                      <FontSize>20pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <Top>0mm</Top>
+            <Left>0mm</Left>
+            <Height>12mm</Height>
+            <Width>190mm</Width>
+            <Style>
+              <Border><Style>None</Style></Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+
+          <!-- "List" implemented as a Tablix (server-safe) -->
+          <Tablix Name="TablixLetter">
+            <DataSetName>dsRenewalLetter</DataSetName>
+            <Top>15mm</Top>
+            <Left>0mm</Left>
+            <Height>230mm</Height>
+            <Width>190mm</Width>
+
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn><Width>190mm</Width></TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>230mm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Rectangle Name="LetterRect">
+                          <ReportItems>
+
+                            <Textbox Name="ApplicantName">
+                              <Top>0mm</Top><Left>0mm</Left><Height>6mm</Height><Width>180mm</Width>
+                              <Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Applicant_Name.Value</Value></TextRun></TextRuns><Style /></Paragraph></Paragraphs>
+                              <Style><Border><Style>None</Style></Border></Style>
+                            </Textbox>
+
+                            <Textbox Name="ApplicantAddr">
+                              <Top>7mm</Top><Left>0mm</Left><Height>10mm</Height><Width>180mm</Width>
+                              <CanGrow>true</CanGrow>
+                              <Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Applicant_Address.Value</Value></TextRun></TextRuns><Style /></Paragraph></Paragraphs>
+                              <Style><Border><Style>None</Style></Border></Style>
+                            </Textbox>
+
+                            <Textbox Name="ForPeriod">
+                              <Top>20mm</Top><Left>0mm</Left><Height>6mm</Height><Width>180mm</Width>
+                              <Paragraphs><Paragraph><TextRuns><TextRun>
+                                <Value>= "For Period: " &amp; IIF(IsNothing(Fields!For_Period.Value), "", Format(Fields!For_Period.Value,"MM/dd/yyyy"))</Value>
+                              </TextRun></TextRuns><Style /></Paragraph></Paragraphs>
+                            </Textbox>
+
+                            <Textbox Name="ThroughDate">
+                              <Top>27mm</Top><Left>0mm</Left><Height>6mm</Height><Width>180mm</Width>
+                              <Paragraphs><Paragraph><TextRuns><TextRun>
+                                <Value>= "Through: " &amp; IIF(IsNothing(Fields!Through_Date.Value), "", Format(Fields!Through_Date.Value,"MM/dd/yyyy"))</Value>
+                              </TextRun></TextRuns><Style /></Paragraph></Paragraphs>
+                            </Textbox>
+
+                            <Textbox Name="PropertyAddress">
+                              <Top>36mm</Top><Left>0mm</Left><Height>12mm</Height><Width>180mm</Width>
+                              <CanGrow>true</CanGrow>
+                              <Paragraphs><Paragraph><TextRuns><TextRun>
+                                <Value>= "PROPERTY ADDRESS: " &amp; Fields!Property_Address.Value</Value>
+                              </TextRun></TextRuns><Style /></Paragraph></Paragraphs>
+                            </Textbox>
+
+                            <Textbox Name="RenewalNumber">
+                              <Top>50mm</Top><Left>0mm</Left><Height>6mm</Height><Width>180mm</Width>
+                              <Paragraphs><Paragraph><TextRuns><TextRun>
+                                <Value>= "Renewal Number: " &amp; Fields!Renewal_Number.Value</Value>
+                              </TextRun></TextRuns><Style /></Paragraph></Paragraphs>
+                            </Textbox>
+
+                            <Textbox Name="PhoneEmail">
+                              <Top>57mm</Top><Left>0mm</Left><Height>6mm</Height><Width>180mm</Width>
+                              <Paragraphs><Paragraph><TextRuns><TextRun>
+                                <Value>= "Phone: " &amp; Fields!Phone_Number.Value &amp; "   Email: " &amp; Fields!Email_Address.Value</Value>
+                              </TextRun></TextRuns><Style /></Paragraph></Paragraphs>
+                            </Textbox>
+
+                            <Textbox Name="LPNumber">
+                              <Top>64mm</Top><Left>0mm</Left><Height>6mm</Height><Width>180mm</Width>
+                              <Paragraphs><Paragraph><TextRuns><TextRun>
+                                <Value>= "License Number: " &amp; Fields!License_Number.Value</Value>
+                              </TextRun></TextRuns><Style /></Paragraph></Paragraphs>
+                            </Textbox>
+
+                            <Textbox Name="Credits">
+                              <Top>74mm</Top><Left>0mm</Left><Height>18mm</Height><Width>180mm</Width>
+                              <CanGrow>true</CanGrow>
+                              <Paragraphs>
+                                <Paragraph><TextRuns><TextRun><Value>= "LICENSE CLASSIFICATIONS: " &amp; Fields!License_Classifications.Value</Value></TextRun></TextRuns><Style /></Paragraph>
+                                <Paragraph><TextRuns><TextRun><Value>= "RECERTIFY BY: " &amp; Fields!Recertify_By.Value</Value></TextRun></TextRuns><Style /></Paragraph>
+                                <Paragraph><TextRuns><TextRun><Value>= "CREDITS NEEDED: " &amp; Fields!Credits_Needed.Value</Value></TextRun></TextRuns><Style /></Paragraph>
+                              </Paragraphs>
+                            </Textbox>
+
+                            <Textbox Name="Fees">
+                              <Top>96mm</Top><Left>0mm</Left><Height>6mm</Height><Width>180mm</Width>
+                              <Paragraphs><Paragraph><TextRuns><TextRun>
+                                <Value>= "Permit Fees: " &amp; Fields!Permit_Fees.Value</Value>
+                              </TextRun></TextRuns><Style /></Paragraph></Paragraphs>
+                              <Style><FontWeight>Bold</FontWeight></Style>
+                            </Textbox>
+
+                            <Textbox Name="FooterBlock">
+                              <Top>160mm</Top><Left>0mm</Left><Height>70mm</Height><Width>180mm</Width>
+                              <CanGrow>true</CanGrow>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>
+POSTAL ADDRESS:
+MONTANA DEPT OF AGRICULTURE
+AG SCIENCES DIVISION
+302 N ROBERTS ST
+HELENA MT 59620-0201
+
+CONTACT INFORMATION:
+Phone: (406) 444-4900
+E-mail: PestLicensing@mt.gov
+Website: pesticides.mt.gov
+Fax: 406-444-9493
+
+MSU EXTENSION AGENTS ONLY
+Exam Date:
+Agent's Name:
+Signature:
+                                      </Value>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style><FontSize>9pt</FontSize></Style>
+                            </Textbox>
+
+                          </ReportItems>
+                        </Rectangle>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+
+            <TablixColumnHierarchy>
+              <TablixMembers><TablixMember /></TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="grpLetter">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!Renewal_Number.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+
+            <Style><Border><Style>None</Style></Border></Style>
+          </Tablix>
+
+        </ReportItems>
+
+        <Height>250mm</Height>
+        <Style><Border><Style>None</Style></Border></Style>
+      </Body>
+
+      <Width>190mm</Width>
+
+      <Page>
+        <PageFooter>
+          <Height>11.43mm</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Textbox Name="ExecutionTime">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun><Value>=Globals!ExecutionTime</Value></TextRun>
+                  </TextRuns>
+                  <Style><TextAlign>Right</TextAlign></Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>5.08mm</Top>
+              <Left>101.6mm</Left>
+              <Height>6.35mm</Height>
+              <Width>50.8mm</Width>
+              <Style><Border><Style>None</Style></Border></Style>
+            </Textbox>
+          </ReportItems>
+          <Style><Border><Style>None</Style></Border></Style>
+        </PageFooter>
+
+        <PageHeight>29.7cm</PageHeight>
+        <PageWidth>21cm</PageWidth>
+        <LeftMargin>2cm</LeftMargin>
+        <RightMargin>2cm</RightMargin>
+        <TopMargin>2cm</TopMargin>
+        <BottomMargin>2cm</BottomMargin>
+        <ColumnSpacing>0.13cm</ColumnSpacing>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+
+  <rd:ReportUnitType>Mm</rd:ReportUnitType>
+  <rd:ReportID>aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee</rd:ReportID>
+</Report>

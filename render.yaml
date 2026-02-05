@@ -1,0 +1,43 @@
+services:
+  - type: web
+    name: accelanova
+    runtime: docker
+    dockerfilePath: ./docker/Dockerfile
+    dockerContext: .
+    plan: standard
+    region: oregon
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ANYTHING_LLM_RUNTIME
+        value: docker
+      - key: STORAGE_DIR
+        value: /opt/render/project/src/storage
+      - key: SERVER_PORT
+        value: 10000
+      # Database Configuration - Update with your PostgreSQL database URL
+      - key: DATABASE_URL
+        sync: false
+        # Set this in Render dashboard: postgresql://user:password@host:port/database
+      # Add your other environment variables here
+      # - key: LLM_PROVIDER
+      #   value: gemini
+      # - key: GEMINI_API_KEY
+      #   sync: false
+      # - key: VECTOR_DB
+      #   value: pinecone
+      # - key: PINECONE_API_KEY
+      #   sync: false
+      # - key: PINECONE_INDEX
+      #   value: accelanova-main
+    healthCheckPath: /api/system/health-check
+    autoDeploy: true
+
+databases:
+  - name: accelanova-db
+    databaseName: accelanova
+    user: accelanova
+    plan: starter
+    region: oregon
+
+

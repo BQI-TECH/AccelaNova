@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accelanova | Your personal LLM trained on anything</title>
+
+    <meta name="title" content="Accelanova | Your personal LLM trained on anything" />
+    <meta name="description" content="Accelanova | Your personal LLM trained on anything" />
+
+    <!-- Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://accelanova.bqitech.com" />
+    <meta property="og:title" content="Accelanova | Your personal LLM trained on anything" />
+    <meta property="og:description" content="Accelanova | Your personal LLM trained on anything" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/Mintplex-Labs/accelanova/master/images/promo.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://accelanova.bqitech.com" />
+    <meta property="twitter:title" content="Accelanova | Your personal LLM trained on anything" />
+    <meta property="twitter:description" content="Accelanova | Your personal LLM trained on anything" />
+    <meta property="twitter:image" content="https://raw.githubusercontent.com/Mintplex-Labs/accelanova/master/images/promo.png" />
+
+    <link rel="icon" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#3b82f6" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Accelanova" />
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ("serviceWorker" in navigator) {
+            // Check if running in Electron before attempting registration
+            const isElectron =
+                (typeof window !== "undefined" &&
+                    window.process &&
+                    window.process.type === "renderer") ||
+                (typeof window !== "undefined" &&
+                    window.__ELECTRON_API_BASE__ !== undefined) ||
+                navigator.userAgent.includes("Electron");
+            const isDevLocalhost =
+                location.hostname === "localhost" && location.port === "3000";
+
+            // Skip service worker registration in Electron or dev mode
+            if (!isElectron && !isDevLocalhost) {
+                window.addEventListener("load", () => {
+                    navigator.serviceWorker
+                        .register("/sw.js")
+                        .then((registration) => {
+                            console.log("SW registered: ", registration);
+                        })
+                        .catch((registrationError) => {
+                            // Silently handle service worker registration errors
+                            if (!registrationError.message ||
+                                !registrationError.message.includes(
+                                    "Service workers disabled"
+                                )
+                            ) {
+                                console.log("SW registration failed: ", registrationError);
+                            }
+                        });
+                });
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="root" class="h-screen"></div>
+    <script type="module" src="./src/main.jsx"></script>
+</body>
+
+</html>

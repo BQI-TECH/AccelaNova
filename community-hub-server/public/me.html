@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accelanova Community Hub - Profile</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="logo">
+        <h1>🚀 Accelanova Hub</h1>
+        <p>Your Community Hub Profile</p>
+      </div>
+
+      <div class="nav">
+        <a href="/me" class="nav-link active">Profile</a>
+        <a href="/" onclick="logout(); return false;" class="nav-link"
+          >Logout</a
+        >
+      </div>
+
+      <div id="loading" class="loading">
+        <p>Loading profile...</p>
+      </div>
+
+      <div id="profile" style="display: none">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number" id="itemCount">0</div>
+            <div class="stat-label">Items Created</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="accountStatus">Active</div>
+            <div class="stat-label">Account Status</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Account Information</h3>
+          <div class="info-item">
+            <span class="info-label">Email</span>
+            <span class="info-value" id="userEmail">-</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Role</span>
+            <span class="info-value" id="userRole">-</span>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>🔑 API Key / Connection Key</h3>
+          <p style="color: #666; font-size: 13px; margin-bottom: 16px">
+            Use this key to connect AnythingLLM to your Community Hub account.
+            Keep it secure!
+          </p>
+          <div class="info-item">
+            <span
+              class="info-value"
+              id="connectionKey"
+              style="flex: 1; margin-right: 12px; font-size: 12px"
+              >-</span
+            >
+            <button class="copy-btn" onclick="copyKey()">Copy</button>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>📝 How to Use This API Key</h3>
+          <ol
+            style="
+              padding-left: 20px;
+              color: #666;
+              font-size: 14px;
+              line-height: 1.8;
+            ">
+            <li>Copy your API key using the button above</li>
+            <li>
+              Open AnythingLLM and go to
+              <strong>Settings → Community Hub → Your Account</strong>
+            </li>
+            <li>
+              Paste your API key in the
+              <strong>"Accelanova Hub API Key"</strong> field
+            </li>
+            <li>Click <strong>Save</strong> to connect</li>
+            <li>You can now access your private items and create new ones!</li>
+          </ol>
+        </div>
+
+        <button onclick="regenerateKey()" class="btn btn-secondary">
+          Regenerate API Key
+        </button>
+      </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script>
+      // Require authentication
+      if (!requireAuth()) {
+        // Will redirect to login
+      } else {
+        // Load profile data
+        loadProfile();
+      }
+
+      async function loadProfile() {
+        try {
+          const profile = await getProfile();
+
+          // Update UI
+          document.getElementById("userEmail").textContent =
+            profile.email || "-";
+          document.getElementById("userRole").textContent = profile.isAdmin
+            ? "Administrator"
+            : "User";
+          document.getElementById("connectionKey").textContent =
+            profile.connectionKey || getToken();
+
+          // Fetch user items count
+          try {
+            const itemsData = await apiCall("/v1/items");
+            document.getElementById("itemCount").textContent = itemsData.items
+              ? itemsData.items.length
+              : 0;
+          } catch (e) {
+            document.getElementById("itemCount").textContent = "0";
+          }
+
+          // Show profile, hide loading
+          document.getElementById("loading").style.display = "none";
+          document.getElementById("profile").style.display = "block";
+        } catch (error) {
+          showAlert("Failed to load profile: " + error.message);
+          // If unauthorized, logout
+          if (error.message.includes("auth") || error.message.includes("401")) {
+            setTimeout(() => logout(), 2000);
+          }
+        }
+      }
+
+      function copyKey() {
+        const key = document.getElementById("connectionKey").textContent;
+        copyToClipboard(key);
+      }
+
+      async function regenerateKey() {
+        if (
+          !confirm(
+            "Are you sure you want to regenerate your API key? Your current key will stop working."
+          )
+        ) {
+          return;
+        }
+
+        try {
+          const data = await apiCall("/v1/auth/regenerate-key", {
+            method: "POST",
+          });
+
+          if (data.connectionKey) {
+            setToken(data.connectionKey);
+            document.getElementById("connectionKey").textContent =
+              data.connectionKey;
+            showAlert("API key regenerated successfully!", "success");
+          }
+        } catch (error) {
+          showAlert("Failed to regenerate key: " + error.message);
+        }
+      }
+    </script>
+  </body>
+</html>
+
+
+

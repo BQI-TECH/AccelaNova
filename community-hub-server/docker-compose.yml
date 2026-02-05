@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  community-hub:
+    build: .
+    container_name: accelanova-community-hub
+    ports:
+      - "5001:5001"
+    environment:
+      - NODE_ENV=production
+      - PORT=5001
+      - BASE_URL=http://localhost:5001
+      - DATABASE_PATH=/app/data/hub.db
+      - STORAGE_PATH=/app/storage/bundles
+      - JWT_SECRET=${JWT_SECRET:-change-this-secret-key}
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-*}
+      - INITIAL_ADMIN_EMAIL=${INITIAL_ADMIN_EMAIL:-admin@example.com}
+      - INITIAL_ADMIN_PASSWORD=${INITIAL_ADMIN_PASSWORD:-changeme123}
+    volumes:
+      - hub-data:/app/data
+      - hub-storage:/app/storage
+    restart: unless-stopped
+    networks:
+      - accelanova-network
+
+volumes:
+  hub-data:
+    driver: local
+  hub-storage:
+    driver: local
+
+networks:
+  accelanova-network:
+    driver: bridge
+
+
+
+

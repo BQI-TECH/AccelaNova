@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report MustUnderstand="df"
+  xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition"
+  xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner"
+  xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily"
+  xmlns:am="http://schemas.microsoft.com/sqlserver/reporting/authoringmetadata">
+  <am:AuthoringMetadata>
+    <am:CreatedBy>
+      <am:Name>MSRB</am:Name>
+      <am:Version>15.0.20283.0</am:Version>
+    </am:CreatedBy>
+    <am:UpdatedBy>
+      <am:Name>MSRB</am:Name>
+      <am:Version>15.0.20283.0</am:Version>
+    </am:UpdatedBy>
+    <am:LastModifiedTimestamp>2025-12-21T15:10:41.3249965Z</am:LastModifiedTimestamp>
+  </am:AuthoringMetadata>
+
+  <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
+  <AutoRefresh>0</AutoRefresh>
+
+  <DataSources>
+    <DataSource Name="DataSource1">
+      <DataSourceReference>DataSource1</DataSourceReference>
+      <rd:DataSourceID>8d7d9a6b-6f3c-4c62-8a6c-1b2f3b4c5d6e</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+
+  <ReportParameters>
+    <ReportParameter Name="RecordID">
+      <DataType>String</DataType>
+      <Prompt>Record ID</Prompt>
+      <Nullable>false</Nullable>
+      <AllowBlank>false</AllowBlank>
+    </ReportParameter>
+  </ReportParameters>
+
+  <DataSets>
+    <DataSet Name="dsMain">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@RecordID">
+            <Value>=Parameters!RecordID.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText><![CDATA[
+DECLARE @RecordID varchar(20) = @RecordID;
+
+;WITH base AS (
+    SELECT
+        b.SERV_PROV_CODE,
+        b.B1_PER_ID1, b.B1_PER_ID2, b.B1_PER_ID3,
+        b.REC_STATUS,
+        b.B1_ALT_ID,
+        b.B1_CREATED_BY
+    FROM B1PERMIT b
+    WHERE
+        b.SERV_PROV_CODE = 'AGR'
+        AND b.REC_STATUS = 'A'
+        AND b.B1_ALT_ID = @RecordID
+),
+complainant AS (
+    SELECT
+        c.SERV_PROV_CODE, c.B1_PER_ID1, c.B1_PER_ID2, c.B1_PER_ID3, c.REC_STATUS,
+        COALESCE(c.B1_FULL_NAME, LTRIM(RTRIM(CONCAT(c.B1_FNAME,' ',c.B1_LNAME)))) AS ComplainantName,
+        c.B1_PHONE1 AS ComplainantPhone,
+        c.B1_ADDRESS1 AS ComplainantAddressLine1,
+        LTRIM(RTRIM(CONCAT(c.B1_CITY, ', ', c.B1_STATE, ' ', c.B1_ZIP))) AS ComplainantCityStateZip
+    FROM B3CONTACT c
+    JOIN base b ON
+        b.SERV_PROV_CODE = c.SERV_PROV_CODE
+        AND b.B1_PER_ID1 = c.B1_PER_ID1
+        AND b.B1_PER_ID2 = c.B1_PER_ID2
+        AND b.B1_PER_ID3 = c.B1_PER_ID3
+        AND b.REC_STATUS  = c.REC_STATUS
+    WHERE
+        c.REC_STATUS = 'A'
+        AND c.B1_CONTACT_TYPE = 'Complainant'
+        AND c.B1_CONTACT_NBR = (
+            SELECT MIN(c2.B1_CONTACT_NBR)
+            FROM B3CONTACT c2
+            WHERE
+                c2.SERV_PROV_CODE = c.SERV_PROV_CODE
+                AND c2.B1_PER_ID1 = c.B1_PER_ID1
+                AND c2.B1_PER_ID2 = c.B1_PER_ID2
+                AND c2.B1_PER_ID3 = c.B1_PER_ID3
+                AND c2.REC_STATUS = c.REC_STATUS
+                AND c2.B1_CONTACT_TYPE = c.B1_CONTACT_TYPE
+                AND COALESCE(c2.B1_FLAG,'N') = (
+                    SELECT MAX(COALESCE(c3.B1_FLAG,'N'))
+                    FROM B3CONTACT c3
+                    WHERE
+                        c3.SERV_PROV_CODE = c2.SERV_PROV_CODE
+                        AND c3.B1_PER_ID1 = c2.B1_PER_ID1
+                        AND c3.B1_PER_ID2 = c2.B1_PER_ID2
+                        AND c3.B1_PER_ID3 = c2.B1_PER_ID3
+                        AND c3.REC_STATUS = c2.REC_STATUS
+                        AND c3.B1_CONTACT_TYPE = c2.B1_CONTACT_TYPE
+                )
+        )
+),
+comments AS (
+    SELECT
+        b.SERV_PROV_CODE, b.B1_PER_ID1, b.B1_PER_ID2, b.B1_PER_ID3, b.REC_STATUS,
+        STRING_AGG(CONVERT(varchar(max), pc.[TEXT]),
+                   CHAR(13) + CHAR(10) + '---' + CHAR(13) + CHAR(10))
+            WITHIN GROUP (ORDER BY pc.REC_DATE) AS Notes
+    FROM base b
+    LEFT JOIN BPERMIT_COMMENT pc ON
+        b.SERV_PROV_CODE = pc.SERV_PROV_CODE
+        AND b.B1_PER_ID1 = pc.B1_PER_ID1
+        AND b.B1_PER_ID2 = pc.B1_PER_ID2
+        AND b.B1_PER_ID3 = pc.B1_PER_ID3
+    WHERE
+        (pc.REC_STATUS = 'A' OR pc.REC_STATUS IS NULL)
+    GROUP BY
+        b.SERV_PROV_CODE, b.B1_PER_ID1, b.B1_PER_ID2, b.B1_PER_ID3, b.REC_STATUS
+),
+asi AS (
+    SELECT
+        pvt.SERV_PROV_CODE, pvt.B1_PER_ID1, pvt.B1_PER_ID2, pvt.B1_PER_ID3,
+        pvt.[Incident Location],
+        pvt.[Incident Date],
+        pvt.[Incident Time],
+        pvt.[Type of Complaint],
+        pvt.[Crop/Site],
+        pvt.[Pesticide],
+        pvt.[Landowner Name],
+        pvt.[Landowner Address],
+        pvt.[Landowner Phone],
+        pvt.[Incident Summary],
+        pvt.[Principal Owner of Pesticide Business],
+        pvt.[Business Name],
+        pvt.[Business Address],
+        pvt.[Application Made By]
+    FROM (
+        SELECT
+            bc.SERV_PROV_CODE,
+            bc.B1_PER_ID1, bc.B1_PER_ID2, bc.B1_PER_ID3,
+            bc.B1_CHECKBOX_DESC,
+            bc.B1_CHECKLIST_COMMENT
+        FROM BCHCKBOX bc
+        JOIN base b ON
+            b.SERV_PROV_CODE = bc.SERV_PROV_CODE
+            AND b.B1_PER_ID1 = bc.B1_PER_ID1
+            AND b.B1_PER_ID2 = bc.B1_PER_ID2
+            AND b.B1_PER_ID3 = bc.B1_PER_ID3
+        WHERE
+            bc.REC_STATUS = 'A'
+            AND bc.B1_CHECKBOX_DESC IN (
+                'Incident Location','Incident Date','Incident Time','Type of Complaint','Crop/Site','Pesticide',
+                'Landowner Name','Landowner Address','Landowner Phone','Incident Summary',
+                'Principal Owner of Pesticide Business','Business Name','Business Address','Application Made By'
+            )
+    ) a
+    PIVOT (
+        MAX(a.B1_CHECKLIST_COMMENT)
+        FOR a.B1_CHECKBOX_DESC IN (
+            [Incident Location],[Incident Date],[Incident Time],[Type of Complaint],[Crop/Site],[Pesticide],
+            [Landowner Name],[Landowner Address],[Landowner Phone],[Incident Summary],
+            [Principal Owner of Pesticide Business],[Business Name],[Business Address],[Application Made By]
+        )
+    ) pvt
+)
+SELECT
+    b.B1_ALT_ID                         AS RecordID,
+    CAST(GETDATE() AS date)             AS ReportRunDate,
+    CONVERT(varchar(8), GETDATE(), 108) AS ReportRunTime,
+    b.B1_CREATED_BY                     AS ContactReceivedBy,
+
+    c.ComplainantName,
+    c.ComplainantPhone,
+    c.ComplainantAddressLine1,
+    c.ComplainantCityStateZip,
+
+    asi.[Incident Location]             AS IncidentLocation,
+    asi.[Incident Date]                 AS IncidentDate,
+    asi.[Incident Time]                 AS IncidentTime,
+    asi.[Type of Complaint]             AS TypeOfComplaintDamage,
+    asi.[Crop/Site]                     AS CropSite,
+    asi.[Pesticide]                     AS Pesticides,
+    asi.[Landowner Name]                AS LandownerName,
+    asi.[Landowner Address]             AS LandownerAddress,
+    asi.[Landowner Phone]               AS LandownerPhone,
+    asi.[Incident Summary]              AS IncidentSummary,
+    asi.[Principal Owner of Pesticide Business] AS PrincipalOwnerPesticideBusiness,
+    asi.[Business Name]                 AS BusinessName,
+    asi.[Business Address]              AS BusinessAddress,
+    asi.[Application Made By]           AS ApplicationMadeBy,
+
+    cm.Notes                            AS Notes
+FROM base b
+LEFT JOIN complainant c ON
+    b.SERV_PROV_CODE = c.SERV_PROV_CODE
+    AND b.B1_PER_ID1 = c.B1_PER_ID1
+    AND b.B1_PER_ID2 = c.B1_PER_ID2
+    AND b.B1_PER_ID3 = c.B1_PER_ID3
+    AND b.REC_STATUS  = c.REC_STATUS
+LEFT JOIN asi ON
+    b.SERV_PROV_CODE = asi.SERV_PROV_CODE
+    AND b.B1_PER_ID1 = asi.B1_PER_ID1
+    AND b.B1_PER_ID2 = asi.B1_PER_ID2
+    AND b.B1_PER_ID3 = asi.B1_PER_ID3
+LEFT JOIN comments cm ON
+    b.SERV_PROV_CODE = cm.SERV_PROV_CODE
+    AND b.B1_PER_ID1 = cm.B1_PER_ID1
+    AND b.B1_PER_ID2 = cm.B1_PER_ID2
+    AND b.B1_PER_ID3 = cm.B1_PER_ID3
+    AND b.REC_STATUS  = cm.REC_STATUS;
+]]></CommandText>
+      </Query>
+      <Fields>
+        <Field Name="RecordID"><DataField>RecordID</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="ReportRunDate"><DataField>ReportRunDate</DataField><rd:TypeName>System.DateTime</rd:TypeName></Field>
+        <Field Name="ReportRunTime"><DataField>ReportRunTime</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="ContactReceivedBy"><DataField>ContactReceivedBy</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+
+        <Field Name="ComplainantName"><DataField>ComplainantName</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="ComplainantPhone"><DataField>ComplainantPhone</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="ComplainantAddressLine1"><DataField>ComplainantAddressLine1</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="ComplainantCityStateZip"><DataField>ComplainantCityStateZip</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+
+        <Field Name="IncidentLocation"><DataField>IncidentLocation</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="IncidentDate"><DataField>IncidentDate</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="IncidentTime"><DataField>IncidentTime</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="TypeOfComplaintDamage"><DataField>TypeOfComplaintDamage</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="CropSite"><DataField>CropSite</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Pesticides"><DataField>Pesticides</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="LandownerName"><DataField>LandownerName</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="LandownerAddress"><DataField>LandownerAddress</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="LandownerPhone"><DataField>LandownerPhone</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="IncidentSummary"><DataField>IncidentSummary</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="PrincipalOwnerPesticideBusiness"><DataField>PrincipalOwnerPesticideBusiness</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="BusinessName"><DataField>BusinessName</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="BusinessAddress"><DataField>BusinessAddress</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="ApplicationMadeBy"><DataField>ApplicationMadeBy</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+
+        <Field Name="Notes"><DataField>Notes</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>dsMain</rd:DataSetName>
+        <rd:TableName>dsMain</rd:TableName>
+      </rd:DataSetInfo>
+    </DataSet>
+
+    <DataSet Name="dsOtherPersons">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@RecordID">
+            <Value>=Parameters!RecordID.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText><![CDATA[
+DECLARE @RecordID varchar(20) = @RecordID;
+
+SELECT
+    b.B1_ALT_ID AS RecordID,
+    c.B1_CONTACT_TYPE AS ContactType,
+    COALESCE(c.B1_FULL_NAME, LTRIM(RTRIM(CONCAT(c.B1_FNAME,' ',c.B1_LNAME)))) AS FullName,
+    c.B1_ADDRESS1 AS AddressLine1,
+    LTRIM(RTRIM(CONCAT(c.B1_CITY, ', ', c.B1_STATE, ' ', c.B1_ZIP))) AS CityStateZip,
+    c.B1_PHONE2 AS MobilePhone,
+    c.B1_PHONE1 AS Phone1,
+    c.B1_EMAIL  AS Email
+FROM B1PERMIT b
+JOIN B3CONTACT c ON
+    b.SERV_PROV_CODE = c.SERV_PROV_CODE
+    AND b.B1_PER_ID1 = c.B1_PER_ID1
+    AND b.B1_PER_ID2 = c.B1_PER_ID2
+    AND b.B1_PER_ID3 = c.B1_PER_ID3
+    AND b.REC_STATUS  = c.REC_STATUS
+WHERE
+    b.SERV_PROV_CODE = 'AGR'
+    AND b.REC_STATUS = 'A'
+    AND c.REC_STATUS = 'A'
+    AND b.B1_ALT_ID = @RecordID
+    AND c.B1_CONTACT_TYPE <> 'Complainant'
+ORDER BY
+    c.B1_CONTACT_TYPE, c.B1_CONTACT_NBR;
+]]></CommandText>
+      </Query>
+      <Fields>
+        <Field Name="RecordID"><DataField>RecordID</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="ContactType"><DataField>ContactType</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="FullName"><DataField>FullName</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="AddressLine1"><DataField>AddressLine1</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="CityStateZip"><DataField>CityStateZip</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="MobilePhone"><DataField>MobilePhone</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Phone1"><DataField>Phone1</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Email"><DataField>Email</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>dsOtherPersons</rd:DataSetName>
+        <rd:TableName>dsOtherPersons</rd:TableName>
+      </rd:DataSetInfo>
+    </DataSet>
+  </DataSets>
+
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+
+          <!-- Title -->
+          <Textbox Name="ReportTitle">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Report of Investigation</Value>
+                    <Style>
+                      <FontFamily>Segoe UI Light</FontFamily>
+                      <FontSize>24pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <Top>0mm</Top>
+            <Left>0mm</Left>
+            <Height>12mm</Height>
+            <Width>170mm</Width>
+            <Style>
+              <Border><Style>None</Style></Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+
+          <Textbox Name="HeaderAgency">
+            <CanGrow>true</CanGrow>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>MONTANA DEPARTMENT</Value>
+                    <Style>
+                      <FontSize>14pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <Top>13mm</Top>
+            <Left>0mm</Left>
+            <Height>7mm</Height>
+            <Width>170mm</Width>
+            <Style>
+              <Border><Style>None</Style></Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+
+          <!-- Main form layout -->
+          <Rectangle Name="MainForm">
+            <Top>22mm</Top>
+            <Left>0mm</Left>
+            <Height>190mm</Height>
+            <Width>170mm</Width>
+            <Style>
+              <Border><Style>None</Style></Border>
+            </Style>
+            <ReportItems>
+
+              <!-- Row helper: label/value pairs -->
+              <!-- Date / Time -->
+              <Textbox Name="LblDate">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Today’s Date</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>0mm</Top><Left>0mm</Left><Height>6mm</Height><Width>45mm</Width>
+                <Style><PaddingLeft>2pt</PaddingLeft><PaddingRight>2pt</PaddingRight><PaddingTop>1pt</PaddingTop><PaddingBottom>1pt</PaddingBottom></Style>
+              </Textbox>
+              <Textbox Name="ValDate">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>=First(Fields!ReportRunDate.Value, "dsMain")</Value></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>0mm</Top><Left>50mm</Left><Height>6mm</Height><Width>55mm</Width>
+                <Style><PaddingLeft>2pt</PaddingLeft><PaddingRight>2pt</PaddingRight><PaddingTop>1pt</PaddingTop><PaddingBottom>1pt</PaddingBottom></Style>
+              </Textbox>
+
+              <Textbox Name="LblTime">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Time</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>0mm</Top><Left>110mm</Left><Height>6mm</Height><Width>20mm</Width>
+                <Style><PaddingLeft>2pt</PaddingLeft><PaddingRight>2pt</PaddingRight><PaddingTop>1pt</PaddingTop><PaddingBottom>1pt</PaddingBottom></Style>
+              </Textbox>
+              <Textbox Name="ValTime">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>=First(Fields!ReportRunTime.Value, "dsMain")</Value></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>0mm</Top><Left>132mm</Left><Height>6mm</Height><Width>38mm</Width>
+                <Style><PaddingLeft>2pt</PaddingLeft><PaddingRight>2pt</PaddingRight><PaddingTop>1pt</PaddingTop><PaddingBottom>1pt</PaddingBottom></Style>
+              </Textbox>
+
+              <!-- Complainant -->
+              <Textbox Name="LblComplainantName">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Complainant’s Name</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>8mm</Top><Left>0mm</Left><Height>6mm</Height><Width>45mm</Width>
+              </Textbox>
+              <Textbox Name="ValComplainantName">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>=First(Fields!ComplainantName.Value, "dsMain")</Value></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>8mm</Top><Left>50mm</Left><Height>6mm</Height><Width>120mm</Width>
+              </Textbox>
+
+              <Textbox Name="LblComplainantPhone">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Phone</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>15mm</Top><Left>0mm</Left><Height>6mm</Height><Width>45mm</Width>
+              </Textbox>
+              <Textbox Name="ValComplainantPhone">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>=First(Fields!ComplainantPhone.Value, "dsMain")</Value></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>15mm</Top><Left>50mm</Left><Height>6mm</Height><Width>120mm</Width>
+              </Textbox>
+
+              <Textbox Name="LblReceivedBy">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Contact Received By</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>22mm</Top><Left>0mm</Left><Height>6mm</Height><Width>45mm</Width>
+              </Textbox>
+              <Textbox Name="ValReceivedBy">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>=First(Fields!ContactReceivedBy.Value, "dsMain")</Value></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>22mm</Top><Left>50mm</Left><Height>6mm</Height><Width>120mm</Width>
+              </Textbox>
+
+              <Textbox Name="LblComplainantAddr">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Address, City / Zip</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>29mm</Top><Left>0mm</Left><Height>6mm</Height><Width>45mm</Width>
+              </Textbox>
+              <Textbox Name="ValComplainantAddr">
+                <CanGrow>true</CanGrow>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!ComplainantAddressLine1.Value, "dsMain") &amp; vbCrLf &amp; First(Fields!ComplainantCityStateZip.Value, "dsMain")</Value>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>29mm</Top><Left>50mm</Left><Height>12mm</Height><Width>120mm</Width>
+              </Textbox>
+
+              <!-- Incident + ASI block -->
+              <Textbox Name="LblIncidentLocation">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Incident Location</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>44mm</Top><Left>0mm</Left><Height>6mm</Height><Width>45mm</Width>
+              </Textbox>
+              <Textbox Name="ValIncidentLocation">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>=First(Fields!IncidentLocation.Value, "dsMain")</Value></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>44mm</Top><Left>50mm</Left><Height>6mm</Height><Width>120mm</Width>
+              </Textbox>
+
+              <Textbox Name="LblIncidentDate">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Incident Date</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>51mm</Top><Left>0mm</Left><Height>6mm</Height><Width>45mm</Width>
+              </Textbox>
+              <Textbox Name="ValIncidentDate">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>=First(Fields!IncidentDate.Value, "dsMain")</Value></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>51mm</Top><Left>50mm</Left><Height>6mm</Height><Width>55mm</Width>
+              </Textbox>
+
+              <Textbox Name="LblIncidentTime">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Incident Time</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>51mm</Top><Left>110mm</Left><Height>6mm</Height><Width>20mm</Width>
+              </Textbox>
+              <Textbox Name="ValIncidentTime">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>=First(Fields!IncidentTime.Value, "dsMain")</Value></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>51mm</Top><Left>132mm</Left><Height>6mm</Height><Width>38mm</Width>
+              </Textbox>
+
+              <Textbox Name="LblTypeComplaint">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Type of Complaint/Damage</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>58mm</Top><Left>0mm</Left><Height>6mm</Height><Width>45mm</Width>
+              </Textbox>
+              <Textbox Name="ValTypeComplaint">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>=First(Fields!TypeOfComplaintDamage.Value, "dsMain")</Value></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>58mm</Top><Left>50mm</Left><Height>6mm</Height><Width>120mm</Width>
+              </Textbox>
+
+              <Textbox Name="LblCropSite">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Crop/Site</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>65mm</Top><Left>0mm</Left><Height>6mm</Height><Width>45mm</Width>
+              </Textbox>
+              <Textbox Name="ValCropSite">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>=First(Fields!CropSite.Value, "dsMain")</Value></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>65mm</Top><Left>50mm</Left><Height>6mm</Height><Width>120mm</Width>
+              </Textbox>
+
+              <Textbox Name="LblPesticides">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Pesticide(s)</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>72mm</Top><Left>0mm</Left><Height>6mm</Height><Width>45mm</Width>
+              </Textbox>
+              <Textbox Name="ValPesticides">
+                <CanGrow>true</CanGrow>
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>=First(Fields!Pesticides.Value, "dsMain")</Value></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>72mm</Top><Left>50mm</Left><Height>10mm</Height><Width>120mm</Width>
+              </Textbox>
+
+              <Textbox Name="LblLandownerName">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Landowner Name</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>85mm</Top><Left>0mm</Left><Height>6mm</Height><Width>45mm</Width>
+              </Textbox>
+              <Textbox Name="ValLandownerName">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>=First(Fields!LandownerName.Value, "dsMain")</Value></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>85mm</Top><Left>50mm</Left><Height>6mm</Height><Width>120mm</Width>
+              </Textbox>
+
+              <Textbox Name="LblLandownerAddrPhone">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Landowner Address &amp; Phone</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>92mm</Top><Left>0mm</Left><Height>6mm</Height><Width>45mm</Width>
+              </Textbox>
+              <Textbox Name="ValLandownerAddrPhone">
+                <CanGrow>true</CanGrow>
+                <Paragraphs><Paragraph><TextRuns><TextRun>
+                  <Value>=First(Fields!LandownerAddress.Value, "dsMain") &amp; vbCrLf &amp; First(Fields!LandownerPhone.Value, "dsMain")</Value>
+                </TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>92mm</Top><Left>50mm</Left><Height>12mm</Height><Width>120mm</Width>
+              </Textbox>
+
+              <Textbox Name="LblIncidentSummary">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Incident Summary</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>107mm</Top><Left>0mm</Left><Height>6mm</Height><Width>45mm</Width>
+              </Textbox>
+              <Textbox Name="ValIncidentSummary">
+                <CanGrow>true</CanGrow>
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>=First(Fields!IncidentSummary.Value, "dsMain")</Value></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>107mm</Top><Left>50mm</Left><Height>18mm</Height><Width>120mm</Width>
+              </Textbox>
+
+              <Textbox Name="LblPrincipalOwner">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Principal Owner of Pesticide Business / Dealer Outlet</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>128mm</Top><Left>0mm</Left><Height>8mm</Height><Width>45mm</Width>
+              </Textbox>
+              <Textbox Name="ValPrincipalOwner">
+                <CanGrow>true</CanGrow>
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>=First(Fields!PrincipalOwnerPesticideBusiness.Value, "dsMain")</Value></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>128mm</Top><Left>50mm</Left><Height>8mm</Height><Width>120mm</Width>
+              </Textbox>
+
+              <Textbox Name="LblBusinessName">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Business Name</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>138mm</Top><Left>0mm</Left><Height>6mm</Height><Width>45mm</Width>
+              </Textbox>
+              <Textbox Name="ValBusinessName">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>=First(Fields!BusinessName.Value, "dsMain")</Value></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>138mm</Top><Left>50mm</Left><Height>6mm</Height><Width>120mm</Width>
+              </Textbox>
+
+              <Textbox Name="LblBusinessAddress">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Address</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>145mm</Top><Left>0mm</Left><Height>6mm</Height><Width>45mm</Width>
+              </Textbox>
+              <Textbox Name="ValBusinessAddress">
+                <CanGrow>true</CanGrow>
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>=First(Fields!BusinessAddress.Value, "dsMain")</Value></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>145mm</Top><Left>50mm</Left><Height>10mm</Height><Width>120mm</Width>
+              </Textbox>
+
+              <Textbox Name="LblApplicationMadeBy">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Application Made By</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>158mm</Top><Left>0mm</Left><Height>6mm</Height><Width>45mm</Width>
+              </Textbox>
+              <Textbox Name="ValApplicationMadeBy">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>=First(Fields!ApplicationMadeBy.Value, "dsMain")</Value></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>158mm</Top><Left>50mm</Left><Height>6mm</Height><Width>120mm</Width>
+              </Textbox>
+
+              <Textbox Name="LblNotes">
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>Notes (All Comments)</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>166mm</Top><Left>0mm</Left><Height>6mm</Height><Width>45mm</Width>
+              </Textbox>
+              <Textbox Name="ValNotes">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs><Paragraph><TextRuns><TextRun><Value>=First(Fields!Notes.Value, "dsMain")</Value></TextRun></TextRuns></Paragraph></Paragraphs>
+                <Top>166mm</Top><Left>50mm</Left><Height>20mm</Height><Width>120mm</Width>
+                <Style>
+                  <Border><Style>Solid</Style></Border>
+                  <PaddingLeft>2pt</PaddingLeft><PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop><PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
+
+            </ReportItems>
+          </Rectangle>
+
+          <!-- Other Persons Involved -->
+          <Textbox Name="OtherPersonsHeader">
+            <Paragraphs><Paragraph><TextRuns><TextRun><Value>Other Person(s) Involved</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs>
+            <Top>215mm</Top>
+            <Left>0mm</Left>
+            <Height>7mm</Height>
+            <Width>170mm</Width>
+          </Textbox>
+
+          <Tablix Name="TablixOtherPersons">
+            <Top>223mm</Top>
+            <Left>0mm</Left>
+            <Height>25mm</Height>
+            <Width>170mm</Width>
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn><Width>25mm</Width></TablixColumn>
+                <TablixColumn><Width>35mm</Width></TablixColumn>
+                <TablixColumn><Width>45mm</Width></TablixColumn>
+                <TablixColumn><Width>40mm</Width></TablixColumn>
+                <TablixColumn><Width>25mm</Width></TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>6mm</Height>
+                  <TablixCells>
+                    <TablixCell><CellContents><Textbox Name="HdrCT"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Type</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs></Textbox></CellContents></TablixCell>
+                    <TablixCell><CellContents><Textbox Name="HdrName"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Name</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs></Textbox></CellContents></TablixCell>
+                    <TablixCell><CellContents><Textbox Name="HdrAddr"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Address</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs></Textbox></CellContents></TablixCell>
+                    <TablixCell><CellContents><Textbox Name="HdrCSZ"><Paragraphs><Paragraph><TextRuns><TextRun><Value>City/State/Zip</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs></Textbox></CellContents></TablixCell>
+                    <TablixCell><CellContents><Textbox Name="HdrMobile"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Mobile</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs></Textbox></CellContents></TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>6mm</Height>
+                  <TablixCells>
+                    <TablixCell><CellContents><Textbox Name="DetCT"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!ContactType.Value</Value></TextRun></TextRuns></Paragraph></Paragraphs></Textbox></CellContents></TablixCell>
+                    <TablixCell><CellContents><Textbox Name="DetName"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!FullName.Value</Value></TextRun></TextRuns></Paragraph></Paragraphs></Textbox></CellContents></TablixCell>
+                    <TablixCell><CellContents><Textbox Name="DetAddr"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!AddressLine1.Value</Value></TextRun></TextRuns></Paragraph></Paragraphs></Textbox></CellContents></TablixCell>
+                    <TablixCell><CellContents><Textbox Name="DetCSZ"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!CityStateZip.Value</Value></TextRun></TextRuns></Paragraph></Paragraphs></Textbox></CellContents></TablixCell>
+                    <TablixCell><CellContents><Textbox Name="DetMobile"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!MobilePhone.Value</Value></TextRun></TextRuns></Paragraph></Paragraphs></Textbox></CellContents></TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember>
+                  <Group Name="DetailGroupOtherPersons" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>dsOtherPersons</DataSetName>
+            <Style>
+              <Border><Style>Solid</Style></Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Tablix>
+
+        </ReportItems>
+        <Height>255mm</Height>
+        <Style>
+          <Border><Style>None</Style></Border>
+        </Style>
+      </Body>
+
+      <Width>170mm</Width>
+
+      <Page>
+        <PageHeader>
+          <Height>0mm</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <Style />
+        </PageHeader>
+
+        <PageFooter>
+          <Height>11.43mm</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Textbox Name="ExecutionTime">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Globals!ExecutionTime</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>ExecutionTime</rd:DefaultName>
+              <Top>5.08mm</Top>
+              <Left>120mm</Left>
+              <Height>6.35mm</Height>
+              <Width>50mm</Width>
+              <Style>
+                <Border><Style>None</Style></Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+          </ReportItems>
+          <Style>
+            <Border><Style>None</Style></Border>
+          </Style>
+        </PageFooter>
+
+        <PageHeight>11in</PageHeight>
+        <PageWidth>8.5in</PageWidth>
+        <LeftMargin>0.5in</LeftMargin>
+        <RightMargin>0.5in</RightMargin>
+        <TopMargin>0.5in</TopMargin>
+        <BottomMargin>0.5in</BottomMargin>
+        <ColumnSpacing>0.13cm</ColumnSpacing>
+        <Style />
+      </Page>
+
+    </ReportSection>
+  </ReportSections>
+
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+
+  <rd:ReportUnitType>Mm</rd:ReportUnitType>
+  <rd:ReportID>e4027abd-6717-464d-b2f1-2edd18834270</rd:ReportID>
+</Report>

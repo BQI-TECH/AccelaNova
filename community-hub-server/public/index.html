@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accelanova Community Hub - Login</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="logo">
+        <h1>🚀 Accelanova Hub</h1>
+        <p>Sign in to access your Community Hub account</p>
+      </div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            placeholder="admin@example.com" />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            placeholder="Enter your password" />
+        </div>
+
+        <button type="submit" class="btn">Sign In</button>
+      </form>
+
+      <div class="text-center mt-3">
+        <p style="color: #666; font-size: 14px">
+          Default credentials: <br />
+          <code>admin@example.com</code> / <code>changeme123</code>
+        </p>
+      </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script>
+      // Redirect if already logged in
+      redirectIfAuth();
+
+      // Handle login form
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const submitBtn = e.target.querySelector('button[type="submit"]');
+
+          // Disable button
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Signing in...";
+
+          try {
+            await login(email, password);
+            window.location.href = "/me";
+          } catch (error) {
+            showAlert(
+              error.message || "Login failed. Please check your credentials."
+            );
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Sign In";
+          }
+        });
+    </script>
+  </body>
+</html>
+
+
+
