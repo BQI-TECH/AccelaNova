@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 
 <p align="center">
-  <a href="https://anythingllm.com"><img src="https://github.com/Mintplex-Labs/anything-llm/blob/master/images/wordmark.png?raw=true" alt="Accelanova logo"></a>
+  <a href="https://anythingllm.com"><img src="https://github.com/GeotechCompanybq/AccelaNova/blob/master/images/wordmark.png?raw=true" alt="Accelanova logo"></a>
 </p>
 
 <div align='center'>
