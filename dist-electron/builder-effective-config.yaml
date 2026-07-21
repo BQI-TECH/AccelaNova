@@ -1,0 +1,37 @@
+directories:
+  output: dist-electron
+  buildResources: build
+appId: com.accelanova.accelanova
+productName: Accelanova
+files:
+  - filter:
+      - electron-main.js
+      - server/**/*
+      - server/node_modules
+      - frontend/dist/**/*
+      - collector/**/*
+      - collector/node_modules
+      - desktop-shims/**/*
+      - node_modules/**/*
+asarUnpack:
+  - '**/node_modules/@prisma/**/*'
+  - '**/node_modules/.prisma/**/*'
+  - '**/node_modules/prisma/**/*'
+  - '**/node_modules/sharp/build/Release/**'
+  - '**/node_modules/@img/sharp-*/lib/**'
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+win:
+  target: nsis
+  icon: frontend/public/app-icon.png
+mac:
+  category: public.app-category.productivity
+  target: dmg
+  icon: frontend/public/app-icon.png
+linux:
+  target: AppImage
+  icon: frontend/public/app-icon.png
+forceCodeSigning: false
+publish: null
+electronVersion: 38.4.0

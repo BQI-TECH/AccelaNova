@@ -1,8 +1,9 @@
 # Dependencies
 node_modules/
 
-# Electron build output
-dist-electron/
+# Electron build — keep metadata; skip unpackaged app and installers
+dist-electron/win-unpacked/
+dist-electron/**/*.exe
 
 # Environment / secrets
 .env
