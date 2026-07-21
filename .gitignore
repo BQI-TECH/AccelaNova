@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Electron build output
+dist-electron/
+
+# Environment / secrets
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local

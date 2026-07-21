@@ -1,7 +1,7 @@
-const { app, BrowserWindow, Menu, shell, session } = require('electron');
+const { app, BrowserWindow, Menu, shell, session, ipcMain, dialog } = require('electron');
 const net = require('net');
 const path = require('path');
-const { existsSync, readFileSync, mkdirSync, copyFileSync } = require('fs');
+const { existsSync, readFileSync, mkdirSync, copyFileSync, writeFileSync, cpSync } = require('fs');
 const { createServer } = require('http');
 const { spawn, exec, fork } = require('child_process');
 const http = require('http');
@@ -127,6 +127,36 @@ function killProcessOnPort(port) {
     });
 }
 
+// Copy empty storage scaffolding and default assets from the packaged template.
+function seedDesktopStorageFromTemplate(storageDir, templateDbPath) {
+    const templateRoot = path.dirname(templateDbPath);
+    const templateDirs = [
+        'documents',
+        'vector-cache',
+        'lancedb',
+        'tmp',
+        'direct-uploads',
+        'comkey',
+        'plugins',
+        'assets',
+        'hotdir',
+    ];
+
+    for (const dirName of templateDirs) {
+        const src = path.join(templateRoot, dirName);
+        const dest = path.join(storageDir, dirName);
+        if (!existsSync(src)) continue;
+
+        try {
+            if (!existsSync(dest)) {
+                cpSync(src, dest, { recursive: true });
+            }
+        } catch (err) {
+            console.warn(`⚠️  Could not seed ${dirName} from desktop template:`, err.message);
+        }
+    }
+}
+
 // Development mode check
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -164,11 +194,18 @@ function createWindow() {
             contextIsolation: true,
             enableRemoteModule: false,
             webSecurity: true, // Enable web security for production
-            allowRunningInsecureContent: false
+            allowRunningInsecureContent: false,
+            preload: path.join(__dirname, 'electron-preload.js'),
         },
         icon: path.join(__dirname, 'frontend/public/app-icon.png'),
         titleBarStyle: 'default',
         show: false // Don't show until ready
+    });
+
+    mainWindow.webContents.session.on('will-download', (_event, item) => {
+        if (!item.getSavePath()) {
+            item.setSavePath(path.join(app.getPath('downloads'), item.getFilename()));
+        }
     });
 
     // Load the app - use HTTP server for proper asset loading
@@ -564,13 +601,18 @@ async function startServer() {
         if (!existsSync(targetDbPath)) {
             console.log(`Database not found at ${targetDbPath}. Initializing from template...`);
             try {
-                // Look for template in the bundle
-                const templateDbPath = path.join(__dirname, 'server', 'storage', dbName);
-                if (existsSync(templateDbPath)) {
+                // Packaged builds ship a fresh template under desktop-template/ (no local dev data).
+                const templateCandidates = [
+                    path.join(__dirname, 'server', 'storage', 'desktop-template', dbName),
+                    path.join(__dirname, 'server', 'storage', dbName),
+                ];
+                const templateDbPath = templateCandidates.find((candidate) => existsSync(candidate));
+                if (templateDbPath) {
                     copyFileSync(templateDbPath, targetDbPath);
                     console.log(`✓ Database initialized successfully from ${templateDbPath}`);
+                    seedDesktopStorageFromTemplate(storageDir, templateDbPath);
                 } else {
-                    console.warn(`⚠️ Template database not found at ${templateDbPath}. Database will be created empty and may need migration.`);
+                    console.warn(`⚠️ Template database not found. Database will be created empty and may need migration.`);
                 }
             } catch (err) {
                 console.error('❌ Failed to initialize database:', err);
@@ -856,6 +898,17 @@ function stopServer() {
         collectorProcess = null;
     }
 }
+
+ipcMain.handle('save-text-file', async (event, { defaultFilename, content }) => {
+    const win = BrowserWindow.fromWebContents(event.sender);
+    const { canceled, filePath } = await dialog.showSaveDialog(win, {
+        defaultPath: defaultFilename || 'download.txt',
+        filters: [{ name: 'All Files', extensions: ['*'] }],
+    });
+    if (canceled || !filePath) return { ok: false, canceled: true };
+    writeFileSync(filePath, content, 'utf8');
+    return { ok: true, filePath };
+});
 
 // App event handlers
 app.whenReady().then(async() => {
