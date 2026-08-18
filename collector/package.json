@@ -1,5 +1,5 @@
 {
-  "name": "accelanova-document-collector",
+  "name": "Akili-document-collector",
   "version": "1.8.53",
   "description": "Document collector server endpoints",
   "main": "index.js",

@@ -1,12 +1,12 @@
-const CACHE_NAME = 'accelanova-anythingllm-v2';
+const CACHE_NAME = 'Akili-anythingllm-v2';
 // Vite emits index.js and index.css at the root of the build by config.
 // Keep image paths relative to public/.
 const urlsToCache = [
     '/',
     '/index.js',
     '/index.css',
-    '/accelanova.png',
-    '/accelanova-white.png',
+    '/Akili.png',
+    '/Akili-white.png',
     '/favicon.png'
 ];
 

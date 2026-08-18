@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
-import Accelanova from "./media/logo/accelanova.png";
-import AccelanovaDark from "./media/logo/accelanova-dark.png";
+import Akili from "./media/logo/Akili.png";
+import AkiliDark from "./media/logo/Akili-dark.png";
 import DefaultLoginLogoLight from "./media/illustrations/login-logo.svg";
 import DefaultLoginLogoDark from "./media/illustrations/login-logo-light.svg";
 import System from "./models/system";
@@ -26,15 +26,15 @@ export function LogoProvider({ children }) {
         setIsCustomLogo(isCustomLogo);
       } else {
         localStorage.getItem("theme") !== "default"
-          ? setLogo(AccelanovaDark)
-          : setLogo(Accelanova);
+          ? setLogo(AkiliDark)
+          : setLogo(Akili);
         setLoginLogo(DefaultLoginLogo);
         setIsCustomLogo(false);
       }
     } catch (err) {
       localStorage.getItem("theme") !== "default"
-        ? setLogo(AccelanovaDark)
-        : setLogo(Accelanova);
+        ? setLogo(AkiliDark)
+        : setLogo(Akili);
       setLoginLogo(DefaultLoginLogo);
       setIsCustomLogo(false);
       console.error("Failed to fetch logo:", err);

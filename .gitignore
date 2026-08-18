@@ -1,0 +1,16 @@
+﻿# Dependencies
+node_modules/
+
+# Electron build ΓÇö keep metadata; skip unpackaged app and installers
+dist-electron/win-unpacked/
+dist-electron/**/*.exe
+
+# Environment / secrets
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local

@@ -3,7 +3,7 @@ REM Start script for Community Hub Server (Windows)
 REM This script handles initial setup and starts the server
 
 echo ============================================================
-echo    Accelanova Community Hub - Startup Script (Windows)
+echo    Akili Community Hub - Startup Script (Windows)
 echo ============================================================
 echo.
 

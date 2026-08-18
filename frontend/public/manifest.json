@@ -1,28 +1,33 @@
 {
-    "name": "Accelanova Accelanova",
-    "short_name": "Accelanova",
-    "description": "The best solution for turning private documents into a chat bot using off-the-shelf tools and commercially viable AI technologies.",
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#1a1a1a",
-    "theme_color": "#3b82f6",
-    "orientation": "portrait-primary",
-    "icons": [{
-            "src": "/accelanova.png",
-            "sizes": "192x192",
-            "type": "image/png",
-            "purpose": "any maskable"
-        },
-        {
-            "src": "/accelanova-white.png",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "any maskable"
-        }
-    ],
-    "categories": ["productivity", "utilities", "business"],
-    "lang": "en",
-    "dir": "ltr",
-    "scope": "/",
-    "prefer_related_applications": false
+    "name":  "Akili",
+    "short_name":  "Akili",
+    "description":  "The best solution for turning private documents into a chat bot using off-the-shelf tools and commercially viable AI technologies.",
+    "start_url":  "/",
+    "display":  "standalone",
+    "background_color":  "#1a1a1a",
+    "theme_color":  "#3b82f6",
+    "orientation":  "portrait-primary",
+    "icons":  [
+                  {
+                      "src":  "/Akili.png",
+                      "sizes":  "192x192",
+                      "type":  "image/png",
+                      "purpose":  "any maskable"
+                  },
+                  {
+                      "src":  "/Akili-white.png",
+                      "sizes":  "512x512",
+                      "type":  "image/png",
+                      "purpose":  "any maskable"
+                  }
+              ],
+    "categories":  [
+                       "productivity",
+                       "utilities",
+                       "business"
+                   ],
+    "lang":  "en",
+    "dir":  "ltr",
+    "scope":  "/",
+    "prefer_related_applications":  false
 }

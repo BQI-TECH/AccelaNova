@@ -1,6 +1,6 @@
-# How to deploy a private Accelanova instance on DigitalOcean using Terraform
+# How to deploy a private Akili instance on DigitalOcean using Terraform
 
-With a DigitalOcean account, you can easily deploy a private Accelanova instance using Terraform. This will create a URL that you can access from any browser over HTTP (HTTPS not supported). This single instance will run on your own keys, and they will not be exposed. However, if you want your instance to be protected, it is highly recommended that you set a password once setup is complete.
+With a DigitalOcean account, you can easily deploy a private Akili instance using Terraform. This will create a URL that you can access from any browser over HTTP (HTTPS not supported). This single instance will run on your own keys, and they will not be exposed. However, if you want your instance to be protected, it is highly recommended that you set a password once setup is complete.
 
 The output of this Terraform configuration will be:
 

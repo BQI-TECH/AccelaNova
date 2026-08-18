@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 
 <p align="center">
-  <a href="https://anythingllm.com"><img src="https://github.com/GeotechCompanybq/AccelaNova/blob/main/frontend/public/accelanova.png" alt="Accelanova logo"></a>
+  <a href="https://anythingllm.com"><img src="https://github.com/GeotechCompanybq/Akili/blob/main/frontend/public/Akili.png" alt="Akili logo"></a>
 </p>
 
 <div align='center'>
@@ -9,7 +9,7 @@
 </div>
 
 <p align="center">
-    <b>Accelanova:</b> The all-in-one AI app you were looking for.<br />
+    <b>Akili:</b> The all-in-one AI app you were looking for.<br />
     Chat with your docs, use AI Agents, hyper-configurable, multi-user, & no frustrating setup required.
 </p>
 
@@ -20,7 +20,7 @@
 </p>
 
 <p align="center">
-👉 Accelanova for desktop (Mac, Windows, & Linux)! <a href="https://accelanova.bqitech.com" target="_blank"> Download Now</a>
+👉 Akili for desktop (Mac, Windows, & Linux)! <a href="https://Akili.bqitech.com" target="_blank"> Download Now</a>
 </p>
 
 A full-stack application that enables you to turn any document, resource, or piece of content into context that any LLM can use as a reference during chatting. This application allows you to pick and choose which LLM or Vector Database you want to use as well as supporting multi-user management and permissions.
@@ -35,11 +35,11 @@ A full-stack application that enables you to turn any document, resource, or pie
 
 ### Product Overview
 
-Accelanova is a full-stack application where you can use commercial off-the-shelf LLMs or popular open source LLMs and vectorDB solutions to build a private ChatGPT with no compromises that you can run locally as well as host remotely and be able to chat intelligently with any documents you provide it.
+Akili is a full-stack application where you can use commercial off-the-shelf LLMs or popular open source LLMs and vectorDB solutions to build a private ChatGPT with no compromises that you can run locally as well as host remotely and be able to chat intelligently with any documents you provide it.
 
-Accelanova divides your documents into objects called `workspaces`. A Workspace functions a lot like a thread, but with the addition of containerization of your documents. Workspaces can share documents, but they do not talk to each other so you can keep your context for each workspace clean.
+Akili divides your documents into objects called `workspaces`. A Workspace functions a lot like a thread, but with the addition of containerization of your documents. Workspaces can share documents, but they do not talk to each other so you can keep your context for each workspace clean.
 
-## Cool features of Accelanova
+## Cool features of Akili
 
 
 - 👤 Multi-user instance support and permissioning _Docker version only_
@@ -87,7 +87,7 @@ Accelanova divides your documents into objects called `workspaces`. A Workspace 
 - [CometAPI (chat models)](https://api.cometapi.com/)
   **Embedder models:**
 
-- [Accelanova Native Embedder](/server/storage/models/README.md) (default)
+- [Akili Native Embedder](/server/storage/models/README.md) (default)
 - [OpenAI](https://openai.com)
 - [Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service)
 - [LocalAI (all)](https://localai.io/)
@@ -97,7 +97,7 @@ Accelanova divides your documents into objects called `workspaces`. A Workspace 
 
 **Audio Transcription models:**
 
-- [Accelanova Built-In](https://github.com/Mintplex-Labs/anything-llm/tree/master/server/storage/models#audiovideo-transcription) (default)
+- [Akili Built-In](https://github.com/Mintplex-Labs/anything-llm/tree/master/server/storage/models#audiovideo-transcription) (default)
 - [OpenAI](https://openai.com/)
 
 **TTS (text-to-speech) support:**
@@ -136,7 +136,7 @@ This monorepo consists of six main sections:
 
 ## 🛳 Self-Hosting
 
-Mintplex Labs & the community maintain a number of deployment methods, scripts, and templates that you can use to run Accelanova locally. Refer to the table below to read how to deploy on your preferred environment or to automatically deploy.
+Mintplex Labs & the community maintain a number of deployment methods, scripts, and templates that you can use to run Akili locally. Refer to the table below to read how to deploy on your preferred environment or to automatically deploy.
 | Docker | AWS | GCP | Digital Ocean | Render.com |
 |----------------------------------------|----|-----|---------------|------------|
 | [![Deploy on Docker][docker-btn]][docker-deploy] | [![Deploy on AWS][aws-btn]][aws-deploy] | [![Deploy on GCP][gcp-btn]][gcp-deploy] | [![Deploy on DigitalOcean][do-btn]][do-deploy] | [![Deploy on Render.com][render-btn]][render-deploy] |
@@ -145,7 +145,7 @@ Mintplex Labs & the community maintain a number of deployment methods, scripts, 
 | --------------------------------------------------- | --------------------------------------------------------- | --------------------------------------------------- |
 | [![Deploy on Railway][railway-btn]][railway-deploy] | [![Deploy on RepoCloud][repocloud-btn]][repocloud-deploy] | [![Deploy on Elestio][elestio-btn]][elestio-deploy] |
 
-[or set up a production Accelanova instance without Docker →](./BARE_METAL.md)
+[or set up a production Akili instance without Docker →](./BARE_METAL.md)
 
 ## How to setup for development
 
@@ -161,22 +161,22 @@ Mintplex Labs & the community maintain a number of deployment methods, scripts, 
 
 ## External Apps & Integrations
 
-_These are apps that are not maintained by Mintplex Labs, but are compatible with Accelanova. A listing here is not an endorsement._
+_These are apps that are not maintained by Mintplex Labs, but are compatible with Akili. A listing here is not an endorsement._
 
 - [Midori AI Subsystem Manager](https://io.midori-ai.xyz/subsystem/anythingllm/) - A streamlined and efficient way to deploy AI systems using Docker container technology.
-- [Coolify](https://coolify.io/docs/services/anythingllm/) - Deploy Accelanova with a single click.
-- [GPTLocalhost for Microsoft Word](https://gptlocalhost.com/demo/) - A local Word Add-in for you to use Accelanova in Microsoft Word.
+- [Coolify](https://coolify.io/docs/services/anythingllm/) - Deploy Akili with a single click.
+- [GPTLocalhost for Microsoft Word](https://gptlocalhost.com/demo/) - A local Word Add-in for you to use Akili in Microsoft Word.
 
 ## Telemetry & Privacy
 
-Accelanova by Mintplex Labs Inc contains a telemetry feature that collects anonymous usage information.
+Akili by Mintplex Labs Inc contains a telemetry feature that collects anonymous usage information.
 
 <details>
-<summary><kbd>More about Telemetry & Privacy for Accelanova</kbd></summary>
+<summary><kbd>More about Telemetry & Privacy for Akili</kbd></summary>
 
 ### Why?
 
-We use this information to help us understand how Accelanova is used, to help us prioritize work on new features and bug fixes, and to help us improve Accelanova's performance and stability.
+We use this information to help us understand how Akili is used, to help us prioritize work on new features and bug fixes, and to help us improve Akili's performance and stability.
 
 ### Opting out
 
@@ -206,7 +206,7 @@ We take privacy very seriously, and we hope you understand that we want to learn
 
 ## 👋 Contributing
 
-- [Contributing to Accelanova](./CONTRIBUTING.md) - How to contribute to Accelanova.
+- [Contributing to Akili](./CONTRIBUTING.md) - How to contribute to Akili.
 
 
 

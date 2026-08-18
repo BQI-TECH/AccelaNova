@@ -1,4 +1,4 @@
-# Push AccelaNova to GitHub in smaller batches (useful for large history or slow connections)
+# Push Akili to GitHub in smaller batches (useful for large history or slow connections)
 # Run in PowerShell: .\push-in-bits.ps1
 
 $ErrorActionPreference = "Stop"
@@ -13,9 +13,9 @@ Set-Location $RepoRoot
 $remotes = git remote
 if ($remotes -notmatch $Remote) {
     Write-Host "Adding remote $Remote..."
-    git remote add origin "https://github.com/GeotechCompanybq/AccelaNova.git"
+    git remote add origin "https://github.com/GeotechCompanybq/Akili.git"
 }
-git remote set-url $Remote "https://github.com/GeotechCompanybq/AccelaNova.git"
+git remote set-url $Remote "https://github.com/GeotechCompanybq/Akili.git"
 git branch -M $Branch
 
 # Smaller post buffer = smaller chunks over the wire (optional, in bytes)

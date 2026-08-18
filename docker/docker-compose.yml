@@ -1,11 +1,11 @@
 name: anythingllm
 
 networks:
-  accelanova:
+  Akili:
     driver: bridge
 
 services:
-  accelanova:
+  Akili:
     container_name: anythingllm
     build:
       context: ../.
@@ -26,6 +26,6 @@ services:
     env_file:
       - .env
     networks:
-      - accelanova
+      - Akili
     extra_hosts:
       - "host.docker.internal:host-gateway"

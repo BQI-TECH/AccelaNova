@@ -118,15 +118,15 @@ const TRANSLATIONS = {
         },
     },
     welcomeMessage: {
-        part1: "Benvenuti in Accelanova, Accelanova è uno strumento di intelligenza artificiale open source di Mintplex Labs che trasforma qualsiasi cosa in un chatbot addestrato con cui puoi effettuare query e chattare. Accelanova è un software BYOK (bring-your-own-keys), quindi non ci sono abbonamenti, commissioni o costi per questo software al di fuori dei servizi che vuoi utilizzare.",
-        part2: "Accelanova è il modo più semplice per mettere insieme potenti prodotti di intelligenza artificiale come OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB e altri servizi in un pacchetto ordinato e senza problemi per aumentare la tua produttività di 100 volte.",
-        part3: "Accelanova può essere eseguito completamente in locale sulla tua macchina con un overhead minimo, non ti accorgerai nemmeno che c'è! Non serve GPU. Sono disponibili anche installazioni cloud e on-premise.\nL'ecosistema degli strumenti di intelligenza artificiale diventa ogni giorno più potente. Accelanova lo rende facile da usare.",
+        part1: "Benvenuti in Akili, Akili è uno strumento di intelligenza artificiale open source di Mintplex Labs che trasforma qualsiasi cosa in un chatbot addestrato con cui puoi effettuare query e chattare. Akili è un software BYOK (bring-your-own-keys), quindi non ci sono abbonamenti, commissioni o costi per questo software al di fuori dei servizi che vuoi utilizzare.",
+        part2: "Akili è il modo più semplice per mettere insieme potenti prodotti di intelligenza artificiale come OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB e altri servizi in un pacchetto ordinato e senza problemi per aumentare la tua produttività di 100 volte.",
+        part3: "Akili può essere eseguito completamente in locale sulla tua macchina con un overhead minimo, non ti accorgerai nemmeno che c'è! Non serve GPU. Sono disponibili anche installazioni cloud e on-premise.\nL'ecosistema degli strumenti di intelligenza artificiale diventa ogni giorno più potente. Akili lo rende facile da usare.",
         githubIssue: "Apri una issue su GitHub",
         user1: "Come posso iniziare?!",
         part4: 'È semplice. Tutte le raccolte sono organizzate in contenitori che chiamiamo "Aree di lavoro". Le aree di lavoro sono contenitori di file, documenti, immagini, PDF e altri file che verranno trasformati in qualcosa che gli LLM possono comprendere e utilizzare nella conversazione.\n\nPuoi aggiungere e rimuovere file in qualsiasi momento.',
         createWorkspace: "Crea la tua prima area di lavoro",
         user2: "È come Dropbox AI o qualcosa del genere? E le chat? È un chatbot, non è vero?",
-        part5: "Accelanova è migliore di un Dropbox più smart.\n\nAccelanova offre due modi di comunicare con i tuoi dati:\n\n<i>Query:</i> Le tue chat restituiranno dati o inferenze trovate con i documenti nella tua area di lavoro a cui ha accesso. Aggiungere più documenti all'area di lavoro lo rende più intelligente! \n\n<i>Conversazionale:</i> i tuoi documenti + la cronologia delle chat in corso contribuiscono entrambi alla conoscenza dell'LLM allo stesso tempo. Ottimo per aggiungere informazioni basate su testo in tempo reale o correzioni e incomprensioni che l'LLM potrebbe avere. \n\nPuoi passare da una modalità all'altra \n<i>nel mezzo della chat!</i>",
+        part5: "Akili è migliore di un Dropbox più smart.\n\nAkili offre due modi di comunicare con i tuoi dati:\n\n<i>Query:</i> Le tue chat restituiranno dati o inferenze trovate con i documenti nella tua area di lavoro a cui ha accesso. Aggiungere più documenti all'area di lavoro lo rende più intelligente! \n\n<i>Conversazionale:</i> i tuoi documenti + la cronologia delle chat in corso contribuiscono entrambi alla conoscenza dell'LLM allo stesso tempo. Ottimo per aggiungere informazioni basate su testo in tempo reale o correzioni e incomprensioni che l'LLM potrebbe avere. \n\nPuoi passare da una modalità all'altra \n<i>nel mezzo della chat!</i>",
         user3: "Wow, sembra fantastico, fammi provare!",
         part6: "Divertiti!",
         starOnGitHub: "Metti una stella su GitHub",
@@ -157,7 +157,7 @@ const TRANSLATIONS = {
             add: "Aggiungi un nuovo messaggio",
             save: "Salva messaggi",
             heading: "Spiegami",
-            body: "i vantaggi di Accelanova",
+            body: "i vantaggi di Akili",
         },
         pfp: {
             title: "Immagine del profilo dell'assistente",
@@ -319,7 +319,7 @@ const TRANSLATIONS = {
     },
     api: {
         title: "Chiavi API",
-        description: "Le chiavi API consentono al titolare di accedere e gestire in modo programmatico questa istanza Accelanova.",
+        description: "Le chiavi API consentono al titolare di accedere e gestire in modo programmatico questa istanza Akili.",
         link: "Leggi la documentazione API",
         generate: "Genera nuova chiave API",
         table: {
@@ -330,7 +330,7 @@ const TRANSLATIONS = {
     },
     llm: {
         title: "Preferenza LLM",
-        description: "Queste sono le credenziali e le impostazioni per il tuo provider di chat e embedding LLM preferito. È importante che queste chiavi siano aggiornate e corrette, altrimenti Accelanova non funzionerà correttamente.",
+        description: "Queste sono le credenziali e le impostazioni per il tuo provider di chat e embedding LLM preferito. È importante che queste chiavi siano aggiornate e corrette, altrimenti Akili non funzionerà correttamente.",
         provider: "Provider LLM",
         providers: {
             azure_openai: {
@@ -348,14 +348,14 @@ const TRANSLATIONS = {
         title: "Preferenza del modello di trascrizione",
         description: "Queste sono le credenziali e le impostazioni per il tuo fornitore di modelli di trascrizione preferito. È importante che queste chiavi siano aggiornate e corrette, altrimenti i file multimediali e l'audio non verranno trascritti.",
         provider: "Provider di trascrizione",
-        "warn-start": "L'utilizzo del modello whisper locale su macchine con RAM o CPU limitate può bloccare Accelanova durante l'elaborazione di file multimediali.",
+        "warn-start": "L'utilizzo del modello whisper locale su macchine con RAM o CPU limitate può bloccare Akili durante l'elaborazione di file multimediali.",
         "warn-recommend": "Si consigliano almeno 2 GB di RAM e caricare file <10 Mb.",
         "warn-end": "Il modello integrato verrà scaricato automaticamente al primo utilizzo.",
     },
     embedding: {
         title: "Preferenza di embedding",
         "desc-start": "Quando si utilizza un LLM che non supporta nativamente un motore di embedding, potrebbe essere necessario specificare credenziali aggiuntive per l'embedding del testo.",
-        "desc-end": "L'embedding è il processo di trasformazione del testo in vettori. Queste credenziali sono necessarie per trasformare i file e i prompt in un formato che Accelanova può utilizzare per l'elaborazione.",
+        "desc-end": "L'embedding è il processo di trasformazione del testo in vettori. Queste credenziali sono necessarie per trasformare i file e i prompt in un formato che Akili può utilizzare per l'elaborazione.",
         provider: {
             title: "Provider di embedding",
         },
@@ -376,7 +376,7 @@ const TRANSLATIONS = {
     },
     vector: {
         title: "Database vettoriale",
-        description: "Queste sono le credenziali e le impostazioni per il funzionamento della tua istanza Accelanova. È importante che queste chiavi siano aggiornate e corrette.",
+        description: "Queste sono le credenziali e le impostazioni per il funzionamento della tua istanza Akili. È importante che queste chiavi siano aggiornate e corrette.",
         provider: {
             title: "Provider del database vettoriale",
             description: "Non è richiesta alcuna configurazione per LanceDB.",
@@ -417,7 +417,7 @@ const TRANSLATIONS = {
     },
     privacy: {
         title: "Privacy e gestione dei dati",
-        description: "Questa è la tua configurazione per il modo in cui i provider terzi connessi e Accelanova gestiscono i tuoi dati.",
+        description: "Questa è la tua configurazione per il modo in cui i provider terzi connessi e Akili gestiscono i tuoi dati.",
         llm: "Selezione LLM",
         embedding: "Preferenza di embedding",
         vector: "Database vettoriale",
@@ -942,7 +942,7 @@ const TRANSLATIONS = {
         },
         password: {
             title: "Protezione password",
-            description: "Proteggi la tua istanza Accelanova con una password. Se la dimentichi, non esiste un metodo di recupero, quindi assicurati di salvare questa password.",
+            description: "Proteggi la tua istanza Akili con una password. Se la dimentichi, non esiste un metodo di recupero, quindi assicurati di salvare questa password.",
             "password-label": "Password istanza",
         },
     },

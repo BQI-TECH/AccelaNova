@@ -7,7 +7,7 @@ const TRANSLATIONS = {
         },
         llm: {
             title: "LLM 偏好",
-            description: "Accelanova 可以與多家 LLM 提供商合作。這將是處理聊天的服務。",
+            description: "Akili 可以與多家 LLM 提供商合作。這將是處理聊天的服務。",
         },
         userSetup: {
             title: "使用者設定",
@@ -31,21 +31,21 @@ const TRANSLATIONS = {
             settingsHint: "這些設定可以隨時在設定中重新配置。",
         },
         survey: {
-            title: "歡迎使用 Accelanova",
-            description: "幫助我們為您的需求打造 Accelanova。可選。",
+            title: "歡迎使用 Akili",
+            description: "幫助我們為您的需求打造 Akili。可選。",
             email: "您的電子郵件是什麼？",
-            useCase: "您將如何使用 Accelanova？",
+            useCase: "您將如何使用 Akili？",
             useCaseWork: "用於工作",
             useCasePersonal: "用於個人使用",
             useCaseOther: "其他",
-            comment: "您是如何聽說 Accelanova 的？",
+            comment: "您是如何聽說 Akili 的？",
             commentPlaceholder: "Reddit，Twitter，GitHub，YouTube 等 - 讓我們知道您是如何找到我們的！",
             skip: "跳過調查",
             thankYou: "感謝您的反饋！",
         },
         workspace: {
             title: "創建您的第一個工作區",
-            description: "創建您的第一個工作區並開始使用 Accelanova。",
+            description: "創建您的第一個工作區並開始使用 Akili。",
         },
     },
     common: {
@@ -118,15 +118,15 @@ const TRANSLATIONS = {
         },
     },
     welcomeMessage: {
-        part1: "歡迎使用 Accelanova，Accelanova 是由 Mintplex Labs 開發的開源 AI 工具，它能將任何內容轉換成可供查詢和對話的訓練模型對話機器人。Accelanova 採用 BYOK（自備金鑰）軟體模式，除了您想使用的服務之外，本軟體不收取任何訂閱費、費用或其他費用。",
-        part2: "Accelanova 是將 OpenAI、GPT-4、LangChain、PineconeDB、ChromaDB 和其他強大 AI 產品整合在一起的最簡單方法，它能透過簡潔的套件，輕鬆地將您的生產力提高 100 倍。",
-        part3: "Accelanova 可以完全在您的本機電腦上執行，而且使用極少的資源，您甚至不會注意到它的存在！不需要 GPU。同時也支援雲端和企業內部部署。\nAI 工具生態系統日新月異，Accelanova 讓使用變得更加簡單。",
+        part1: "歡迎使用 Akili，Akili 是由 Mintplex Labs 開發的開源 AI 工具，它能將任何內容轉換成可供查詢和對話的訓練模型對話機器人。Akili 採用 BYOK（自備金鑰）軟體模式，除了您想使用的服務之外，本軟體不收取任何訂閱費、費用或其他費用。",
+        part2: "Akili 是將 OpenAI、GPT-4、LangChain、PineconeDB、ChromaDB 和其他強大 AI 產品整合在一起的最簡單方法，它能透過簡潔的套件，輕鬆地將您的生產力提高 100 倍。",
+        part3: "Akili 可以完全在您的本機電腦上執行，而且使用極少的資源，您甚至不會注意到它的存在！不需要 GPU。同時也支援雲端和企業內部部署。\nAI 工具生態系統日新月異，Akili 讓使用變得更加簡單。",
         githubIssue: "在 GitHub 上建立 issue ",
         user1: "我該如何開始？",
         part4: "很簡單。所有資料集都組織成我們稱之為「工作區」的儲存區。工作區是檔案、文件、圖片、PDF 和其他檔案的儲存區，這些檔案將會被轉換成 LLM 可以理解並在對話中使用的格式。\n\n您可以隨時新增和移除檔案。",
         createWorkspace: "建立您的第一個工作區",
         user2: "這像是 AI Dropbox 之類的嗎？那對話功能呢？它是一個對話機器人嗎？",
-        part5: "Accelanova 不僅是一個更聰明的 Dropbox。\n\nAccelanova 提供兩種與您的資料互動的方式：\n\n<i>查詢：</i> 您的對話將會根據工作區中可存取的文件內容，傳回資料或推論。新增更多文件到工作區會讓它變得更聰明！\n\n<i>對話：</i> 您的文件加上持續進行中的對話紀錄，兩者會同時貢獻給 LLM 的知識庫。這非常適合用於附加即時的文字資訊，或是修正 LLM 可能產生的誤解。\n\n您可以在<i>對話過程中</i>隨時切換這兩種模式！",
+        part5: "Akili 不僅是一個更聰明的 Dropbox。\n\nAkili 提供兩種與您的資料互動的方式：\n\n<i>查詢：</i> 您的對話將會根據工作區中可存取的文件內容，傳回資料或推論。新增更多文件到工作區會讓它變得更聰明！\n\n<i>對話：</i> 您的文件加上持續進行中的對話紀錄，兩者會同時貢獻給 LLM 的知識庫。這非常適合用於附加即時的文字資訊，或是修正 LLM 可能產生的誤解。\n\n您可以在<i>對話過程中</i>隨時切換這兩種模式！",
         user3: "哇，這聽起來很棒，讓我馬上試試看！",
         part6: "祝您使用愉快！",
         starOnGitHub: "在 GitHub 上給我們星星",
@@ -157,7 +157,7 @@ const TRANSLATIONS = {
             add: "新增訊息",
             save: "儲存訊息",
             heading: "請向我說明",
-            body: "Accelanova 的優點",
+            body: "Akili 的優點",
         },
         pfp: {
             title: "助理個人檔案圖片",
@@ -319,7 +319,7 @@ const TRANSLATIONS = {
     },
     api: {
         title: "API 金鑰",
-        description: "API 金鑰允許持有者以程式化方式存取和管理此 Accelanova 系統。",
+        description: "API 金鑰允許持有者以程式化方式存取和管理此 Akili 系統。",
         link: "閱讀 API 文件",
         generate: "產生新的 API 金鑰",
         table: {
@@ -330,7 +330,7 @@ const TRANSLATIONS = {
     },
     llm: {
         title: "LLM 偏好設定",
-        description: "這些是您偏好的 LLM 對話與嵌入提供者的憑證和設定。確保這些金鑰是最新且正確的，否則 Accelanova 將無法正常運作。",
+        description: "這些是您偏好的 LLM 對話與嵌入提供者的憑證和設定。確保這些金鑰是最新且正確的，否則 Akili 將無法正常運作。",
         provider: "LLM 提供者",
         providers: {
             azure_openai: {
@@ -348,14 +348,14 @@ const TRANSLATIONS = {
         title: "語音轉錄模型偏好設定",
         description: "這些是您偏好的語音轉錄模型提供者的憑證和設定。確保這些金鑰是最新且正確的，否則媒體檔案和音訊將無法轉錄。",
         provider: "語音轉錄提供者",
-        "warn-start": "在記憶體或處理器資源有限的電腦上使用本機 Whisper 模型，處理媒體檔案時可能會造成 Accelanova 停頓。",
+        "warn-start": "在記憶體或處理器資源有限的電腦上使用本機 Whisper 模型，處理媒體檔案時可能會造成 Akili 停頓。",
         "warn-recommend": "我們建議至少 2GB 的記憶體，並且上傳小於 10MB 的檔案。",
         "warn-end": "內建模型將會在第一次使用時自動下載。",
     },
     embedding: {
         title: "向量嵌入偏好設定",
         "desc-start": "當使用原生不支援嵌入引擎的 LLM 時，您可能需要額外指定用於嵌入文字的憑證。",
-        "desc-end": "嵌入是將文字轉換成向量的過程。這些憑證是用於將您的檔案和提示詞轉換成 Accelanova 可以處理的格式。",
+        "desc-end": "嵌入是將文字轉換成向量的過程。這些憑證是用於將您的檔案和提示詞轉換成 Akili 可以處理的格式。",
         provider: {
             title: "向量嵌入提供者",
         },
@@ -376,7 +376,7 @@ const TRANSLATIONS = {
     },
     vector: {
         title: "向量資料庫",
-        description: "這些是您的 Accelanova 系統運作方式的憑證和設定。確保這些金鑰是最新且正確的，這點非常重要。",
+        description: "這些是您的 Akili 系統運作方式的憑證和設定。確保這些金鑰是最新且正確的，這點非常重要。",
         provider: {
             title: "向量資料庫提供者",
             description: "使用 LanceDB 不需要任何設定。",
@@ -417,7 +417,7 @@ const TRANSLATIONS = {
     },
     privacy: {
         title: "隱私與資料處理",
-        description: "這是您針對已連線的第三方供應商和 Accelanova 如何處理您的資料的設定。",
+        description: "這是您針對已連線的第三方供應商和 Akili 如何處理您的資料的設定。",
         llm: "LLM 選擇",
         embedding: "向量嵌入偏好設定",
         vector: "向量資料庫",
@@ -553,18 +553,18 @@ const TRANSLATIONS = {
             "placeholder-link": "https://example.com",
             fetching: "正在擷取...",
             "fetch-website": "擷取網站",
-            "privacy-notice": "這些檔案將上傳到此 Accelanova 實例中的文件處理器。這些檔案不會發送或共享給第三方。",
+            "privacy-notice": "這些檔案將上傳到此 Akili 實例中的文件處理器。這些檔案不會發送或共享給第三方。",
         },
         pinning: {
             what_pinning: "什麼是文件固定？",
-            pin_explained_block1: "當您在 Accelanova 中<b>固定</b>一個文件時，我們會將該文件的所有內容注入到您的提示窗口中，讓您的 LLM 完全理解。",
+            pin_explained_block1: "當您在 Akili 中<b>固定</b>一個文件時，我們會將該文件的所有內容注入到您的提示窗口中，讓您的 LLM 完全理解。",
             pin_explained_block2: "這對於<b>大範圍模型</b>或對知識庫至關重要的小型文件效果最佳。",
-            pin_explained_block3: "如果您沒有從 Accelanova 預設獲得理想的答案，那麼固定是一個輕鬆獲得更高質量答案的方法。",
+            pin_explained_block3: "如果您沒有從 Akili 預設獲得理想的答案，那麼固定是一個輕鬆獲得更高質量答案的方法。",
             accept: "好的，明白了",
         },
         watching: {
             what_watching: "觀看文件有何作用？",
-            watch_explained_block1: "當您在 Accelanova 中<b>觀看</b>一個文件時，我們會<i>自動</i>定期同步該文件的內容，並在每個管理該文件的工作區中自動更新內容。",
+            watch_explained_block1: "當您在 Akili 中<b>觀看</b>一個文件時，我們會<i>自動</i>定期同步該文件的內容，並在每個管理該文件的工作區中自動更新內容。",
             watch_explained_block2: "此功能目前僅支持基於線上內容，無法用於手動上傳的文件。",
             watch_explained_block3_start: "您可以從 ",
             watch_explained_block3_link: "檔案管理器",
@@ -663,15 +663,15 @@ const TRANSLATIONS = {
     customization: {
         interface: {
             title: "介面偏好設定",
-                description: "設定你在 Accelanova 的使用介面偏好。",
+                description: "設定你在 Akili 的使用介面偏好。",
         },
         branding: {
             title: "品牌與白標設定",
-            description: "使用自訂品牌設計將 Accelanova 白標化。",
+            description: "使用自訂品牌設計將 Akili 白標化。",
         },
         chat: {
             title: "聊天",
-            description: "設定你在 Accelanova 的聊天偏好。",
+            description: "設定你在 Akili 的聊天偏好。",
             auto_submit: {
                 title: "語音輸入自動送出",
                 description: "在靜音一段時間後自動送出語音輸入內容",
@@ -708,7 +708,7 @@ const TRANSLATIONS = {
             },
             "display-language": {
                 title: "顯示語言",
-                description: "選擇 Accelanova 使用者介面的顯示語言（如有提供翻譯）。",
+                description: "選擇 Akili 使用者介面的顯示語言（如有提供翻譯）。",
             },
             logo: {
                 title: "品牌標誌",
@@ -725,7 +725,7 @@ const TRANSLATIONS = {
                 system: "系統",
                 user: "使用者",
                 message: "訊息",
-                assistant: "Accelanova 聊天助理",
+                assistant: "Akili 聊天助理",
                 "double-click": "雙擊進行編輯...",
                 save: "儲存訊息",
             },
@@ -754,7 +754,7 @@ const TRANSLATIONS = {
         checklist: {
             title: "開始使用",
             tasksLeft: "個任務未完成",
-            completed: "你已經走在成為Accelanova專家的路上！",
+            completed: "你已經走在成為Akili專家的路上！",
             dismiss: "關閉",
             tasks: {
                 create_workspace: {
@@ -895,7 +895,7 @@ const TRANSLATIONS = {
             generic: {
                 unauthenticated: {
                     title: "需要驗證",
-                    description: "在發布項目之前，您需要通過 Accelanova 社群中心進行驗證。",
+                    description: "在發布項目之前，您需要通過 Akili 社群中心進行驗證。",
                     button: "連接到社群中心",
                 },
             },
@@ -942,7 +942,7 @@ const TRANSLATIONS = {
         },
         password: {
             title: "密碼保護",
-            description: "使用密碼保護您的 Accelanova 系統。如果您忘記這個密碼，將沒有復原方法，因此請務必儲存此密碼。",
+            description: "使用密碼保護您的 Akili 系統。如果您忘記這個密碼，將沒有復原方法，因此請務必儲存此密碼。",
             "password-label": "實例密碼",
         },
     },

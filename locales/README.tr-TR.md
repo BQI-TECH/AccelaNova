@@ -1,15 +1,15 @@
 <a name="readme-top"></a>
 
 <p align="center">
-  <a href="https://anythingllm.com"><img src="https://github.com/Mintplex-Labs/accelanova/blob/master/images/wordmark.png?raw=true" alt="Accelanova logo"></a>
+  <a href="https://anythingllm.com"><img src="https://github.com/Mintplex-Labs/Akili/blob/master/images/wordmark.png?raw=true" alt="Akili logo"></a>
 </p>
 
 <div align='center'>
-<a href="https://trendshift.io/repositories/2415" target="_blank"><img src="https://trendshift.io/api/badge/repositories/2415" alt="Mintplex-Labs%2Faccelanova | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+<a href="https://trendshift.io/repositories/2415" target="_blank"><img src="https://trendshift.io/api/badge/repositories/2415" alt="Mintplex-Labs%2FAkili | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 </div>
 
 <p align="center">
-<b>Accelanova:</b> Aradığınız hepsi bir arada yapay zeka uygulaması.<br />
+<b>Akili:</b> Aradığınız hepsi bir arada yapay zeka uygulaması.<br />
 Belgelerinizle sohbet edin, yapay zeka ajanlarını kullanın, son derece özelleştirilebilir, çok kullanıcılı ve zahmetsiz kurulum!
 </p>
 
@@ -17,7 +17,7 @@ Belgelerinizle sohbet edin, yapay zeka ajanlarını kullanın, son derece özell
   <a href="https://discord.gg/6UyHPeGZAC" target="_blank">
       <img src="https://img.shields.io/badge/chat-mintplex_labs-blue.svg?style=flat&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAH1UExURQAAAP////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////r6+ubn5+7u7/3+/v39/enq6urq6/v7+97f39rb26eoqT1BQ0pOT4+Rkuzs7cnKykZKS0NHSHl8fdzd3ejo6UxPUUBDRdzc3RwgIh8jJSAkJm5xcvHx8aanqB4iJFBTVezt7V5hYlJVVuLj43p9fiImKCMnKZKUlaaoqSElJ21wcfT09O3u7uvr6zE0Nr6/wCUpK5qcnf7+/nh7fEdKTHx+f0tPUOTl5aipqiouMGtubz5CRDQ4OsTGxufn515hY7a3uH1/gXBydIOFhlVYWvX29qaoqCQoKs7Pz/Pz87/AwUtOUNfY2dHR0mhrbOvr7E5RUy8zNXR2d/f39+Xl5UZJSx0hIzQ3Odra2/z8/GlsbaGjpERHSezs7L/BwScrLTQ4Odna2zM3Obm7u3x/gKSmp9jZ2T1AQu/v71pdXkVISr2+vygsLiInKTg7PaOlpisvMcXGxzk8PldaXPLy8u7u7rm6u7S1tsDBwvj4+MPExbe4ueXm5s/Q0Kyf7ewAAAAodFJOUwAABClsrNjx/QM2l9/7lhmI6jTB/kA1GgKJN+nea6vy/MLZQYeVKK3rVA5tAAAAAWJLR0QB/wIt3gAAAAd0SU1FB+cKBAAmMZBHjXIAAAISSURBVDjLY2CAAkYmZhZWNnYODnY2VhZmJkYGVMDIycXNw6sBBbw8fFycyEoYGfkFBDVQgKAAPyMjQl5IWEQDDYgIC8FUMDKKsmlgAWyiEBWMjGJY5YEqxMAqGMWFNXAAYXGgAkYJSQ2cQFKCkYFRShq3AmkpRgYJbghbU0tbB0Tr6ukbgGhDI10gySfBwCwDUWBsYmpmDqQtLK2sbTQ0bO3sHYA8GWYGWWj4WTs6Obu4ami4OTm7exhqeHp5+4DCVJZBDmqdr7ufn3+ArkZgkJ+fU3CIRmgYWFiOARYGvo5OQUHhEUAFTkF+kVHRsLBgkIeyYmLjwoOc4hMSk5JTnINS06DC8gwcEEZ6RqZGlpOfc3ZObl5+gZ+TR2ERWFyBQQFMF5eklmqUpQb5+ReU61ZUOvkFVVXXQBSAraitq29o1GiKcfLzc29u0mjxBzq0tQ0kww5xZHtHUGeXhkZhdxBYgZ4d0LI6c4gjwd7siQQraOp1AivQ6CuAKZCDBBRQQQNQgUb/BGf3cqCCiZOcnCe3QQIKHNRTpk6bDgpZjRkzg3pBQTBrdtCcuZCgluAD0vPmL1gIdvSixUuWgqNs2YJ+DUhkEYxuggkGmOQUcckrioPTJCOXEnZ5JS5YslbGnuyVERlDDFvGEUPOWvwqaH6RVkHKeuDMK6SKnHlVhTgx8jeTmqy6Eij7K6nLqiGyPwChsa1MUrnq1wAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMy0xMC0wNFQwMDozODo0OSswMDowMB9V0a8AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjMtMTAtMDRUMDA6Mzg6NDkrMDA6MDBuCGkTAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDIzLTEwLTA0VDAwOjM4OjQ5KzAwOjAwOR1IzAAAAABJRU5ErkJggg==" alt="Discord">
   </a> |
-  <a href="https://github.com/Mintplex-Labs/accelanova/blob/master/LICENSE" target="_blank">
+  <a href="https://github.com/Mintplex-Labs/Akili/blob/master/LICENSE" target="_blank">
       <img src="https://img.shields.io/static/v1?label=license&message=MIT&color=white" alt="License">
   </a> |
   <a href="https://docs.anythingllm.com" target="_blank">
@@ -33,12 +33,12 @@ Belgelerinizle sohbet edin, yapay zeka ajanlarını kullanın, son derece özell
 </p>
 
 <p align="center">  
-👉 Masaüstü için Accelanova (Mac, Windows ve Linux)! <a href="https://anythingllm.com/download" target="_blank"> Şimdi İndir</a>  
+👉 Masaüstü için Akili (Mac, Windows ve Linux)! <a href="https://anythingllm.com/download" target="_blank"> Şimdi İndir</a>  
 </p>
 
 Herhangi bir belgeyi, kaynağı veya içeriği sohbet sırasında herhangi bir büyük dil modelinin referans olarak kullanabileceği bir bağlama dönüştürmenizi sağlayan tam kapsamlı bir uygulama. Bu uygulama, kullanmak istediğiniz LLM veya Vektör Veritabanını seçmenize olanak tanırken, çok kullanıcılı yönetim ve yetkilendirme desteği de sunar.
 
-![Mesajlaşma](https://github.com/Mintplex-Labs/accelanova/assets/16845892/cfc5f47c-bd91-4067-986c-f3f49621a859)
+![Mesajlaşma](https://github.com/Mintplex-Labs/Akili/assets/16845892/cfc5f47c-bd91-4067-986c-f3f49621a859)
 
 <details>
 <summary><kbd>Demoyu izle!</kbd></summary>
@@ -49,11 +49,11 @@ Herhangi bir belgeyi, kaynağı veya içeriği sohbet sırasında herhangi bir b
 
 ### Ürün Genel Bakışı
 
-Accelanova, ticari hazır büyük dil modellerini veya popüler açık kaynak LLM'leri ve vektör veritabanı çözümlerini kullanarak, hiçbir ödün vermeden özel bir ChatGPT oluşturmanıza olanak tanıyan tam kapsamlı bir uygulamadır. Bu uygulamayı yerel olarak çalıştırabilir veya uzaktan barındırarak sağladığınız belgelerle akıllı sohbetler gerçekleştirebilirsiniz.
+Akili, ticari hazır büyük dil modellerini veya popüler açık kaynak LLM'leri ve vektör veritabanı çözümlerini kullanarak, hiçbir ödün vermeden özel bir ChatGPT oluşturmanıza olanak tanıyan tam kapsamlı bir uygulamadır. Bu uygulamayı yerel olarak çalıştırabilir veya uzaktan barındırarak sağladığınız belgelerle akıllı sohbetler gerçekleştirebilirsiniz.
 
-Accelanova, belgelerinizi **"çalışma alanları" (workspaces)** adı verilen nesnelere ayırır. Bir çalışma alanı, bir sohbet dizisi gibi çalışır ancak belgelerinizi kapsülleyen bir yapı sunar. Çalışma alanları belgeleri paylaşabilir, ancak birbirleriyle iletişim kurmaz, böylece her çalışma alanının bağlamını temiz tutabilirsiniz.
+Akili, belgelerinizi **"çalışma alanları" (workspaces)** adı verilen nesnelere ayırır. Bir çalışma alanı, bir sohbet dizisi gibi çalışır ancak belgelerinizi kapsülleyen bir yapı sunar. Çalışma alanları belgeleri paylaşabilir, ancak birbirleriyle iletişim kurmaz, böylece her çalışma alanının bağlamını temiz tutabilirsiniz.
 
-## Accelanova’in Harika Özellikleri
+## Akili’in Harika Özellikleri
 
 - 🆕 [**Özel Yapay Zeka Ajanları**](https://docs.anythingllm.com/agent/custom/introduction)
 - 🆕 [**Kod yazmadan AI Ajanı oluşturma aracı**](https://docs.anythingllm.com/agent-flows/overview)
@@ -98,12 +98,12 @@ Accelanova, belgelerinizi **"çalışma alanları" (workspaces)** adı verilen n
 - [Text Generation Web UI](https://github.com/oobabooga/text-generation-webui)
 - [Apipie](https://apipie.ai/)
 - [xAI](https://x.ai/)
-- [Novita AI (chat models)](https://novita.ai/model-api/product/llm-api?utm_source=github_accelanova&utm_medium=github_readme&utm_campaign=link)
-- [PPIO](https://ppinfra.com?utm_source=github_accelanova)
+- [Novita AI (chat models)](https://novita.ai/model-api/product/llm-api?utm_source=github_Akili&utm_medium=github_readme&utm_campaign=link)
+- [PPIO](https://ppinfra.com?utm_source=github_Akili)
 
 **Embedder modelleri:**
 
-- [Accelanova Native Embedder](/server/storage/models/README.md) (default)
+- [Akili Native Embedder](/server/storage/models/README.md) (default)
 - [OpenAI](https://openai.com)
 - [Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service)
 - [LocalAi (all)](https://localai.io/)
@@ -113,7 +113,7 @@ Accelanova, belgelerinizi **"çalışma alanları" (workspaces)** adı verilen n
 
 **Ses Transkripsiyon Modelleri:**
 
-- [Accelanova Built-In](https://github.com/Mintplex-Labs/accelanova/tree/master/server/storage/models#audiovideo-transcription) (default)
+- [Akili Built-In](https://github.com/Mintplex-Labs/Akili/tree/master/server/storage/models#audiovideo-transcription) (default)
 - [OpenAI](https://openai.com/)
 
 **TTS (text-to-speech) desteği:**
@@ -153,7 +153,7 @@ Bu monorepo üç ana bölümden oluşmaktadır:
 
 ## 🛳 Kendi Sunucunuzda Barındırma
 
-Mintplex Labs ve topluluk, Accelanova'i yerel olarak çalıştırmak için çeşitli dağıtım yöntemleri, betikler ve şablonlar sunmaktadır. Aşağıdaki tabloya göz atarak tercih ettiğiniz ortamda nasıl dağıtım yapabileceğinizi öğrenebilir veya otomatik dağıtım seçeneklerini keşfedebilirsiniz.
+Mintplex Labs ve topluluk, Akili'i yerel olarak çalıştırmak için çeşitli dağıtım yöntemleri, betikler ve şablonlar sunmaktadır. Aşağıdaki tabloya göz atarak tercih ettiğiniz ortamda nasıl dağıtım yapabileceğinizi öğrenebilir veya otomatik dağıtım seçeneklerini keşfedebilirsiniz.
 | Docker | AWS | GCP | Digital Ocean | Render.com |
 |----------------------------------------|----|-----|---------------|------------|
 | [![Deploy on Docker][docker-btn]][docker-deploy] | [![Deploy on AWS][aws-btn]][aws-deploy] | [![Deploy on GCP][gcp-btn]][gcp-deploy] | [![Deploy on DigitalOcean][do-btn]][do-deploy] | [![Deploy on Render.com][render-btn]][render-deploy] |
@@ -162,7 +162,7 @@ Mintplex Labs ve topluluk, Accelanova'i yerel olarak çalıştırmak için çeş
 | --------------------------------------------------- | --------------------------------------------------------- | --------------------------------------------------- |
 | [![Deploy on Railway][railway-btn]][railway-deploy] | [![Deploy on RepoCloud][repocloud-btn]][repocloud-deploy] | [![Deploy on Elestio][elestio-btn]][elestio-deploy] |
 
-[veya Docker kullanmadan üretim ortamında Accelanova kurun →](../BARE_METAL.md)
+[veya Docker kullanmadan üretim ortamında Akili kurun →](../BARE_METAL.md)
 
 ## Geliştirme İçin Kurulum
 
@@ -178,22 +178,22 @@ Mintplex Labs ve topluluk, Accelanova'i yerel olarak çalıştırmak için çeş
 
 ## Harici Uygulamalar ve Entegrasyonlar
 
-_Bu uygulamalar Mintplex Labs tarafından yönetilmemektedir, ancak Accelanova ile uyumludur. Burada listelenmeleri bir onay anlamına gelmez._
+_Bu uygulamalar Mintplex Labs tarafından yönetilmemektedir, ancak Akili ile uyumludur. Burada listelenmeleri bir onay anlamına gelmez._
 
 - [Midori AI Alt Sistem Yöneticisi](https://io.midori-ai.xyz/subsystem/anythingllm/) - Docker konteyner teknolojisini kullanarak yapay zeka sistemlerini verimli bir şekilde dağıtmanın pratik bir yolu.
-- [Coolify](https://coolify.io/docs/services/anythingllm/) - Tek tıklamayla Accelanova dağıtımı yapmanıza olanak tanır.
-- [GPTLocalhost for Microsoft Word](https://gptlocalhost.com/demo/) - Accelanova’i Microsoft Word içinde kullanmanıza olanak tanıyan yerel bir Word eklentisi.
+- [Coolify](https://coolify.io/docs/services/anythingllm/) - Tek tıklamayla Akili dağıtımı yapmanıza olanak tanır.
+- [GPTLocalhost for Microsoft Word](https://gptlocalhost.com/demo/) - Akili’i Microsoft Word içinde kullanmanıza olanak tanıyan yerel bir Word eklentisi.
 
 ## Telemetri ve Gizlilik
 
-Mintplex Labs Inc. tarafından geliştirilen Accelanova, anonim kullanım bilgilerini toplayan bir telemetri özelliği içermektedir.
+Mintplex Labs Inc. tarafından geliştirilen Akili, anonim kullanım bilgilerini toplayan bir telemetri özelliği içermektedir.
 
 <details>  
-<summary><kbd>Accelanova için Telemetri ve Gizlilik hakkında daha fazla bilgi</kbd></summary>
+<summary><kbd>Akili için Telemetri ve Gizlilik hakkında daha fazla bilgi</kbd></summary>
 
 ### Neden?
 
-Bu bilgileri, Accelanova’in nasıl kullanıldığını anlamak, yeni özellikler ve hata düzeltmelerine öncelik vermek ve uygulamanın performansını ve kararlılığını iyileştirmek için kullanıyoruz.
+Bu bilgileri, Akili’in nasıl kullanıldığını anlamak, yeni özellikler ve hata düzeltmelerine öncelik vermek ve uygulamanın performansını ve kararlılığını iyileştirmek için kullanıyoruz.
 
 ### Telemetriden Çıkış Yapma (Opt-Out)
 
@@ -211,7 +211,7 @@ Yalnızca ürün ve yol haritası kararlarını almamıza yardımcı olacak kull
 
 Bu verileri doğrulamak için kod içinde **`Telemetry.sendTelemetry` çağrılarını** inceleyebilirsiniz. Ayrıca, bu olaylar günlük kaydına yazıldığı için hangi verilerin gönderildiğini görebilirsiniz (eğer etkinleştirilmişse). **IP adresi veya diğer tanımlayıcı bilgiler toplanmaz.** Telemetri sağlayıcısı, açık kaynaklı bir telemetri toplama hizmeti olan [PostHog](https://posthog.com/)‘dur.
 
-[Kaynak kodda tüm telemetri olaylarını görüntüle](https://github.com/search?q=repo%3AMintplex-Labs%2Faccelanova%20.sendTelemetry(&type=code)
+[Kaynak kodda tüm telemetri olaylarını görüntüle](https://github.com/search?q=repo%3AMintplex-Labs%2FAkili%20.sendTelemetry(&type=code)
 
 </details>
 
@@ -223,9 +223,9 @@ Bu verileri doğrulamak için kod içinde **`Telemetry.sendTelemetry` çağrıla
 
 ## 🌟 Katkıda Bulunanlar
 
-[![anythingllm contributors](https://contrib.rocks/image?repo=mintplex-labs/accelanova)](https://github.com/mintplex-labs/accelanova/graphs/contributors)
+[![anythingllm contributors](https://contrib.rocks/image?repo=mintplex-labs/Akili)](https://github.com/mintplex-labs/Akili/graphs/contributors)
 
-[![Star History Chart](https://api.star-history.com/svg?repos=mintplex-labs/accelanova&type=Timeline)](https://star-history.com/#mintplex-labs/accelanova&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=mintplex-labs/Akili&type=Timeline)](https://star-history.com/#mintplex-labs/Akili&Date)
 
 ## 🔗 Diğer Ürünler
 
@@ -258,9 +258,9 @@ Bu proje [MIT](../LICENSE) lisansı ile lisanslanmıştır.
 [do-btn]: https://www.deploytodo.com/do-btn-blue.svg
 [do-deploy]: ./cloud-deployments/digitalocean/terraform/DEPLOY.md
 [render-btn]: https://render.com/images/deploy-to-render-button.svg
-[render-deploy]: https://render.com/deploy?repo=https://github.com/Mintplex-Labs/accelanova&branch=render
+[render-deploy]: https://render.com/deploy?repo=https://github.com/Mintplex-Labs/Akili&branch=render
 [render-btn]: https://render.com/images/deploy-to-render-button.svg
-[render-deploy]: https://render.com/deploy?repo=https://github.com/Mintplex-Labs/accelanova&branch=render
+[render-deploy]: https://render.com/deploy?repo=https://github.com/Mintplex-Labs/Akili&branch=render
 [railway-btn]: https://railway.app/button.svg
 [railway-deploy]: https://railway.app/template/HNSCS1?referralCode=WFgJkn
 [repocloud-btn]: https://d16t0pc4846x52.cloudfront.net/deploylobe.svg

@@ -3,7 +3,7 @@ import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
-import AccelanovaIcon from "@/media/logo/accelanova-icon.png";
+import AkiliIcon from "@/media/logo/Akili-icon.png";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
 import AzureOpenAiLogo from "@/media/llmprovider/azure.png";
 import GeminiAiLogo from "@/media/llmprovider/gemini.png";
@@ -40,12 +40,12 @@ import MistralAiOptions from "@/components/EmbeddingSelection/MistralAiOptions";
 
 const EMBEDDERS = [
   {
-    name: "Accelanova Embedder",
+    name: "Akili Embedder",
     value: "native",
-    logo: AccelanovaIcon,
+    logo: AkiliIcon,
     options: (settings) => <NativeEmbeddingOptions settings={settings} />,
     description:
-      "Use the built-in embedding provider for Accelanova. Zero setup!",
+      "Use the built-in embedding provider for Akili. Zero setup!",
   },
   {
     name: "OpenAI",

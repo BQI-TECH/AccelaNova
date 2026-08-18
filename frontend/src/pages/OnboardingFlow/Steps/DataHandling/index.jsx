@@ -1,6 +1,6 @@
 import PreLoader from "@/components/Preloader";
 import System from "@/models/system";
-import AccelanovaIcon from "@/media/logo/accelanova-icon.png";
+import AkiliIcon from "@/media/logo/Akili-icon.png";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
 import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
 import AzureOpenAiLogo from "@/media/llmprovider/azure.png";
@@ -334,7 +334,7 @@ export const VECTOR_DB_PRIVACY = {
   lancedb: {
     name: "LanceDB",
     description: [
-      "Your vectors and document text are stored privately on this instance of Accelanova",
+      "Your vectors and document text are stored privately on this instance of Akili",
     ],
     logo: LanceDbLogo,
   },
@@ -342,11 +342,11 @@ export const VECTOR_DB_PRIVACY = {
 
 export const EMBEDDING_ENGINE_PRIVACY = {
   native: {
-    name: "Accelanova Embedder",
+    name: "Akili Embedder",
     description: [
-      "Your document text is embedded privately on this instance of Accelanova",
+      "Your document text is embedded privately on this instance of Akili",
     ],
-    logo: AccelanovaIcon,
+    logo: AkiliIcon,
   },
   openai: {
     name: "OpenAI",
@@ -434,23 +434,23 @@ export const FALLBACKS = {
   LLM: (provider) => ({
     name: "Unknown",
     description: [
-      `"${provider}" has no known data handling policy defined in Accelanova`,
+      `"${provider}" has no known data handling policy defined in Akili`,
     ],
-    logo: AccelanovaIcon,
+    logo: AkiliIcon,
   }),
   EMBEDDING: (provider) => ({
     name: "Unknown",
     description: [
-      `"${provider}" has no known data handling policy defined in Accelanova`,
+      `"${provider}" has no known data handling policy defined in Akili`,
     ],
-    logo: AccelanovaIcon,
+    logo: AkiliIcon,
   }),
   VECTOR: (provider) => ({
     name: "Unknown",
     description: [
-      `"${provider}" has no known data handling policy defined in Accelanova`,
+      `"${provider}" has no known data handling policy defined in Akili`,
     ],
-    logo: AccelanovaIcon,
+    logo: AkiliIcon,
   }),
 };
 

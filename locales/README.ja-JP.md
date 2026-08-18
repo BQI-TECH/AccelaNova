@@ -1,15 +1,15 @@
 <a name="readme-top"></a>
 
 <p align="center">
-  <a href="https://anythingllm.com"><img src="https://github.com/Mintplex-Labs/accelanova/blob/master/images/wordmark.png?raw=true" alt="Accelanova logo"></a>
+  <a href="https://anythingllm.com"><img src="https://github.com/Mintplex-Labs/Akili/blob/master/images/wordmark.png?raw=true" alt="Akili logo"></a>
 </p>
 
 <div align='center'>
-<a href="https://trendshift.io/repositories/2415" target="_blank"><img src="https://trendshift.io/api/badge/repositories/2415" alt="Mintplex-Labs%2Faccelanova | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+<a href="https://trendshift.io/repositories/2415" target="_blank"><img src="https://trendshift.io/api/badge/repositories/2415" alt="Mintplex-Labs%2FAkili | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 </div>
 
 <p align="center">
-    <b>Accelanova:</b> あなたが探していたオールインワンAIアプリ。<br />
+    <b>Akili:</b> あなたが探していたオールインワンAIアプリ。<br />
     ドキュメントとチャットし、AIエージェントを使用し、高度にカスタマイズ可能で、複数ユーザー対応、面倒な設定は不要です。
 </p>
 
@@ -17,7 +17,7 @@
   <a href="https://discord.gg/6UyHPeGZAC" target="_blank">
       <img src="https://img.shields.io/badge/chat-mintplex_labs-blue.svg?style=flat&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAH1UExURQAAAP////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////r6+ubn5+7u7/3+/v39/enq6urq6/v7+97f39rb26eoqT1BQ0pOT4+Rkuzs7cnKykZKS0NHSHl8fdzd3ejo6UxPUUBDRdzc3RwgIh8jJSAkJm5xcvHx8aanqB4iJFBTVezt7V5hYlJVVuLj43p9fiImKCMnKZKUlaaoqSElJ21wcfT09O3u7uvr6zE0Nr6/wCUpK5qcnf7+/nh7fEdKTHx+f0tPUOTl5aipqiouMGtubz5CRDQ4OsTGxufn515hY7a3uH1/gXBydIOFhlVYWvX29qaoqCQoKs7Pz/Pz87/AwUtOUNfY2dHR0mhrbOvr7E5RUy8zNXR2d/f39+Xl5UZJSx0hIzQ3Odra2/z8/GlsbaGjpERHSezs7L/BwScrLTQ4Odna2zM3Obm7u3x/gKSmp9jZ2T1AQu/v71pdXkVISr2+vygsLiInKTg7PaOlpisvMcXGxzk8PldaXPLy8u7u7rm6u7S1tsDBwvj4+MPExbe4ueXm5s/Q0Kyf7ewAAAAodFJOUwAABClsrNjx/QM2l9/7lhmI6jTB/kA1GgKJN+nea6vy/MLZQYeVKK3rVA5tAAAAAWJLR0QB/wIt3gAAAAd0SU1FB+cKBAAmMZBHjXIAAAISSURBVDjLY2CAAkYmZhZWNnYODnY2VhZmJkYGVMDIycXNw6sBBbw8fFycyEoYGfkFBDVQgKAAPyMjQl5IWEQDDYgIC8FUMDKKsmlgAWyiEBWMjGJY5YEqxMAqGMWFNXAAYXGgAkYJSQ2cQFKCkYFRShq3AmkpRgYJbghbU0tbB0Tr6ukbgGhDI10gySfBwCwDUWBsYmpmDqQtLK2sbTQ0bO3sHYA8GWYGWWj4WTs6Obu4ami4OTm7exhqeHp5+4DCVJZBDmqdr7ufn3+ArkZgkJ+fU3CIRmgYWFiOARYGvo5OQUHhEUAFTkF+kVHRsLBgkIeyYmLjwoOc4hMSk5JTnINS06DC8gwcEEZ6RqZGlpOfc3ZObl5+gZ+TR2ERWFyBQQFMF5eklmqUpQb5+ReU61ZUOvkFVVXXQBSAraitq29o1GiKcfLzc29u0mjxBzq0tQ0kww5xZHtHUGeXhkZhdxBYgZ4d0LI6c4gjwd7siQQraOp1AivQ6CuAKZCDBBRQQQNQgUb/BGf3cqCCiZOcnCe3QQIKHNRTpk6bDgpZjRkzg3pBQTBrdtCcuZCgluAD0vPmL1gIdvSixUuWgqNs2YJ+DUhkEYxuggkGmOQUcckrioPTJCOXEnZ5JS5YslbGnuyVERlDDFvGEUPOWvwqaH6RVkHKeuDMK6SKnHlVhTgx8jeTmqy6Eij7K6nLqiGyPwChsa1MUrnq1wAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMy0xMC0wNFQwMDozODo0OSswMDowMB9V0a8AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjMtMTAtMDRUMDA6Mzg6NDkrMDA6MDBuCGkTAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDIzLTEwLTA0VDAwOjM4OjQ5KzAwOjAwOR1IzAAAAABJRU5ErkJggg==" alt="Discord">
   </a> |
-  <a href="https://github.com/Mintplex-Labs/accelanova/blob/master/LICENSE" target="_blank">
+  <a href="https://github.com/Mintplex-Labs/Akili/blob/master/LICENSE" target="_blank">
       <img src="https://img.shields.io/static/v1?label=license&message=MIT&color=white" alt="ライセンス">
   </a> |
   <a href="https://docs.anythingllm.com" target="_blank">
@@ -33,12 +33,12 @@
 </p>
 
 <p align="center">
-👉 デスクトップ用Accelanova（Mac、Windows、Linux対応）！<a href="https://anythingllm.com/download" target="_blank">今すぐダウンロード</a>
+👉 デスクトップ用Akili（Mac、Windows、Linux対応）！<a href="https://anythingllm.com/download" target="_blank">今すぐダウンロード</a>
 </p>
 
 これは、任意のドキュメント、リソース、またはコンテンツの断片を、チャット中に LLM が参照として使用できるコンテキストに変換できるフルスタックアプリケーションです。このアプリケーションを使用すると、使用する LLM またはベクトルデータベースを選択し、マルチユーザー管理と権限をサポートできます。
 
-![チャット](https://github.com/Mintplex-Labs/accelanova/assets/16845892/cfc5f47c-bd91-4067-986c-f3f49621a859)
+![チャット](https://github.com/Mintplex-Labs/Akili/assets/16845892/cfc5f47c-bd91-4067-986c-f3f49621a859)
 
 <details>
 <summary><kbd>デモを見る！</kbd></summary>
@@ -49,11 +49,11 @@
 
 ### 製品概要
 
-Accelanova は、市販の LLM や人気のあるオープンソース LLM、およびベクトル DB ソリューションを使用して、妥協のないプライベート ChatGPT を構築できるフルスタックアプリケーションです。ローカルで実行することも、リモートでホストすることもでき、提供されたドキュメントと知的にチャットできます。
+Akili は、市販の LLM や人気のあるオープンソース LLM、およびベクトル DB ソリューションを使用して、妥協のないプライベート ChatGPT を構築できるフルスタックアプリケーションです。ローカルで実行することも、リモートでホストすることもでき、提供されたドキュメントと知的にチャットできます。
 
-Accelanova は、ドキュメントを`ワークスペース`と呼ばれるオブジェクトに分割します。ワークスペースはスレッドのように機能しますが、ドキュメントのコンテナ化が追加されています。ワークスペースはドキュメントを共有できますが、互いに通信することはないため、各ワークスペースのコンテキストをクリーンに保つことができます。
+Akili は、ドキュメントを`ワークスペース`と呼ばれるオブジェクトに分割します。ワークスペースはスレッドのように機能しますが、ドキュメントのコンテナ化が追加されています。ワークスペースはドキュメントを共有できますが、互いに通信することはないため、各ワークスペースのコンテキストをクリーンに保つことができます。
 
-## Accelanova のいくつかのクールな機能
+## Akili のいくつかのクールな機能
 
 - **マルチユーザーインスタンスのサポートと権限付与**
 - ワークスペース内のエージェント（ウェブを閲覧、コードを実行など）
@@ -85,17 +85,17 @@ Accelanova は、ドキュメントを`ワークスペース`と呼ばれるオ�
 - [Fireworks AI (チャットモデル)](https://fireworks.ai/)
 - [Perplexity (チャットモデル)](https://www.perplexity.ai/)
 - [OpenRouter (チャットモデル)](https://openrouter.ai/)
-- [Novita AI (チャットモデル)](https://novita.ai/model-api/product/llm-api?utm_source=github_accelanova&utm_medium=github_readme&utm_campaign=link)
+- [Novita AI (チャットモデル)](https://novita.ai/model-api/product/llm-api?utm_source=github_Akili&utm_medium=github_readme&utm_campaign=link)
 - [Mistral](https://mistral.ai/)
 - [Groq](https://groq.com/)
 - [Cohere](https://cohere.com/)
 - [KoboldCPP](https://github.com/LostRuins/koboldcpp)
-- [PPIO](https://ppinfra.com?utm_source=github_accelanova)
+- [PPIO](https://ppinfra.com?utm_source=github_Akili)
 - [CometAPI (チャットモデル)](https://api.cometapi.com/)
 
 **埋め込みモデル：**
 
-- [Accelanova ネイティブ埋め込み](/server/storage/models/README.md)（デフォルト）
+- [Akili ネイティブ埋め込み](/server/storage/models/README.md)（デフォルト）
 - [OpenAI](https://openai.com)
 - [Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service)
 - [LocalAi (すべて)](https://localai.io/)
@@ -105,7 +105,7 @@ Accelanova は、ドキュメントを`ワークスペース`と呼ばれるオ�
 
 **音声変換モデル：**
 
-- [Accelanova 内蔵](https://github.com/Mintplex-Labs/accelanova/tree/master/server/storage/models#audiovideo-transcription)（デフォルト）
+- [Akili 内蔵](https://github.com/Mintplex-Labs/Akili/tree/master/server/storage/models#audiovideo-transcription)（デフォルト）
 - [OpenAI](https://openai.com/)
 
 **TTS（テキストから音声へ）サポート：**
@@ -142,7 +142,7 @@ Accelanova は、ドキュメントを`ワークスペース`と呼ばれるオ�
 
 ## 🛳 セルフホスティング
 
-Mintplex Labs およびコミュニティは、Accelanova をローカルで実行できる多数のデプロイメント方法、スクリプト、テンプレートを維持しています。以下の表を参照して、お好みの環境でのデプロイ方法を読むか、自動デプロイを行ってください。
+Mintplex Labs およびコミュニティは、Akili をローカルで実行できる多数のデプロイメント方法、スクリプト、テンプレートを維持しています。以下の表を参照して、お好みの環境でのデプロイ方法を読むか、自動デプロイを行ってください。
 | Docker | AWS | GCP | Digital Ocean | Render.com |
 |----------------------------------------|----|-----|---------------|------------|
 | [![Docker上でデプロイ][docker-btn]][docker-deploy] | [![AWS上でデプロイ][aws-btn]][aws-deploy] | [![GCP上でデプロイ][gcp-btn]][gcp-deploy] | [![DigitalOcean上でデプロイ][do-btn]][do-deploy] | [![Render.com上でデプロイ][render-btn]][render-deploy] |
@@ -151,7 +151,7 @@ Mintplex Labs およびコミュニティは、Accelanova をローカルで実�
 | ----------------------------------------------------- |
 | [![Railway上でデプロイ][railway-btn]][railway-deploy] |
 
-[Docker を使用せずに本番環境の Accelanova インスタンスを設定する →](../BARE_METAL.md)
+[Docker を使用せずに本番環境の Akili インスタンスを設定する →](../BARE_METAL.md)
 
 ## 開発環境のセットアップ方法
 
@@ -173,14 +173,14 @@ Mintplex Labs およびコミュニティは、Accelanova をローカルで実�
 
 ## テレメトリーとプライバシー
 
-Mintplex Labs Inc.によって開発された Accelanova には、匿名の使用情報を収集するテレメトリー機能が含まれています。
+Mintplex Labs Inc.によって開発された Akili には、匿名の使用情報を収集するテレメトリー機能が含まれています。
 
 <details>
-<summary><kbd>Accelanovaのテレメトリーとプライバシーについての詳細</kbd></summary>
+<summary><kbd>Akiliのテレメトリーとプライバシーについての詳細</kbd></summary>
 
 ### なぜ？
 
-この情報を使用して、Accelanova の使用方法を理解し、新機能とバグ修正の優先順位を決定し、Accelanova のパフォーマンスと安定性を向上させるのに役立てます。
+この情報を使用して、Akili の使用方法を理解し、新機能とバグ修正の優先順位を決定し、Akili のパフォーマンスと安定性を向上させるのに役立てます。
 
 ### オプトアウト
 
@@ -198,7 +198,7 @@ Mintplex Labs Inc.によって開発された Accelanova には、匿名の使�
 
 これらの主張を検証するには、`Telemetry.sendTelemetry`が呼び出されるすべての場所を見つけてください。また、これらのイベントは出力ログに書き込まれるため、送信された具体的なデータも確認できます。IP アドレスやその他の識別情報は収集されません。テレメトリープロバイダーは[PostHog](https://posthog.com/)です。
 
-[ソースコード内のすべてのテレメトリーイベントを表示](https://github.com/search?q=repo%3AMintplex-Labs%2Faccelanova%20.sendTelemetry(&type=code)
+[ソースコード内のすべてのテレメトリーイベントを表示](https://github.com/search?q=repo%3AMintplex-Labs%2FAkili%20.sendTelemetry(&type=code)
 
 </details>
 
@@ -216,7 +216,7 @@ Mintplex Labs Inc.によって開発された Accelanova には、匿名の使�
 ---
 
 Copyright © 2025 [Mintplex Labs][profile-link]。<br />
-このプロジェクトは[MIT](https://github.com/Mintplex-Labs/accelanova/blob/master/LICENSE)ライセンスの下でライセンスされています。
+このプロジェクトは[MIT](https://github.com/Mintplex-Labs/Akili/blob/master/LICENSE)ライセンスの下でライセンスされています。
 
 <!-- LINK GROUP -->
 
@@ -233,8 +233,8 @@ Copyright © 2025 [Mintplex Labs][profile-link]。<br />
 [do-btn]: https://www.deploytodo.com/do-btn-blue.svg
 [do-deploy]: ./cloud-deployments/digitalocean/terraform/DEPLOY.md
 [render-btn]: https://render.com/images/deploy-to-render-button.svg
-[render-deploy]: https://render.com/deploy?repo=https://github.com/Mintplex-Labs/accelanova&branch=render
+[render-deploy]: https://render.com/deploy?repo=https://github.com/Mintplex-Labs/Akili&branch=render
 [render-btn]: https://render.com/images/deploy-to-render-button.svg
-[render-deploy]: https://render.com/deploy?repo=https://github.com/Mintplex-Labs/accelanova&branch=render
+[render-deploy]: https://render.com/deploy?repo=https://github.com/Mintplex-Labs/Akili&branch=render
 [railway-btn]: https://railway.app/button.svg
 [railway-deploy]: https://railway.app/template/HNSCS1?referralCode=WFgJkn

@@ -50,7 +50,7 @@ export default {
         },
     },
     github: () => {
-        return "https://github.com/Mintplex-Labs/accelanova";
+        return "https://github.com/Mintplex-Labs/Akili";
     },
     discord: () => {
         return "https://discord.com/invite/6UyHPeGZAC";

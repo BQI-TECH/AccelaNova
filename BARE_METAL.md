@@ -1,11 +1,11 @@
-# Run Accelanova in production without Docker
+# Run Akili in production without Docker
 
 > [!WARNING]
 > This method of deployment is **not supported** by the core-team and is to be used as a reference for your deployment.
 > You are fully responsible for securing your deployment and data in this mode.
 > **Any issues** experienced from bare-metal or non-containerized deployments will be **not** answered or supported.
 
-Here you can find the scripts and known working process to run Accelanova outside of a Docker container.
+Here you can find the scripts and known working process to run Akili outside of a Docker container.
 
 ### Minimum Requirements
 
@@ -41,7 +41,7 @@ VITE_API_BASE='/api' # Use this URL deploying on non-localhost address OR in doc
 
 ## To start the application
 
-Accelanova is comprised of three main sections. The `frontend`, `server`, and `collector`. When running in production you will be running `server` and `collector` on two different processes, with a build step for compilation of the frontend.
+Akili is comprised of three main sections. The `frontend`, `server`, and `collector`. When running in production you will be running `server` and `collector` on two different processes, with a build step for compilation of the frontend.
 
 1. Build the frontend application.
    `cd frontend && yarn build` - this will produce a `frontend/dist` folder that will be used later.
@@ -62,15 +62,15 @@ cd server && npx prisma migrate deploy --schema=./prisma/schema.prisma
 5. Boot the collection in another process
    `cd collector && NODE_ENV=production node index.js &`
 
-Accelanova should now be running on `http://localhost:3001`!
+Akili should now be running on `http://localhost:3001`!
 
-## Updating Accelanova
+## Updating Akili
 
-To update Accelanova with future updates you can `git pull origin master` to pull in the latest code and then repeat steps 2 - 5 to deploy with all changes fully.
+To update Akili with future updates you can `git pull origin master` to pull in the latest code and then repeat steps 2 - 5 to deploy with all changes fully.
 
 _note_ You should ensure that each folder runs `yarn` again to ensure packages are up to date in case any dependencies were added, changed, or removed.
 
-_note_ You should `pkill node` before running an update so that you are not running multiple Accelanova processes on the same instance as this can cause conflicts.
+_note_ You should `pkill node` before running an update so that you are not running multiple Akili processes on the same instance as this can cause conflicts.
 
 ### Example update script
 

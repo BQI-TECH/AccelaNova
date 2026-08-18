@@ -1,4 +1,4 @@
-# Accelanova Community Hub - Project Completion Summary
+# Akili Community Hub - Project Completion Summary
 
 ## 🎉 Project Status: **COMPLETE & PRODUCTION-READY**
 
@@ -228,8 +228,8 @@ npm start
 ### Option 2: Docker
 
 ```bash
-docker build -t accelanova-hub .
-docker run -p 5001:5001 accelanova-hub
+docker build -t Akili-hub .
+docker run -p 5001:5001 Akili-hub
 ```
 
 ### Option 3: Docker Compose
@@ -505,7 +505,7 @@ allm-community-id:agent-flow:6900c1057a70565977b0b72d
 
 ## 🎉 Final Status: PRODUCTION-READY
 
-The Accelanova Community Hub is **fully functional**, **thoroughly tested**, and **production-ready**.
+The Akili Community Hub is **fully functional**, **thoroughly tested**, and **production-ready**.
 
 ### What You Have
 
@@ -536,7 +536,7 @@ The Accelanova Community Hub is **fully functional**, **thoroughly tested**, and
 
 ---
 
-**Thank you for using Accelanova Community Hub!** 🚀
+**Thank you for using Akili Community Hub!** 🚀
 
 Built with ❤️ for the AnythingLLM community
 

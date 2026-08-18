@@ -7,7 +7,7 @@ const TRANSLATIONS = {
         },
         llm: {
             title: "LLM-i eelistus",
-            description: "Accelanova töötab paljude LLM-teenusepakkujatega. See teenus haldab vestlust.",
+            description: "Akili töötab paljude LLM-teenusepakkujatega. See teenus haldab vestlust.",
         },
         userSetup: {
             title: "Kasutaja seadistus",
@@ -31,21 +31,21 @@ const TRANSLATIONS = {
             settingsHint: "Neid sätteid saab igal ajal seadetes muuta.",
         },
         survey: {
-            title: "Tere tulemast Accelanova-i",
-            description: "Aita meil Accelanova sinu vajadustele vastavaks kujundada. Valikuline.",
+            title: "Tere tulemast Akili-i",
+            description: "Aita meil Akili sinu vajadustele vastavaks kujundada. Valikuline.",
             email: "Mis on su e-post?",
-            useCase: "Milleks kasutad Accelanova-i?",
+            useCase: "Milleks kasutad Akili-i?",
             useCaseWork: "Töö jaoks",
             useCasePersonal: "Isiklikuks kasutuseks",
             useCaseOther: "Muu",
-            comment: "Kust kuulsid Accelanova-ist?",
+            comment: "Kust kuulsid Akili-ist?",
             commentPlaceholder: "Reddit, Twitter, GitHub, YouTube jne – anna meile teada!",
             skip: "Jäta vahele",
             thankYou: "Aitäh tagasiside eest!",
         },
         workspace: {
             title: "Loo oma esimene tööruum",
-            description: "Loo esimene tööruum ja alusta Accelanova-iga.",
+            description: "Loo esimene tööruum ja alusta Akili-iga.",
         },
     },
     common: {
@@ -118,15 +118,15 @@ const TRANSLATIONS = {
         },
     },
     welcomeMessage: {
-        part1: "Tere tulemast Accelanova-i! See on Mintplex Labsi avatud lähtekoodiga AI-tööriist, mis muudab kõik failid koolitatud juturobotiks, kellega saad vestelda. Accelanova on BYOK-tarkvara, seega puudub igasugune tellimus- või litsentsitasu, välja arvatud kasutatavate teenuste kulud.",
-        part2: "Accelanova on lihtsaim viis kombineerida võimsad AI-teenused nagu OpenAI, GPT-4, LangChain, PineconeDB, ChromaDB jpt ilma vaevata, tõstes sinu produktiivsust kordades.",
-        part3: "Accelanova võib töötada täielikult lokaalselt sinu masinas minimaalse ressursikasutusega – GPU-d pole vaja. Samuti on saadaval pilve- ja kohapealsed paigaldised.\nAI-ökosüsteem muutub iga päevaga võimekamaks ja Accelanova teeb selle kasutamise lihtsaks.",
+        part1: "Tere tulemast Akili-i! See on Mintplex Labsi avatud lähtekoodiga AI-tööriist, mis muudab kõik failid koolitatud juturobotiks, kellega saad vestelda. Akili on BYOK-tarkvara, seega puudub igasugune tellimus- või litsentsitasu, välja arvatud kasutatavate teenuste kulud.",
+        part2: "Akili on lihtsaim viis kombineerida võimsad AI-teenused nagu OpenAI, GPT-4, LangChain, PineconeDB, ChromaDB jpt ilma vaevata, tõstes sinu produktiivsust kordades.",
+        part3: "Akili võib töötada täielikult lokaalselt sinu masinas minimaalse ressursikasutusega – GPU-d pole vaja. Samuti on saadaval pilve- ja kohapealsed paigaldised.\nAI-ökosüsteem muutub iga päevaga võimekamaks ja Akili teeb selle kasutamise lihtsaks.",
         githubIssue: "Loo GitHubis probleem",
         user1: "Kuidas alustada?!",
         part4: 'Lihtne. Kõik kogud on korraldatud "Tööruumideks". Tööruum on kaust failidest (dokumendid, pildid, PDF-id jm), mis teisendatakse LLM-ile mõistetavaks vestluskontekstiks.\n\nFailide lisamine ja eemaldamine on võimalik igal ajal.',
         createWorkspace: "Loo esimene tööruum",
         user2: "Kas see on nagu AI-Dropbox? Aga vestlus – see peaks ju chatbot olema?",
-        part5: "Accelanova on enamat kui nutikam Dropbox.\n\nAccelanova pakub kahte viisi oma andmetega suhtlemiseks:\n\n<i>Päring:</i> Vestlus tagastab andmed või järeldused olemasolevatest dokumentidest tööruumis. Mida rohkem faile lisad, seda nutikamaks see muutub!\n\n<i>Vestluslik:</i> Sinu dokumendid + käimasolev vestlus mõjutavad vastuseid samaaegselt. Sobib reaalajas info lisamiseks või LLM-i arusaamade parandamiseks.\n\nVõid režiime vahetada <i>keset vestlust!</i>",
+        part5: "Akili on enamat kui nutikam Dropbox.\n\nAkili pakub kahte viisi oma andmetega suhtlemiseks:\n\n<i>Päring:</i> Vestlus tagastab andmed või järeldused olemasolevatest dokumentidest tööruumis. Mida rohkem faile lisad, seda nutikamaks see muutub!\n\n<i>Vestluslik:</i> Sinu dokumendid + käimasolev vestlus mõjutavad vastuseid samaaegselt. Sobib reaalajas info lisamiseks või LLM-i arusaamade parandamiseks.\n\nVõid režiime vahetada <i>keset vestlust!</i>",
         user3: "Võimas! Las ma proovin kohe ära!",
         part6: "Head kasutamist!",
         starOnGitHub: "Tähista GitHubis",
@@ -137,7 +137,7 @@ const TRANSLATIONS = {
         checklist: {
             title: "Alustamine",
             tasksLeft: "ülesannet jäänud",
-            completed: "Oled teel Accelanova-i eksperdiks saama!",
+            completed: "Oled teel Akili-i eksperdiks saama!",
             dismiss: "sulge",
             tasks: {
                 create_workspace: {
@@ -238,7 +238,7 @@ const TRANSLATIONS = {
             add: "Lisa uus sõnum",
             save: "Salvesta sõnumid",
             heading: "Selgita mulle",
-            body: "Accelanova eeliseid",
+            body: "Akili eeliseid",
         },
         pfp: {
             title: "Abilise profiilipilt",
@@ -401,11 +401,11 @@ const TRANSLATIONS = {
     customization: {
         interface: {
             title: "Kasutajaliidese eelistused",
-                description: "Sea Accelanova-i UI eelistused.",
+                description: "Sea Akili-i UI eelistused.",
         },
         branding: {
             title: "Bränding ja valgesildistamine",
-            description: "Valgesildista oma Accelanova kohandatud brändinguga.",
+            description: "Valgesildista oma Akili kohandatud brändinguga.",
         },
         chat: {
             title: "Vestlus",
@@ -446,7 +446,7 @@ const TRANSLATIONS = {
             },
             "display-language": {
                 title: "Kuvakeel",
-                description: "Vali keel, milles Accelanova UI kuvatakse (kui tõlge on olemas).",
+                description: "Vali keel, milles Akili UI kuvatakse (kui tõlge on olemas).",
             },
             logo: {
                 title: "Brändi logo",
@@ -463,7 +463,7 @@ const TRANSLATIONS = {
                 system: "süsteem",
                 user: "kasutaja",
                 message: "sõnum",
-                assistant: "Accelanova vestlusabi",
+                assistant: "Akili vestlusabi",
                 "double-click": "Topeltklõps muutmiseks…",
                 save: "Salvesta sõnumid",
             },
@@ -489,7 +489,7 @@ const TRANSLATIONS = {
     },
     api: {
         title: "API võtmed",
-        description: "API võtmed võimaldavad programmipõhiselt hallata seda Accelanova instantsi.",
+        description: "API võtmed võimaldavad programmipõhiselt hallata seda Akili instantsi.",
         link: "Loe API dokumentatsiooni",
         generate: "Genereeri uus API võti",
         table: {
@@ -500,7 +500,7 @@ const TRANSLATIONS = {
     },
     llm: {
         title: "LLM-i eelistus",
-        description: "Siin on sinu valitud LLM-teenusepakkuja võtmed ja seaded. Need peavad olema õiged, vastasel juhul Accelanova ei tööta.",
+        description: "Siin on sinu valitud LLM-teenusepakkuja võtmed ja seaded. Need peavad olema õiged, vastasel juhul Akili ei tööta.",
         provider: "LLM-pakkuja",
         providers: {
             azure_openai: {
@@ -525,7 +525,7 @@ const TRANSLATIONS = {
     embedding: {
         title: "Embedding-i eelistus",
         "desc-start": "Kui kasutad LLM-i, mis ei sisalda embedding-mootorit, tuleb määrata täiendavad võtmed.",
-        "desc-end": "Embedding muudab teksti vektoriteks. Need võtmed on vajalikud, et Accelanova saaks sinu failid ja päringud töödelda.",
+        "desc-end": "Embedding muudab teksti vektoriteks. Need võtmed on vajalikud, et Akili saaks sinu failid ja päringud töödelda.",
         provider: {
             title: "Embedding-i pakkuja",
         },
@@ -546,7 +546,7 @@ const TRANSLATIONS = {
     },
     vector: {
         title: "Vektoriandmebaas",
-        description: "Siin on seaded, kuidas Accelanova töötab. Vale seadistus võib põhjustada tõrkeid.",
+        description: "Siin on seaded, kuidas Akili töötab. Vale seadistus võib põhjustada tõrkeid.",
         provider: {
             title: "Vektoriandmebaasi pakkuja",
             description: "LanceDB puhul seadistust pole vaja.",
@@ -587,7 +587,7 @@ const TRANSLATIONS = {
     },
     privacy: {
         title: "Privaatsus ja andmetöötlus",
-        description: "Konfiguratsioon kolmandate osapoolte ja Accelanova-i andmekäitluse kohta.",
+        description: "Konfiguratsioon kolmandate osapoolte ja Akili-i andmekäitluse kohta.",
         llm: "LLM-i valik",
         embedding: "Embedding-i eelistus",
         vector: "Vektoriandmebaas",

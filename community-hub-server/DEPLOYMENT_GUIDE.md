@@ -1,4 +1,4 @@
-# Accelanova Community Hub - Complete Deployment Guide
+# Akili Community Hub - Complete Deployment Guide
 
 ## 🎉 Congratulations!
 
@@ -254,15 +254,15 @@ This creates:
 cd community-hub-server
 
 # Build image
-docker build -t accelanova-hub .
+docker build -t Akili-hub .
 
 # Run container
 docker run -d \
   -p 5001:5001 \
   -e MONGODB_URI="your-mongodb-connection-string" \
   -e JWT_SECRET="your-jwt-secret" \
-  --name accelanova-hub \
-  accelanova-hub
+  --name Akili-hub \
+  Akili-hub
 ```
 
 ### Using Docker Compose
@@ -284,7 +284,7 @@ Expected response:
 ```json
 {
   "status": "ok",
-  "service": "Accelanova Community Hub",
+  "service": "Akili Community Hub",
   "version": "1.0.0",
   "timestamp": "2025-10-28T14:45:00.000Z"
 }
@@ -297,7 +297,7 @@ Expected response:
 tail -f community-hub-server/server.log
 
 # If running with Docker
-docker logs -f accelanova-hub
+docker logs -f Akili-hub
 ```
 
 ## 🔧 Troubleshooting

@@ -1,6 +1,6 @@
-# Accelanova Community Hub API Server
+# Akili Community Hub API Server
 
-A custom, self-hosted community hub API server for Accelanova/AnythingLLM. This allows you to create your own marketplace for sharing system prompts, slash commands, agent skills, and agent flows.
+A custom, self-hosted community hub API server for Akili/AnythingLLM. This allows you to create your own marketplace for sharing system prompts, slash commands, agent skills, and agent flows.
 
 ## Features
 
@@ -98,7 +98,7 @@ INITIAL_ADMIN_EMAIL=admin@example.com
 INITIAL_ADMIN_PASSWORD=changeme123
 ```
 
-## Connecting to Accelanova/AnythingLLM
+## Connecting to Akili/AnythingLLM
 
 ### Update the AnythingLLM Server
 
@@ -366,7 +366,7 @@ For issues related to:
 
 ---
 
-Made with ❤️ for the Accelanova/AnythingLLM community
+Made with ❤️ for the Akili/AnythingLLM community
 
 
 

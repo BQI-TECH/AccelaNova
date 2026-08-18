@@ -11,9 +11,9 @@ import { t } from "i18next";
 
 const noop = () => {};
 
-export const CHECKLIST_UPDATED_EVENT = "accelanova_checklist_updated";
-export const CHECKLIST_STORAGE_KEY = "accelanova_checklist_completed";
-export const CHECKLIST_HIDDEN = "accelanova_checklist_dismissed";
+export const CHECKLIST_UPDATED_EVENT = "Akili_checklist_updated";
+export const CHECKLIST_STORAGE_KEY = "Akili_checklist_completed";
+export const CHECKLIST_HIDDEN = "Akili_checklist_dismissed";
 
 /**
  * @typedef {Object} ChecklistItemHandlerParams

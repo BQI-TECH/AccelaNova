@@ -1,6 +1,6 @@
-# Integration Guide: Connecting Your Hub to Accelanova/AnythingLLM
+# Integration Guide: Connecting Your Hub to Akili/AnythingLLM
 
-This guide shows you how to connect your custom Community Hub to your Accelanova/AnythingLLM instance.
+This guide shows you how to connect your custom Community Hub to your Akili/AnythingLLM instance.
 
 ## Step 1: Start Your Community Hub
 
@@ -37,7 +37,7 @@ You should see:
 ```json
 {
   "status": "ok",
-  "service": "Accelanova Community Hub",
+  "service": "Akili Community Hub",
   "version": "1.0.0"
 }
 ```

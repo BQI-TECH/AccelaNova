@@ -1,9 +1,9 @@
 [{
         "thumbnail_url": "https://cdn.anythingllm.com/support/announcements/assets/mcp.jpg",
         "title": "MCP Support",
-        "short_description": "Import and leverage MCP tools using Accelanova.",
+        "short_description": "Import and leverage MCP tools using Akili.",
         "goto": "https://docs.anythingllm.com/mcp-compatibility/overview",
-        "author": "Accelanova",
+        "author": "Akili",
         "date": "April 8, 2025"
     },
     {
@@ -19,7 +19,7 @@
         "title": "Community Hub Updates",
         "short_description": "We refreshed the Community Hub with a new look and feel. Check it out!",
         "goto": "https://hub.anythingllm.com",
-        "author": "Accelanova",
+        "author": "Akili",
         "date": "March 12, 2025"
     }
 ]

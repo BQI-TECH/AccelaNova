@@ -1,6 +1,6 @@
-# Contributing to Accelanova
+# Contributing to Akili
 
-Accelanova is an open-source project and we welcome contributions from the community.
+Akili is an open-source project and we welcome contributions from the community.
 
 ## Reporting Issues
 
@@ -18,11 +18,11 @@ If there's an issue you are interested in working on, please leave a comment on 
 
 Keep in mind that we are a small team and have limited resources. We will do our best to review and merge your PRs, but please be patient. Ultimately, **we become the maintainer** of your changes. It is our responsibility to make sure that the changes are working as expected and are of high quality as well as being compatible with the rest of the project both for existing users and for future users & features.
 
-Before you start working on an issue, please read the following so that you don't waste time on something that is not a good fit for the project or is more suitable for a personal fork. We would rather answer a comment on an issue than close a PR after you've spent time on it. Your time is valuable and we appreciate your time and effort to make Accelanova better.
+Before you start working on an issue, please read the following so that you don't waste time on something that is not a good fit for the project or is more suitable for a personal fork. We would rather answer a comment on an issue than close a PR after you've spent time on it. Your time is valuable and we appreciate your time and effort to make Akili better.
 
 0. (most important) If you are making a PR that does not have a corresponding issue, **it will not be merged.** _The only exception to this is language translations._
 
-1. If you are modifying the permission system for a new role or something custom, you are likely better off forking the project and building your own version since this is a core part of the project and is only to be maintained by the Accelanova team.
+1. If you are modifying the permission system for a new role or something custom, you are likely better off forking the project and building your own version since this is a core part of the project and is only to be maintained by the Akili team.
 
 2. Integrations (LLM, Vector DB, etc.) are reviewed at our discretion. We will eventually get to them. Do not expect us to merge your integration PR instantly since there are often many moving parts and we want to make sure we get it right. We will get to it!
 
@@ -85,7 +85,7 @@ For the best chance of having your pull request accepted, please follow these gu
 
 ## Project structure
 
-The core library is written in Node.js. There are additional sub-repositories for the embed widget and browser extension. These are not part of the core Accelanova project, but are maintained by the Accelanova team.
+The core library is written in Node.js. There are additional sub-repositories for the embed widget and browser extension. These are not part of the core Akili project, but are maintained by the Akili team.
 
 - `server`: Node.js server source code
 - `frontend`: React frontend source code
@@ -93,14 +93,14 @@ The core library is written in Node.js. There are additional sub-repositories fo
 
 ## Release process
 
-Changes to the core Accelanova project are released through the `master` branch. When a PR is merged into `master`, a new version of the package is published to Docker and GitHub Container Registry under the `latest` tag.
+Changes to the core Akili project are released through the `master` branch. When a PR is merged into `master`, a new version of the package is published to Docker and GitHub Container Registry under the `latest` tag.
 
 When a new version is released, the following steps are taken a new image is built and pushed to Docker Hub and GitHub Container Registry under the assoicated version tag. Version tags are of the format `v<major>.<minor>.<patch>` and are pinned code, while `latest` is the latest version of the code at any point in time.
 
 ### Desktop propogation
 
-Changes to the desktop app are downstream of the core Accelanova project. Releases of the desktop app are published at the same time as the core Accelanova project. Code from the core Accelanova project is copied into the desktop app into an Electron wrapper. The Electron wrapper that wraps around the core Accelanova project is **not** part of the core Accelanova project, but is maintained by the Accelanova team.
+Changes to the desktop app are downstream of the core Akili project. Releases of the desktop app are published at the same time as the core Akili project. Code from the core Akili project is copied into the desktop app into an Electron wrapper. The Electron wrapper that wraps around the core Akili project is **not** part of the core Akili project, but is maintained by the Akili team.
 
 ## License
 
-By contributing to Accelanova (this repository), you agree to license your contributions under the MIT license.
+By contributing to Akili (this repository), you agree to license your contributions under the MIT license.

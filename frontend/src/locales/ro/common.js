@@ -7,7 +7,7 @@ const TRANSLATIONS = {
         },
         llm: {
             title: "Preferința LLM",
-            description: "Accelanova poate funcționa cu mai mulți furnizori LLM. Acesta va fi serviciul care gestionează conversațiile.",
+            description: "Akili poate funcționa cu mai mulți furnizori LLM. Acesta va fi serviciul care gestionează conversațiile.",
         },
         userSetup: {
             title: "Configurare Utilizator",
@@ -31,21 +31,21 @@ const TRANSLATIONS = {
             settingsHint: "Aceste setări pot fi reconfigurate oricând în setările aplicației.",
         },
         survey: {
-            title: "Bun venit la Accelanova",
-            description: "Ajută-ne să facem Accelanova potrivit pentru nevoile tale. Opțional.",
+            title: "Bun venit la Akili",
+            description: "Ajută-ne să facem Akili potrivit pentru nevoile tale. Opțional.",
             email: "Care este adresa ta de email?",
-            useCase: "Pentru ce vei folosi Accelanova?",
+            useCase: "Pentru ce vei folosi Akili?",
             useCaseWork: "Pentru muncă",
             useCasePersonal: "Pentru uz personal",
             useCaseOther: "Altele",
-            comment: "De unde ai aflat despre Accelanova?",
+            comment: "De unde ai aflat despre Akili?",
             commentPlaceholder: "Reddit, Twitter, GitHub, YouTube, etc. - Spune-ne cum ne-ai găsit!",
             skip: "Sari peste sondaj",
             thankYou: "Îți mulțumim pentru feedback!",
         },
         workspace: {
             title: "Creează primul tău spațiu de lucru",
-            description: "Creează primul tău spațiu de lucru și începe să folosești Accelanova.",
+            description: "Creează primul tău spațiu de lucru și începe să folosești Akili.",
         },
     },
     common: {
@@ -118,15 +118,15 @@ const TRANSLATIONS = {
         },
     },
     welcomeMessage: {
-        part1: "Bine ai venit la Accelanova, Accelanova este un instrument AI open-source creat de Mintplex Labs care transformă orice într-un chatbot antrenat cu care poți interacționa. Accelanova este un software BYOK (bring-your-own-keys) fără abonamente sau taxe în afară de serviciile pe care dorești să le folosești.",
-        part2: "Accelanova este cea mai simplă modalitate de a combina produse AI puternice precum OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB și alte servicii într-un pachet ordonat care îți crește productivitatea de 100x.",
-        part3: "Accelanova poate rula complet local pe calculatorul tău cu un consum redus de resurse, pe care nici nu îl vei observa! Nu este necesar GPU. Instalarea în cloud sau local este, de asemenea, disponibilă.\nEcosistemul de unelte AI devine tot mai puternic zilnic. Accelanova face aceste tehnologii ușor de folosit.",
+        part1: "Bine ai venit la Akili, Akili este un instrument AI open-source creat de Mintplex Labs care transformă orice într-un chatbot antrenat cu care poți interacționa. Akili este un software BYOK (bring-your-own-keys) fără abonamente sau taxe în afară de serviciile pe care dorești să le folosești.",
+        part2: "Akili este cea mai simplă modalitate de a combina produse AI puternice precum OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB și alte servicii într-un pachet ordonat care îți crește productivitatea de 100x.",
+        part3: "Akili poate rula complet local pe calculatorul tău cu un consum redus de resurse, pe care nici nu îl vei observa! Nu este necesar GPU. Instalarea în cloud sau local este, de asemenea, disponibilă.\nEcosistemul de unelte AI devine tot mai puternic zilnic. Akili face aceste tehnologii ușor de folosit.",
         githubIssue: "Creează un tichet de problemă pe GitHub",
         user1: "Cum încep?!",
         part4: 'Este simplu. Toate colecțiile sunt organizate în bucket-uri pe care le numim "Spații de Lucru". Acestea sunt containere de fișiere, documente, imagini, PDF-uri și alte fișiere care vor fi transformate într-un format pe care LLM-urile îl pot înțelege și folosi în conversație.\n\nPoți adăuga și elimina fișiere oricând.',
         createWorkspace: "Creează primul tău spațiu de lucru",
         user2: "Este ca un Dropbox AI sau ceva de genul? Dar ce fac cu chat-ul? Este un chatbot, nu?",
-        part5: "Accelanova este mai mult decât un Dropbox mai inteligent.\n\nAccelanova oferă două moduri de a discuta cu datele tale:\n\nQuery: Chaturile tale vor returna date sau inferențe găsite în documentele din spațiul de lucru accesat. Adăugarea mai multor documente face sistemul mai inteligent! \n\nConversational: Documentele tale + istoricul conversațiilor contribuie împreună la cunoașterea LLM-ului în timp real. Ideal pentru a adăuga corecții și informații textuale în timp real.\n\nPoți comuta între cele două moduri chiar în timpul conversației!",
+        part5: "Akili este mai mult decât un Dropbox mai inteligent.\n\nAkili oferă două moduri de a discuta cu datele tale:\n\nQuery: Chaturile tale vor returna date sau inferențe găsite în documentele din spațiul de lucru accesat. Adăugarea mai multor documente face sistemul mai inteligent! \n\nConversational: Documentele tale + istoricul conversațiilor contribuie împreună la cunoașterea LLM-ului în timp real. Ideal pentru a adăuga corecții și informații textuale în timp real.\n\nPoți comuta între cele două moduri chiar în timpul conversației!",
         user3: "Wow, sună uimitor, hai să încerc acum!",
         part6: "Distracție plăcută!",
         starOnGitHub: "Dă stea pe GitHub",
@@ -137,7 +137,7 @@ const TRANSLATIONS = {
         checklist: {
             title: "Început rapid",
             tasksLeft: "sarcini rămase",
-            completed: "Ești pe drumul să devii expert Accelanova!",
+            completed: "Ești pe drumul să devii expert Akili!",
             dismiss: "închide",
             tasks: {
                 create_workspace: {
@@ -238,7 +238,7 @@ const TRANSLATIONS = {
             add: "Adaugă mesaj nou",
             save: "Salvează mesajele",
             heading: "Explică-mi",
-            body: "beneficiile Accelanova",
+            body: "beneficiile Akili",
         },
         pfp: {
             title: "Imagine profil asistent",
@@ -319,7 +319,7 @@ const TRANSLATIONS = {
     },
     vector: {
         title: "Baza de date vectorială",
-        description: "Acestea sunt credențialele și setările pentru modul în care funcționează instanța ta Accelanova. Este important să fie corecte și actuale.",
+        description: "Acestea sunt credențialele și setările pentru modul în care funcționează instanța ta Akili. Este important să fie corecte și actuale.",
         provider: {
             title: "Furnizor baza de date vectorială",
             description: "Nu este necesară configurarea pentru LanceDB.",
@@ -360,7 +360,7 @@ const TRANSLATIONS = {
     },
     privacy: {
         title: "Confidențialitate & Gestionarea datelor",
-        description: "Aceasta este configurația ta pentru modul în care furnizorii terți conectați și Accelanova gestionează datele tale.",
+        description: "Aceasta este configurația ta pentru modul în care furnizorii terți conectați și Akili gestionează datele tale.",
         llm: "Selecția LLM",
         embedding: "Preferința embedding",
         vector: "Baza de date vectorială",
@@ -507,18 +507,18 @@ const TRANSLATIONS = {
             "placeholder-link": "https://exemplu.com",
             fetching: "Se preia...",
             "fetch-website": "Preluare site web",
-            "privacy-notice": "Aceste fișiere vor fi încărcate în procesorul de documente care rulează pe această instanță Accelanova. Aceste fișiere nu sunt trimise sau partajate cu o terță parte.",
+            "privacy-notice": "Aceste fișiere vor fi încărcate în procesorul de documente care rulează pe această instanță Akili. Aceste fișiere nu sunt trimise sau partajate cu o terță parte.",
         },
         pinning: {
             what_pinning: "Ce este fixarea documentelor?",
-            pin_explained_block1: "Când **fixezi** un document în Accelanova, vom injecta întregul conținut al documentului în fereastra de prompt pentru ca LLM-ul tău să-l înțeleagă pe deplin.",
+            pin_explained_block1: "Când **fixezi** un document în Akili, vom injecta întregul conținut al documentului în fereastra de prompt pentru ca LLM-ul tău să-l înțeleagă pe deplin.",
             pin_explained_block2: "Acest lucru funcționează cel mai bine cu **modele cu context mare** sau fișiere mici care sunt critice pentru baza sa de cunoștințe.",
-            pin_explained_block3: "Dacă nu obții răspunsurile dorite de la Accelanova în mod implicit, atunci fixarea este o modalitate excelentă de a obține răspunsuri de calitate superioară dintr-un clic.",
+            pin_explained_block3: "Dacă nu obții răspunsurile dorite de la Akili în mod implicit, atunci fixarea este o modalitate excelentă de a obține răspunsuri de calitate superioară dintr-un clic.",
             accept: "Ok, am înțeles",
         },
         watching: {
             what_watching: "Ce face vizualizarea unui document?",
-            watch_explained_block1: "Când **urmărești** un document în Accelanova, vom sincroniza *automat* conținutul documentului tău din sursa originală la intervale regulate. Acest lucru va actualiza automat conținutul în fiecare spațiu de lucru unde acest fișier este gestionat.",
+            watch_explained_block1: "Când **urmărești** un document în Akili, vom sincroniza *automat* conținutul documentului tău din sursa originală la intervale regulate. Acest lucru va actualiza automat conținutul în fiecare spațiu de lucru unde acest fișier este gestionat.",
             watch_explained_block2: "Această funcție suportă în prezent conținutul online și nu va fi disponibilă pentru documentele încărcate manual.",
             watch_explained_block3_start: "Poți gestiona ce documente sunt urmărite din vizualizarea de administrator a ",
             watch_explained_block3_link: "Managerului de fișiere",
@@ -694,7 +694,7 @@ const TRANSLATIONS = {
             generic: {
                 unauthenticated: {
                     title: "Autentificare necesară",
-                    description: "Trebuie să te autentifici cu Accelanova Community Hub înainte de a publica elemente.",
+                    description: "Trebuie să te autentifici cu Akili Community Hub înainte de a publica elemente.",
                     button: "Conectează-te la Community Hub",
                 },
             },
@@ -784,15 +784,15 @@ const TRANSLATIONS = {
     customization: {
         interface: {
             title: "Preferințe UI",
-                description: "Setează preferințele UI pentru Accelanova.",
+                description: "Setează preferințele UI pentru Akili.",
         },
         branding: {
             title: "Branding & White-labeling",
-            description: "Personalizează-ți instanța Accelanova cu branding personalizat.",
+            description: "Personalizează-ți instanța Akili cu branding personalizat.",
         },
         chat: {
             title: "Chat",
-            description: "Setează preferințele de chat pentru Accelanova.",
+            description: "Setează preferințele de chat pentru Akili.",
             auto_submit: {
                 title: "Trimite automat intrarea vocală",
                 description: "Trimite automat intrarea vocală după o perioadă de liniște",
@@ -829,7 +829,7 @@ const TRANSLATIONS = {
             },
             "display-language": {
                 title: "Limba de afișare",
-                description: "Selectează limba preferată pentru a reda interfața Accelanova - atunci când traducerile sunt disponibile.",
+                description: "Selectează limba preferată pentru a reda interfața Akili - atunci când traducerile sunt disponibile.",
             },
             logo: {
                 title: "Logo brand",
@@ -846,7 +846,7 @@ const TRANSLATIONS = {
                 system: "sistem",
                 user: "utilizator",
                 message: "mesaj",
-                assistant: "Asistent Chat Accelanova",
+                assistant: "Asistent Chat Akili",
                 "double-click": "Dublu clic pentru a edita...",
                 save: "Salvează mesajele",
             },
@@ -872,7 +872,7 @@ const TRANSLATIONS = {
     },
     api: {
         title: "Chei API",
-        description: "Cheile API permit deținătorului să acceseze și să gestioneze programatic această instanță Accelanova.",
+        description: "Cheile API permit deținătorului să acceseze și să gestioneze programatic această instanță Akili.",
         link: "Citește documentația API",
         generate: "Generează o nouă cheie API",
         table: {
@@ -883,7 +883,7 @@ const TRANSLATIONS = {
     },
     llm: {
         title: "Preferința LLM",
-        description: "Acestea sunt credențialele și setările pentru furnizorul tău preferat de chat și embedding LLM. Este important ca aceste chei să fie actuale și corecte, altfel Accelanova nu va funcționa corect.",
+        description: "Acestea sunt credențialele și setările pentru furnizorul tău preferat de chat și embedding LLM. Este important ca aceste chei să fie actuale și corecte, altfel Akili nu va funcționa corect.",
         provider: "Furnizor LLM",
         providers: {
             azure_openai: {
@@ -901,14 +901,14 @@ const TRANSLATIONS = {
         title: "Preferința modelului de transcriere",
         description: "Acestea sunt credențialele și setările pentru furnizorul tău preferat de model de transcriere. Este important ca aceste chei să fie actuale și corecte, altfel fișierele media și audio nu vor fi transcrise.",
         provider: "Furnizor transcriere",
-        "warn-start": "Utilizarea modelului local Whisper pe mașini cu RAM sau CPU limitat poate bloca Accelanova la procesarea fișierelor media.",
+        "warn-start": "Utilizarea modelului local Whisper pe mașini cu RAM sau CPU limitat poate bloca Akili la procesarea fișierelor media.",
         "warn-recommend": "Recomandăm cel puțin 2GB de RAM și încărcarea fișierelor <10Mb.",
         "warn-end": "Modelul încorporat se va descărca automat la prima utilizare.",
     },
     embedding: {
         title: "Preferință embedding",
         "desc-start": "Atunci când utilizați un LLM care nu suportă nativ un motor de embedding - s-ar putea să fie necesar să specificați credențiale suplimentare pentru embedding text.",
-        "desc-end": "Embedding-ul este procesul de transformare a textului în vectori. Aceste credențiale sunt necesare pentru a transforma fișierele și prompturile dvs. într-un format pe care Accelanova îl poate utiliza pentru procesare.",
+        "desc-end": "Embedding-ul este procesul de transformare a textului în vectori. Aceste credențiale sunt necesare pentru a transforma fișierele și prompturile dvs. într-un format pe care Akili îl poate utiliza pentru procesare.",
         provider: {
             title: "Furnizor embedding",
         },
@@ -942,7 +942,7 @@ const TRANSLATIONS = {
         },
         password: {
             title: "Protecție prin parolă",
-            description: "Protejează instanța Accelanova cu o parolă. Dacă o uiți, nu există metode de recuperare, deci asigură-te că o salvezi.",
+            description: "Protejează instanța Akili cu o parolă. Dacă o uiți, nu există metode de recuperare, deci asigură-te că o salvezi.",
             "password-label": "Parola instanței",
         },
     },

@@ -118,15 +118,15 @@ const TRANSLATIONS = {
         },
     },
     welcomeMessage: {
-        part1: "Chào mừng đến với Accelanova, Accelanova is an open-source AI tool by Mintplex Labs that turns anything into a trained chatbot you can query and chat with. Accelanova is a BYOK (bring-your-own-keys) software so there is no subscription, fee, or charges for this software outside of the services you want to use with it.",
-        part2: "Accelanova is the easiest way to put powerful AI products like OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB, and other services together in a neat package with no fuss to increase your productivity by 100x.",
-        part3: "Accelanova can run totally locally on your machine with little overhead you wont even notice it's there! No GPU needed. Cloud and on-premises installation is available as well.\nThe AI tooling ecosystem gets more powerful everyday. Accelanova makes it easy to use.",
+        part1: "Chào mừng đến với Akili, Akili is an open-source AI tool by Mintplex Labs that turns anything into a trained chatbot you can query and chat with. Akili is a BYOK (bring-your-own-keys) software so there is no subscription, fee, or charges for this software outside of the services you want to use with it.",
+        part2: "Akili is the easiest way to put powerful AI products like OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB, and other services together in a neat package with no fuss to increase your productivity by 100x.",
+        part3: "Akili can run totally locally on your machine with little overhead you wont even notice it's there! No GPU needed. Cloud and on-premises installation is available as well.\nThe AI tooling ecosystem gets more powerful everyday. Akili makes it easy to use.",
         githubIssue: "Create an issue on GitHub",
         user1: "How do I get started?!",
         part4: "It's simple. All collections are organized into buckets we call \"Không gian làm việc\". Không gian làm việc are buckets of files, documents, images, PDFs, and other files which will be transformed into something LLM's can understand and use in conversation.\n\nYou can add and remove files at anytime.",
         createWorkspace: "Create your first workspace",
         user2: "Is this like an AI dropbox or something? What about chatting? It is a chatbot isn't it?",
-        part5: "Accelanova is more than a smarter Dropbox.\n\nAccelanova offers two ways of talking with your data:\n\n<i>Query:</i> Your chats will return data or inferences found with the documents in your workspace it has access to. Adding more documents to the Workspace make it smarter! \n\n<i>Conversational:</i> Your documents + your on-going chat history both contribute to the LLM knowledge at the same time. Great for appending real-time text-based info or corrections and misunderstandings the LLM might have. \n\nYou can toggle between either mode \n<i>in the middle of chatting!</i>",
+        part5: "Akili is more than a smarter Dropbox.\n\nAkili offers two ways of talking with your data:\n\n<i>Query:</i> Your chats will return data or inferences found with the documents in your workspace it has access to. Adding more documents to the Workspace make it smarter! \n\n<i>Conversational:</i> Your documents + your on-going chat history both contribute to the LLM knowledge at the same time. Great for appending real-time text-based info or corrections and misunderstandings the LLM might have. \n\nYou can toggle between either mode \n<i>in the middle of chatting!</i>",
         user3: "Wow, this sounds amazing, let me try it out already!",
         part6: "Have Fun!",
         starOnGitHub: "Star on GitHub",
@@ -157,7 +157,7 @@ const TRANSLATIONS = {
             add: "Add new message",
             save: "Save Messages",
             heading: "Explain to me",
-            body: "the benefits of Accelanova",
+            body: "the benefits of Akili",
         },
         pfp: {
             title: "Hình đại diện trợ lý",
@@ -319,7 +319,7 @@ const TRANSLATIONS = {
     },
     api: {
         title: "Khóa API",
-        description: "API keys allow the holder to programmatically access and manage this Accelanova instance.",
+        description: "API keys allow the holder to programmatically access and manage this Akili instance.",
         link: "Read the API documentation",
         generate: "Generate New API Key",
         table: {
@@ -330,7 +330,7 @@ const TRANSLATIONS = {
     },
     llm: {
         title: "LLM Preference",
-        description: "These are the credentials and settings for your preferred LLM chat & embedding provider. Its important these keys are current and correct or else Accelanova will not function properly.",
+        description: "These are the credentials and settings for your preferred LLM chat & embedding provider. Its important these keys are current and correct or else Akili will not function properly.",
         provider: "LLM Provider",
         providers: {
             azure_openai: {
@@ -348,14 +348,14 @@ const TRANSLATIONS = {
         title: "Chuyển đổi giọng nói Model Preference",
         description: "These are the credentials and settings for your preferred transcription model provider. Its important these keys are current and correct or else media files and audio will not transcribe.",
         provider: "Chuyển đổi giọng nói Provider",
-        "warn-start": "Using the local whisper model on machines with limited RAM or CPU can stall Accelanova when processing media files.",
+        "warn-start": "Using the local whisper model on machines with limited RAM or CPU can stall Akili when processing media files.",
         "warn-recommend": "We recommend at least 2GB of RAM and upload files <10Mb.",
         "warn-end": "The built-in model will automatically download on the first use.",
     },
     embedding: {
         title: "Tùy chọn nhúng",
         "desc-start": "When using an LLM that does not natively support an embedding engine - you may need to additionally specify credentials to for embedding text.",
-        "desc-end": "Embedding is the process of turning text into vectors. These credentials are required to turn your files and prompts into a format which Accelanova can use to process.",
+        "desc-end": "Embedding is the process of turning text into vectors. These credentials are required to turn your files and prompts into a format which Akili can use to process.",
         provider: {
             title: "Embedding Provider",
         },
@@ -376,7 +376,7 @@ const TRANSLATIONS = {
     },
     vector: {
         title: "Cơ sở dữ liệu Vector",
-        description: "These are the credentials and settings for how your Accelanova instance will function. It's important these keys are current and correct.",
+        description: "These are the credentials and settings for how your Akili instance will function. It's important these keys are current and correct.",
         provider: {
             title: "Cơ sở dữ liệu Vector Provider",
             description: "There is no configuration needed for LanceDB.",
@@ -417,7 +417,7 @@ const TRANSLATIONS = {
     },
     privacy: {
         title: "Quyền riêng tư & Dữ liệu-Handling",
-        description: "This is your configuration for how connected third party providers and Accelanova handle your data.",
+        description: "This is your configuration for how connected third party providers and Akili handle your data.",
         llm: "LLM Selection",
         embedding: "Tùy chọn nhúng",
         vector: "Cơ sở dữ liệu Vector",
@@ -942,7 +942,7 @@ const TRANSLATIONS = {
         },
         password: {
             title: "Mật khẩu Protection",
-            description: "Protect your Accelanova instance with a password. If you forget this there is no recovery method so ensure you save this password.",
+            description: "Protect your Akili instance with a password. If you forget this there is no recovery method so ensure you save this password.",
             "password-label": "Mật khẩu của instance",
         },
     },

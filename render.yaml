@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: accelanova
+    name: Akili
     runtime: docker
     dockerfilePath: ./docker/Dockerfile
     dockerContext: .
@@ -29,14 +29,14 @@ services:
       # - key: PINECONE_API_KEY
       #   sync: false
       # - key: PINECONE_INDEX
-      #   value: accelanova-main
+      #   value: Akili-main
     healthCheckPath: /api/system/health-check
     autoDeploy: true
 
 databases:
-  - name: accelanova-db
-    databaseName: accelanova
-    user: accelanova
+  - name: Akili-db
+    databaseName: Akili
+    user: Akili
     plan: starter
     region: oregon
 

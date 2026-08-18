@@ -22,7 +22,7 @@ export default function AwsBedrockLLMOptions({ settings }) {
                 target="_blank"
                 className="underline flex gap-x-1 items-center"
               >
-                Read more on how to use AWS Bedrock in Accelanova
+                Read more on how to use AWS Bedrock in Akili
                 <ArrowSquareOut size={14} />
               </a>
             </p>

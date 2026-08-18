@@ -1,10 +1,10 @@
 @echo off
 REM Run each block one at a time (push in bits) - open in CMD or PowerShell outside Cursor
-cd /d "C:\xampp\htdocs\GEOTECH COMPANY PROJECTS\IN PROGRESS\ACCELANOVAI"
+cd /d "C:\xampp\htdocs\GEOTECH COMPANY PROJECTS\IN PROGRESS\AkiliI"
 
 echo [1/3] Ensuring remote...
-git remote add origin https://github.com/GeotechCompanybq/AccelaNova.git 2>nul
-git remote set-url origin https://github.com/GeotechCompanybq/AccelaNova.git
+git remote add origin https://github.com/GeotechCompanybq/Akili.git 2>nul
+git remote set-url origin https://github.com/GeotechCompanybq/Akili.git
 git branch -M main
 
 echo [2/3] Smaller chunks (5MB)...

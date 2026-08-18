@@ -190,7 +190,7 @@ function TelemetryLogs({ settings }) {
             based information. To see the list of event tags collected you can
             look on{" "}
             <a
-              href="https://github.com/search?q=repo%3AMintplex-Labs%2Faccelanova%20.sendTelemetry(&type=code"
+              href="https://github.com/search?q=repo%3AMintplex-Labs%2FAkili%20.sendTelemetry(&type=code"
               className="underline text-blue-400"
               target="_blank"
             >
@@ -203,7 +203,7 @@ function TelemetryLogs({ settings }) {
             dedicated to building the best solution for integrating AI and
             documents privately and securely. If you do decide to turn off
             telemetry all we ask is to consider sending us feedback and thoughts
-            so that we can continue to improve Accelanova for you.{" "}
+            so that we can continue to improve Akili for you.{" "}
             <a
               href="mailto:support@geotechcompany.us"
               className="underline text-blue-400"
