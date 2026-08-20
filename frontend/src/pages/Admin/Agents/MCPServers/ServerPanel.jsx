@@ -110,9 +110,9 @@ export default function ServerPanel({ server, toggleServer, onDelete }) {
             <div className="flex items-center gap-x-2">
               <img src={MCPLogo} className="w-6 h-6 light:invert" />
               <label htmlFor="name" className="text-white text-md font-bold">
-                {titleCase(server.name.replace(/[_-]/g, " "))}
+                {titleCase((server.name || "").replace(/[_-]/g, " ") || "MCP Server")}
               </label>
-              {server.tools.length > 0 && (
+              {server.tools?.length > 0 && (
                 <p className="text-theme-text-secondary text-sm">
                   {server.tools.length} {pluralize("tool", server.tools.length)}{" "}
                   available

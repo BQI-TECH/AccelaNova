@@ -101,7 +101,7 @@ class MCPHypervisor {
       fs.readFileSync(this.mcpServerJSONPath, "utf8"),
       { mcpServers: {} }
     );
-    return Object.entries(servers.mcpServers).map(([name, server]) => ({
+    return Object.entries(servers.mcpServers || {}).map(([name, server]) => ({
       name,
       server,
     }));

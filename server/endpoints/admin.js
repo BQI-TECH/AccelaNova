@@ -387,6 +387,9 @@ function adminEndpoints(app) {
             case "imported_agent_skills":
               requestedSettings[label] = ImportedPlugin.listImportedPlugins();
               break;
+            case "active_agent_flows":
+              requestedSettings[label] = safeJsonParse(setting?.value, []);
+              break;
             case "custom_app_name":
               requestedSettings[label] = setting?.value || null;
               break;

@@ -9,6 +9,7 @@ import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import paths from "@/utils/paths";
 import useUser from "@/hooks/useUser";
+import { Link } from "react-router-dom";
 
 export default function WorkspaceAgentConfiguration({ workspace }) {
   const { user } = useUser();
@@ -20,10 +21,18 @@ export default function WorkspaceAgentConfiguration({ workspace }) {
 
   useEffect(() => {
     async function fetchSettings() {
-      const _settings = await System.keys();
-      const _preferences = await Admin.systemPreferences();
-      setSettings({ ..._settings, preferences: _preferences.settings } ?? {});
-      setLoading(false);
+      try {
+        const _settings = (await System.keys()) ?? {};
+        const _preferences = await Admin.systemPreferences();
+        setSettings({
+          ..._settings,
+          preferences: _preferences?.settings ?? {},
+        });
+      } catch (error) {
+        console.error("Failed to load workspace agent settings:", error);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchSettings();
   }, []);
@@ -90,12 +99,12 @@ export default function WorkspaceAgentConfiguration({ workspace }) {
           <>
             {!hasChanges && (
               <div className="flex flex-col gap-y-4">
-                <a
+                <Link
                   className="w-fit transition-all duration-300 border border-slate-200 px-5 py-2.5 rounded-lg text-white text-sm items-center flex gap-x-2 hover:bg-slate-200 hover:text-slate-800 focus:ring-gray-800"
-                  href={paths.settings.agentSkills()}
+                  to={paths.settings.agentSkills()}
                 >
                   Configure Agent Skills
-                </a>
+                </Link>
                 <p className="text-white text-opacity-60 text-xs font-medium">
                   Customize and enhance the default agent's capabilities by
                   enabling or disabling specific skills. These settings will be

@@ -24,12 +24,20 @@ async function executeLLMInstruction(config, context) {
     if (typeof input !== "string") input = String(input);
 
     const provider = aibitat.getProviderForConfig(aibitat.defaultProvider);
-    const completion = await provider.complete([
-      {
-        role: "user",
-        content: input,
-      },
-    ]);
+    const workspacePrompt =
+      aibitat?.handlerProps?.invocation?.workspace?.openAiPrompt || null;
+    const messages = [];
+    if (workspacePrompt) {
+      messages.push({
+        role: "system",
+        content: `${workspacePrompt}\n\nA domain-specific agent flow is running. Follow this workspace system prompt together with the domain instruction in the next message. Do not discard either. If they conflict on Accela standards, keep SERV_PROV_CODE, REC_STATUS = 'A', and do-not-invent-schema rules, and prefer the more specific domain instruction for format and workflow.`,
+      });
+    }
+    messages.push({
+      role: "user",
+      content: input,
+    });
+    const completion = await provider.complete(messages);
 
     introspect(`Successfully received LLM response`);
     if (resultVariable) config.resultVariable = resultVariable;

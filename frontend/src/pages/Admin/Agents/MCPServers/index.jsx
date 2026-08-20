@@ -138,7 +138,7 @@ export function MCPServersList({
           onClick={() => handleClick?.(server)}
         >
           <div className="text-sm font-light">
-            {titleCase(server.name.replace(/[_-]/g, " "))}
+            {titleCase((server.name || "").replace(/[_-]/g, " ") || "MCP Server")}
           </div>
           <div className="flex items-center gap-x-2">
             <div

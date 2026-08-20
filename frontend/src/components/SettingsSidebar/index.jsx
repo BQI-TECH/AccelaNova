@@ -112,6 +112,12 @@ export default function SettingsSidebar() {
                     <div className="h-[1.5px] bg-[#3D4147] mx-3 mt-[14px]" />
                     <SupportEmail />
                     <Link
+                      to={paths.help()}
+                      className="text-theme-text-secondary hover:text-white text-xs leading-[18px] mx-3"
+                    >
+                      User manual
+                    </Link>
+                    <Link
                       hidden={
                         user?.hasOwnProperty("role") && user.role !== "admin"
                       }
@@ -162,6 +168,12 @@ export default function SettingsSidebar() {
                   <SidebarOptions user={user} t={t} />
                   <div className="h-[1.5px] bg-[#3D4147] mx-3 mt-[14px]" />
                   <SupportEmail />
+                  <Link
+                    to={paths.help()}
+                    className="text-theme-text-secondary hover:text-white hover:light:text-theme-text-primary text-xs leading-[18px] mx-3"
+                  >
+                    User manual
+                  </Link>
                   <Link
                     hidden={
                       user?.hasOwnProperty("role") && user.role !== "admin"
@@ -229,12 +241,6 @@ const SidebarOptions = ({ user = null, t }) => (
             {
               btnText: t("settings.vector-database"),
               href: paths.settings.vectorDatabase(),
-              flex: true,
-              roles: ["admin"],
-            },
-            {
-              btnText: t("settings.embedder"),
-              href: paths.settings.embedder.modelPreference(),
               flex: true,
               roles: ["admin"],
             },

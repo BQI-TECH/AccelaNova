@@ -48,6 +48,7 @@ export default function Footer() {
   if (!Array.isArray(footerData) || footerData.length === 0) {
     return (
       <div className="flex justify-center mb-2">
+        <HelpButton />
         {!isMobile && <SettingsButton />}
         <Tooltip
           id="footer-item"
@@ -61,6 +62,7 @@ export default function Footer() {
 
   return (
     <div className="flex justify-center mb-2">
+      <HelpButton />
       {!isMobile && <SettingsButton />}
       <Tooltip
         id="footer-item"
@@ -69,5 +71,23 @@ export default function Footer() {
         className="tooltip !text-xs z-99"
       />
     </div>
+  );
+}
+
+function HelpButton() {
+  return (
+    <Link
+      to={paths.help()}
+      className="transition-all duration-300 p-2 rounded-full bg-theme-sidebar-footer-icon hover:bg-theme-sidebar-footer-icon-hover"
+      aria-label="User manual"
+      data-tooltip-id="footer-item"
+      data-tooltip-content="User manual"
+    >
+      <BookOpen
+        className="h-5 w-5"
+        weight="fill"
+        color="var(--theme-sidebar-footer-icon-fill)"
+      />
+    </Link>
   );
 }

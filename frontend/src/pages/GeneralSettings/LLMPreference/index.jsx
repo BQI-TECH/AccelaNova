@@ -69,6 +69,7 @@ import MoonshotAiOptions from "@/components/LLMSelection/MoonshotAiOptions";
 import LLMItem from "@/components/LLMSelection/LLMItem";
 import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
 import CTAButton from "@/components/lib/CTAButton";
+import EmbedderPanel from "@/pages/GeneralSettings/EmbeddingPreference/EmbedderPanel";
 
 export const AVAILABLE_LLM_PROVIDERS = [
   {
@@ -395,6 +396,16 @@ export default function GeneralLLMPreference() {
   }, []);
 
   useEffect(() => {
+    if (loading) return;
+    if (window.location.hash === "#embedding") {
+      document.getElementById("embedding-section")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [loading]);
+
+  useEffect(() => {
     const filtered = AVAILABLE_LLM_PROVIDERS.filter((llm) =>
       llm.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -539,6 +550,7 @@ export default function GeneralLLMPreference() {
               </div>
             </div>
           </form>
+          {!loading && <EmbedderPanel />}
         </div>
       )}
     </div>

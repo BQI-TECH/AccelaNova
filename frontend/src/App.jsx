@@ -20,6 +20,7 @@ import { ThemeProvider } from "./ThemeContext";
 import KeyboardShortcutsHelp from "@/components/KeyboardShortcutsHelp";
 
 const Main = lazy(() => import("@/pages/Main"));
+const UserManual = lazy(() => import("@/pages/UserManual"));
 const InvitePage = lazy(() => import("@/pages/Invite"));
 const WorkspaceChat = lazy(() => import("@/pages/WorkspaceChat"));
 const AdminUsers = lazy(() => import("@/pages/Admin/Users"));
@@ -103,6 +104,10 @@ export default function App() {
               <I18nextProvider i18n={i18n}>
                 <Routes>
                   <Route path="/" element={<PrivateRoute Component={Main} />} />
+                  <Route
+                    path="/help"
+                    element={<PrivateRoute Component={UserManual} />}
+                  />
                   <Route path="/login" element={<Login />} />
                   <Route
                     path="/sso/simple"

@@ -28,13 +28,13 @@ export default function ImportedSkillList({
     <div
       className={`bg-theme-bg-secondary text-white rounded-xl w-full md:min-w-[360px]`}
     >
-      {skills.map((config, index) => (
+      {skills.filter(Boolean).map((config, index) => (
         <div
           key={config.hubId}
           className={`py-3 px-4 flex items-center justify-between ${
             index === 0 ? "rounded-t-xl" : ""
           } ${
-            index === Object.keys(skills).length - 1
+            index === skills.length - 1
               ? "rounded-b-xl"
               : "border-b border-white/10"
           } cursor-pointer transition-all duration-300 hover:bg-theme-bg-primary ${
@@ -42,7 +42,9 @@ export default function ImportedSkillList({
           }`}
           onClick={() => handleClick?.({ ...config, imported: true })}
         >
-          <div className="text-sm font-light">{sentenceCase(config.name)}</div>
+          <div className="text-sm font-light">
+            {sentenceCase(config.name || config.hubId || "Imported skill")}
+          </div>
           <div className="flex items-center gap-x-2">
             <div className="text-sm text-theme-text-secondary font-medium">
               {config.active ? "On" : "Off"}

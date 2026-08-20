@@ -78,7 +78,7 @@ const TRANSLATIONS = {
         branding: "Branding & Whitelabeling",
         chat: "Chat",
         "api-keys": "Developer API",
-        llm: "LLM",
+        llm: "AI Models",
         transcription: "Transcription",
         embedder: "Embedder",
         "text-splitting": "Text Splitter & Chunking",
@@ -520,8 +520,8 @@ const TRANSLATIONS = {
     },
 
     llm: {
-        title: "LLM Preference",
-        description: "These are the credentials and settings for your preferred LLM chat & embedding provider. It is important that these keys are current and correct, or else Akili will not function properly.",
+        title: "AI Models",
+        description: "Choose the chat LLM and the embedding model on this page. Both are required for Akili to answer questions and search your documents.",
         provider: "LLM Provider",
         providers: {
             azure_openai: {

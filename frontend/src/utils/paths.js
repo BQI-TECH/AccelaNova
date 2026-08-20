@@ -168,6 +168,9 @@ export default {
             return `/settings/mobile-connections`;
         },
     },
+    help: () => {
+        return "/help";
+    },
     agents: {
         builder: () => {
             return `/settings/agents/builder`;

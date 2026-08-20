@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 const { FlowExecutor, FLOW_TYPES } = require("./executor");
 const { normalizePath } = require("../files");
 const { safeJsonParse } = require("../http");
+const { BUILTIN_FLOWS, toFlowConfig } = require("./builtinFlows");
 
 /**
  * @typedef {Object} LoadedFlow
@@ -33,6 +34,42 @@ class AgentFlows {
     } catch (error) {
       console.error("Failed to create flows directory:", error);
       return false;
+    }
+  }
+
+  /**
+   * Seed built-in Accela domain flows so they appear in Agent Flows.
+   * Does not overwrite an existing flow with the same UUID or name.
+   */
+  static seedBuiltinFlows() {
+    try {
+      AgentFlows.createOrCheckFlowsDir();
+      const existing = AgentFlows.getAllFlows();
+      const existingNames = new Set(
+        Object.values(existing).map((flow) => flow?.name)
+      );
+
+      for (const definition of BUILTIN_FLOWS) {
+        if (existing[definition.uuid] || existingNames.has(definition.name)) {
+          continue;
+        }
+        const result = AgentFlows.saveFlow(
+          definition.name,
+          toFlowConfig(definition),
+          definition.uuid
+        );
+        if (result.success) {
+          console.log(
+            `[AgentFlows] Seeded built-in flow: ${definition.name}`
+          );
+        } else {
+          console.error(
+            `[AgentFlows] Failed to seed ${definition.name}: ${result.error}`
+          );
+        }
+      }
+    } catch (error) {
+      console.error("Failed to seed built-in agent flows:", error);
     }
   }
 

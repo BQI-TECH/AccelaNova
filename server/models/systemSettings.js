@@ -29,6 +29,7 @@ const SystemSettings = {
     "default_agent_skills",
     "disabled_agent_skills",
     "imported_agent_skills",
+    "active_agent_flows",
     "custom_app_name",
     "feature_flags",
     "meta_page_title",
@@ -45,6 +46,7 @@ const SystemSettings = {
     "agent_search_provider",
     "default_agent_skills",
     "disabled_agent_skills",
+    "active_agent_flows",
     "agent_sql_connections",
     "custom_app_name",
 
@@ -141,6 +143,18 @@ const SystemSettings = {
         return JSON.stringify(skills);
       } catch (e) {
         console.error(`Could not validate disabled agent skills.`);
+        return JSON.stringify([]);
+      }
+    },
+    active_agent_flows: (updates) => {
+      try {
+        const flowIds = String(updates)
+          .split(",")
+          .map((id) => id.trim())
+          .filter((id) => !!id);
+        return JSON.stringify(flowIds);
+      } catch (e) {
+        console.error(`Could not validate active agent flows.`);
         return JSON.stringify([]);
       }
     },

@@ -64,24 +64,47 @@ export default function AdminAgents() {
 
   useEffect(() => {
     async function fetchSettings() {
-      const _settings = await System.keys();
-      const _preferences = await Admin.systemPreferencesByFields([
-        "disabled_agent_skills",
-        "default_agent_skills",
-        "imported_agent_skills",
-        "active_agent_flows",
-      ]);
-      const { flows = [] } = await AgentFlows.listFlows();
+      try {
+        const _settings = (await System.keys()) ?? {};
+        const _preferences = await Admin.systemPreferencesByFields([
+          "disabled_agent_skills",
+          "default_agent_skills",
+          "imported_agent_skills",
+          "active_agent_flows",
+        ]);
+        const { flows = [] } = await AgentFlows.listFlows();
+        const preferenceSettings = _preferences?.settings ?? {};
 
-      setSettings({ ..._settings, preferences: _preferences.settings } ?? {});
-      setAgentSkills(_preferences.settings?.default_agent_skills ?? []);
-      setDisabledAgentSkills(
-        _preferences.settings?.disabled_agent_skills ?? []
-      );
-      setImportedSkills(_preferences.settings?.imported_agent_skills ?? []);
-      setActiveFlowIds(_preferences.settings?.active_agent_flows ?? []);
-      setAgentFlows(flows);
-      setLoading(false);
+        setSettings({ ..._settings, preferences: preferenceSettings });
+        setAgentSkills(
+          Array.isArray(preferenceSettings.default_agent_skills)
+            ? preferenceSettings.default_agent_skills
+            : []
+        );
+        setDisabledAgentSkills(
+          Array.isArray(preferenceSettings.disabled_agent_skills)
+            ? preferenceSettings.disabled_agent_skills
+            : []
+        );
+        setImportedSkills(
+          Array.isArray(preferenceSettings.imported_agent_skills)
+            ? preferenceSettings.imported_agent_skills.filter(Boolean)
+            : []
+        );
+        setActiveFlowIds(
+          Array.isArray(preferenceSettings.active_agent_flows)
+            ? preferenceSettings.active_agent_flows
+            : []
+        );
+        setAgentFlows(Array.isArray(flows) ? flows : []);
+      } catch (error) {
+        console.error("Failed to load agent skill settings:", error);
+        showToast("Failed to load agent skill settings.", "error", {
+          clear: true,
+        });
+      } finally {
+        setLoading(false);
+      }
     }
     fetchSettings();
   }, []);
@@ -368,7 +391,7 @@ export default function AdminAgents() {
                             enabled={activeFlowIds.includes(selectedFlow.uuid)}
                             onDelete={handleFlowDelete}
                           />
-                        ) : selectedSkill.imported ? (
+                        ) : selectedSkill?.imported ? (
                           <ImportedSkillConfig
                             key={selectedSkill.hubId}
                             selectedSkill={selectedSkill}
@@ -390,7 +413,7 @@ export default function AdminAgents() {
                                 setHasChanges={setHasChanges}
                                 {...defaultSkills[selectedSkill]}
                               />
-                            ) : (
+                            ) : configurableSkills?.[selectedSkill] ? (
                               // The selected skill is a configurable skill - show the configurable skill panel
                               <SelectedSkillComponent
                                 skill={configurableSkills[selectedSkill]?.skill}
@@ -402,7 +425,7 @@ export default function AdminAgents() {
                                 setHasChanges={setHasChanges}
                                 {...configurableSkills[selectedSkill]}
                               />
-                            )}
+                            ) : null}
                           </>
                         )}
                       </>
@@ -559,7 +582,7 @@ export default function AdminAgents() {
                     enabled={activeFlowIds.includes(selectedFlow.uuid)}
                     onDelete={handleFlowDelete}
                   />
-                ) : selectedSkill.imported ? (
+                ) : selectedSkill?.imported ? (
                   <ImportedSkillConfig
                     key={selectedSkill.hubId}
                     selectedSkill={selectedSkill}
@@ -581,7 +604,7 @@ export default function AdminAgents() {
                         setHasChanges={setHasChanges}
                         {...defaultSkills[selectedSkill]}
                       />
-                    ) : (
+                    ) : configurableSkills?.[selectedSkill] ? (
                       // The selected skill is a configurable skill - show the configurable skill panel
                       <SelectedSkillComponent
                         skill={configurableSkills[selectedSkill]?.skill}
@@ -593,7 +616,7 @@ export default function AdminAgents() {
                         setHasChanges={setHasChanges}
                         {...configurableSkills[selectedSkill]}
                       />
-                    )}
+                    ) : null}
                   </>
                 )}
               </>
