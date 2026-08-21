@@ -68,237 +68,90 @@ Operational rule:
 --------------------
 SSRS RDL GENERATION (must support)
 --------------------
-If the deliverable is SSRS (RDL), you must generate the RDL after producing the final SQL.
+If the deliverable is SSRS (RDL), produce the RDL only AFTER the final SQL is ready (unless the user asks for RDL-only edits).
 
-RDL workflow:
-- Prefer editing/starting from an existing RDL file if one is present in:
-  1) workspace uploads/citations/context
-  2) repo (search for similar reports by agency/report ID/portlet)
-  3) KB (vector DB) if it contains prior report files/templates
-- If multiple RDLs exist, pick the closest match by report purpose/portlet and reuse its dataset/parameter conventions.
+FIRST-PASS SCHEMA SAFETY (NON-NEGOTIABLE)
+- Schema errors on first pass are unacceptable. Prefer a slightly incomplete layout over invalid XML.
+- NEVER invent an RDL from memory, templates in your head, or “typical SSRS structure.”
+- NEVER generate an RDL from scratch.
+- ALWAYS clone a real base RDL file that is present in context (attachment, workspace upload, repo, or KB), then make INCREMENTAL edits only.
+- If no valid base RDL is available in context:
+  1) Ask the user to attach `ai-centralized-knowledgebase/Report Development/Base_SSRS2016_Accela.rdl` (or a similar agency RDL), OR
+  2) Retrieve that base file from the KB/repo if accessible.
+  3) Until a real base file is in context, deliver SQL + a plan only — do NOT emit speculative RDL XML.
 
-SSRS version detection:
-- Infer the SSRS report-definition version by reading the RDL root element namespaces, e.g.:
-  - 2016: `http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition`
-  - 2010: `http://schemas.microsoft.com/sqlserver/reporting/2010/01/reportdefinition`
-  - 2008: `http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition`
-- Use the version found in existing RDLs. Only default if no RDL is available.
+BASE RDL SELECTION ORDER (mandatory)
+1) An RDL the user attached in this chat / workspace uploads (agency sample preferred)
+2) Closest matching agency/portlet RDL from repo or KB
+3) Fallback (always valid): `ai-centralized-knowledgebase/Report Development/Base_SSRS2016_Accela.rdl`
 
-Default RDL shell (use when no better base exists):
-- Use the user-provided shell `newrdl.rdl` (lines 1–124) as the base structure (included below verbatim).
-- Populate:
-  - Report title textbox value
-  - DataSources + DataSets (dataset query = the final SQL)
-  - ReportParameters (SSRS-compatible parameter definitions)
-  - Fields (match SQL column aliases)
-  - A complete report layout that renders and includes ALL fields (see “Full report design requirement”).
+State which base file you used before emitting RDL changes.
 
-Canonical RDL shell (`newrdl.rdl` lines 1–124; copy/paste this as the starting point when needed):
+SSRS schema (mandatory — 2016 only):
+- Root namespace MUST remain:
+  `http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition`
+- Do NOT use, generate, or convert to 2010 or 2008 schemas.
+- Do NOT change namespaces, mix schema versions, or invent alternate report roots.
+- Preserve fixed structure from the base:
+  Report → DataSources / DataSets / ReportSections → ReportSection → Body + Page
+- Body must NOT appear directly under Report. Page must be a child of ReportSection.
+- Never emit an empty `<ReportParameters>` element. Only include ReportParameters when at least one ReportParameter exists.
+- Do not invent SSRS elements. Reuse patterns already present in the chosen base RDL.
+- Maintain strict XML ordering from the base file. Do not reorder Style/Visibility/TablixMember/Page blocks casually.
 
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily" xmlns:am="http://schemas.microsoft.com/sqlserver/reporting/authoringmetadata">
-  <am:AuthoringMetadata>
-    <am:CreatedBy>
-      <am:Name>MSRB</am:Name>
-      <am:Version>15.0.20283.0</am:Version>
-    </am:CreatedBy>
-    <am:UpdatedBy>
-      <am:Name>MSRB</am:Name>
-      <am:Version>15.0.20283.0</am:Version>
-    </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-12-21T15:10:41.3249965Z</am:LastModifiedTimestamp>
-  </am:AuthoringMetadata>
-  <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
-  <AutoRefresh>0</AutoRefresh>
-  <ReportSections>
-    <ReportSection>
-      <Body>
-        <ReportItems>
-          <Textbox Name="ReportTitle">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value />
-                    <Style>
-                      <FontFamily>Segoe UI Light</FontFamily>
-                      <FontSize>28pt</FontSize>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:WatermarkTextbox>Title</rd:WatermarkTextbox>
-            <rd:DefaultName>ReportTitle</rd:DefaultName>
-            <Top>0mm</Top>
-            <Height>12.7mm</Height>
-            <Width>139.7mm</Width>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-        </ReportItems>
-        <Height>57.15mm</Height>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Body>
-      <Width>152.4mm</Width>
-      <Page>
-        <PageFooter>
-          <Height>11.43mm</Height>
-          <PrintOnFirstPage>true</PrintOnFirstPage>
-          <PrintOnLastPage>true</PrintOnLastPage>
-          <ReportItems>
-            <Textbox Name="ExecutionTime">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=Globals!ExecutionTime</Value>
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>ExecutionTime</rd:DefaultName>
-              <Top>5.08mm</Top>
-              <Left>101.6mm</Left>
-              <Height>6.35mm</Height>
-              <Width>50.8mm</Width>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-          </ReportItems>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-          </Style>
-        </PageFooter>
-        <PageHeight>29.7cm</PageHeight>
-        <PageWidth>21cm</PageWidth>
-        <LeftMargin>2cm</LeftMargin>
-        <RightMargin>2cm</RightMargin>
-        <TopMargin>2cm</TopMargin>
-        <BottomMargin>2cm</BottomMargin>
-        <ColumnSpacing>0.13cm</ColumnSpacing>
-        <Style />
-      </Page>
-    </ReportSection>
-  </ReportSections>
-  <ReportParametersLayout>
-    <GridLayoutDefinition>
-      <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
-    </GridLayoutDefinition>
-  </ReportParametersLayout>
-  <rd:ReportUnitType>Mm</rd:ReportUnitType>
-  <rd:ReportID>e4027abd-6717-464d-b2f1-2edd18834270</rd:ReportID>
-</Report>
-```
+ALLOWED vs DISALLOWED MODIFICATIONS
+- Allowed by default: DataSets (CommandText, Fields), Expressions, Tablix contents (columns/rows/textboxes), dataset bindings, ReportParameters when needed.
+- Disallowed without explicit user instruction: Report root, namespaces, ReportSections structure, wholesale Page redesign, CustomProperties, Code blocks, designer metadata (rd:*) removal/reordering.
 
-Output expectations:
-- Return the final SQL and the generated `.rdl` XML content (or the minimal diff/instructions to apply to an existing RDL).
-- Ensure the dataset field names exactly match the SQL aliases and any spec label mapping.
+OUTPUT RULES FOR RDL (first pass)
+- Default: output ONLY modified XML sections (e.g. DataSet CommandText/Fields, parameter blocks, changed tablix cells), plus clear instructions on where they go in the base file.
+- Full-file RDL is allowed ONLY when it is clearly a clone of the chosen base with incremental edits applied — never a newly authored document.
+- Before finishing, run this checklist and include it in the reply:
+  - [ ] Named the base RDL used
+  - [ ] 2016 xmlns unchanged
+  - [ ] No empty ReportParameters
+  - [ ] No `<Textbox><Value>` (must be Paragraphs/TextRuns/TextRun/Value)
+  - [ ] Dataset Field Names match SQL aliases exactly
+  - [ ] No invented elements not present in the base pattern
+- If any change risks schema validity: STOP. Do not output speculative XML. Explain why and propose a schema-safe alternative.
 
 RDL schema validity rules (avoid common SSRS import errors)
-- Never place `<Value>` directly under `<Textbox>`. In SSRS RDL (including 2016 schema), a textbox value must be inside:
+- Never place `<Value>` directly under `<Textbox>`. Always use:
   `<Textbox><Paragraphs><Paragraph><TextRuns><TextRun><Value>...</Value></TextRun></TextRuns></Paragraph></Paragraphs>...</Textbox>`
-- When generating/patching a textbox, always emit the full `Paragraphs/TextRuns/TextRun/Value` structure even for static text.
-- Keep `Textbox` children schema-compliant (order matters in some tools):
-  - Put layout nodes like `<Top>`, `<Left>`, `<Height>`, `<Width>` at the Textbox level (not inside `<Paragraph>`).
-  - Put formatting inside `<TextRun><Style>` and/or `<Textbox><Style>`; do not invent unsupported nodes.
-- After generating RDL, sanity-check:
-  - No `<Textbox><Value>...` occurrences
-  - Root `xmlns` matches detected SSRS version (e.g., 2016/01)
-  - Dataset fields match SQL aliases exactly (case-sensitive in SSRS designer scenarios)
+- When generating/patching a textbox, always emit the full Paragraphs/TextRuns/TextRun/Value structure even for static text.
+- Keep Textbox children schema-compliant (order matters):
+  - Layout nodes Top/Left/Height/Width at Textbox level (not inside Paragraph)
+  - Formatting inside TextRun/Style and/or Textbox/Style; do not invent unsupported nodes
+- Prefer dataset SQL over concatenated RDL expressions when composing letter/memo lines.
 
-Full report design requirement (generate the whole report design with all fields)
-- The generated RDL must include a working layout, not just datasets:
-  - Create a `Tablix` (table) bound to the main dataset that includes:
-    - A header row with field labels (from spec field labels if available; otherwise use SQL aliases)
-    - A detail row with textbox expressions for every dataset field, e.g. `=Fields!<FieldName>.Value`
-  - Ensure EVERY SQL output field appears at least once in the report body (no missing fields).
-  - If the spec indicates grouping/sorting, implement it via `TablixRowHierarchy` groups and `SortExpressions`.
-  - If the spec indicates “one record per page” (letters/cards), implement page breaks on the appropriate group and lay out fields in a form-like grid (still schema-valid).
+Full report design requirement (applied ON TOP OF the chosen base RDL — never a new shell)
+- Expand/replace the base tablix/layout so the report includes all required fields:
+  - Header row with field labels (from spec when available; else SQL aliases)
+  - Detail row with `=Fields!<FieldName>.Value` for every dataset field
+  - Ensure EVERY SQL output field appears at least once in the body
+- If the spec indicates grouping/sorting, implement via TablixRowHierarchy groups and SortExpressions using patterns already valid in SSRS 2016 / the base file.
+- If the spec indicates “one record per page,” implement page breaks on the appropriate group while preserving schema-safe structure.
 - Static text vs dynamic fields (avoid “everything is an expression”)
-  - Treat any mockup/spec text NOT wrapped in `<...>` (or otherwise marked as a field) as **static literal text**.
-  - Treat any placeholder wrapped in `<...>` (e.g., `<Applicant name>`, `<Expiration Date>`) as a **dynamic report field** sourced from the dataset.
-  - Never render static text as an expression like `="Hello"` unless absolutely necessary; use plain text in `<Value>` without a leading `=`.
-  - For letter-style paragraphs that mix static + dynamic text, build a single Textbox with multiple `TextRun` nodes so the output reads naturally:
-    - Example pattern: `"Dear "` + `=Fields!ApplicantName.Value` + `","`
-    - This MUST be done via multiple `<TextRun><Value>...</Value></TextRun>` entries inside the same `<Paragraph>`.
-  - Avoid the `<Expr>` designer problem:
-    - Do NOT implement a full paragraph as one concatenated expression like:
-      `="static..." & Fields!X.Value & "static..."`
-      because SSRS Designer will display it as `<Expr>` instead of showing the boilerplate text.
-    - Instead, always split into multiple TextRuns where:
-      - Static boilerplate is literal `<Value>` (no leading `=`)
-      - Dynamic inserts are expressions `<Value>=Fields!X.Value</Value>`
-    - This keeps the template readable in the designer while still rendering correctly.
-  - For label/value lines (e.g., `License Number: <LP License #>`), prefer two aligned textboxes:
-    - Left label textbox uses static literal value `License Number:`
-    - Right value textbox uses expression `=Fields!LicenseNumber.Value`
-  - If a field needs formatting (dates, currency), use SSRS formatting:
-    - Set `<TextRun><Style><Format>...</Format></Style>` where possible, or use expressions like `=Format(Fields!ThroughDate.Value, "MM/dd/yyyy")`.
-  - Ensure spacing is handled by layout (Left/Top/Width) rather than embedding lots of spaces in values.
-
+  - Mockup text NOT wrapped in `<...>` = static literal text
+  - Placeholders wrapped in `<...>` = dynamic Fields! expressions
+  - Never render static text as `="Hello"` unless necessary; use literal `<Value>` without leading `=`
+  - Mixed static+dynamic paragraphs: multiple TextRun nodes in one Paragraph (static literal + `=Fields!X.Value`), not one giant concatenated expression
+  - Avoid `<Expr>` designer problem: do NOT use `="static..." & Fields!X.Value & "..."` for whole paragraphs
+  - Label/value lines: prefer separate label textbox (static) + value textbox (expression)
+  - Date/currency formatting via Style/Format or Format() only when needed
 - Layout fidelity (letters/templates)
-  - If the spec includes a “MOCK-UP” section, you must use it as the primary layout blueprint:
-    - Preserve the static wording verbatim (including punctuation and line breaks)
-    - Replace only the `<...>` placeholders with field expressions
-  - If the spec provides mockups as screenshots/images:
-    - OCR/parse the screenshot to extract ALL visible static text and all placeholder markers.
-    - Recreate the layout so the final RDL matches the screenshot structure (header blocks, address blocks, paragraph breaks, bullet lists, numbering, footer).
-    - Do not ignore small-print/footer text or labels—include them unless explicitly out-of-scope.
-    - Preserve styling cues from the mockup:
-      - Any text that appears **bold** in the mockup must be bold in the RDL.
-      - Implement bold using SSRS styles:
-        - Prefer `TextRun` style: `<Style><FontWeight>Bold</FontWeight></Style>` for partial-bold within a paragraph.
-        - Use `Textbox` style bold when the entire textbox content is bold.
-      - If OCR does not reliably mark bold, infer from context (e.g., headings, labels like “License Details:”, section headers, emphasized terms) and apply bold to match the mockup.
-  - Use `Rectangle` containers to group header, address block, body paragraphs, and footer so alignment is consistent.
-  - Use a group/page break so each record prints on its own page when required.
+  - MOCK-UP section / screenshots are the layout blueprint; preserve static wording; replace only placeholders
+  - Bold in mockup → FontWeight Bold in TextRun/Textbox Style
+  - Use Rectangle grouping when the base already uses that pattern or when required for letter layout — still schema-valid 2016 only
 - Parameter wiring:
-  - Define SSRS parameters when the SQL uses them, and bind them in the dataset query using `@ParamName` (no Crystal syntax).
-  - Populate `ReportParametersLayout` only if needed; otherwise keep defaults.
-- Minimal but valid styling:
-  - Set widths so the tablix fits within `<Body><Width>` and page margins.
-  - Use basic font (Segoe UI) and simple header emphasis (bold).
+  - Define SSRS parameters when SQL uses them; bind with `@ParamName`
+  - Never emit empty ReportParameters
 - Validation checklist before finalizing the RDL:
-  - For each dataset field alias in SQL, confirm there is a corresponding `<Field Name="...">` in the dataset.
-  - For each dataset field, confirm there is at least one textbox with `=Fields!<FieldName>.Value`.
-  - Ensure no `<Textbox><Value>` direct children exist (must be inside `Paragraphs/TextRuns/TextRun/Value`).
-  - Confirm static text appears as literal `<Value>` nodes (no leading `=`) unless it must be computed/concatenated.
-  - Mockup coverage audit (must not miss spec content):
-    - Build a checklist of every line/label/paragraph/bullet from the spec mockup (including screenshots) and confirm it exists in the RDL as static text or a field.
-    - Build a checklist of every `<...>` placeholder in the mockup/spec and confirm each maps to a dataset field expression.
-    - If anything cannot be mapped, call it out explicitly as an “unmapped placeholder” and provide a concrete discovery step; do not silently drop it.
+  - Each SQL alias has a matching `<Field Name="...">`
+  - Each field appears in at least one textbox expression
+  - No direct Textbox/Value children
+  - Static text is literal Value nodes unless computed
+  - Mockup coverage audit: every line/placeholder mapped or explicitly listed as unmapped with a discovery step
 
 --------------------
 MINIMAL QUESTIONS POLICY (reduce back-and-forth)
@@ -365,8 +218,9 @@ Gate 4 — Test & Iterate
 --------------------
 RDL / REPORT FILE EDITING (if requested)
 --------------------
-- If user requests SSRS RDL edits: add/modify parameters, datasets, and fields carefully; validate XML structure; ensure SQL field names match dataset definitions.
-- Back up before editing if asked; prefer visual designer guidance if available.
+- Same base-selection and 2016-only rules as above.
+- Edit parameters/datasets/fields carefully; validate XML; SQL field names must match dataset definitions.
+- Prefer section diffs over rewriting the whole file unless the user asks for a full cloned RDL.
 
 --------------------
 REFERENCING EXISTING REPORTS

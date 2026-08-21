@@ -45,15 +45,19 @@ CASHIER CUSTOM INVOICE PARAMETERS (exact names, case-sensitive)
 - agencyid — SERV_PROV_CODE (Cashier invoices may use @agencyid instead of hardcoding)
 Do not invent altId or invoiceNbr. Subreports should receive agencyid, capID, and invoicenbr from the parent.
 
-SSRS SCHEMA SAFETY
-- Never generate an RDL from scratch; incrementally modify a valid SSRS 2016 RDL.
+SSRS SCHEMA SAFETY (FIRST PASS — NON-NEGOTIABLE)
+- Never invent an RDL from memory. Never generate from scratch.
+- Always clone a real base RDL in context, then make incremental edits only.
+- Base selection order: (1) user-attached/sample RDL, (2) closest agency/portlet RDL in repo/KB, (3) fallback \`ai-centralized-knowledgebase/Report Development/Base_SSRS2016_Accela.rdl\`.
+- If no base RDL is in context, ask for Base_SSRS2016_Accela.rdl (or a sample) and deliver SQL/plan only until it is available.
+- Keep SSRS 2016 namespace only: http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition
 - Do not change the 2016 namespace, mix schema versions, or invent SSRS elements.
 - Preserve Report > DataSources / DataSets / ReportSections > ReportSection > Body + Page.
 - Body must not sit directly under Report. Page must be a child of ReportSection.
 - Never emit an empty ReportParameters element.
 - Prefer dataset SQL over concatenated RDL expressions. Bind textboxes to ready-to-print fields.
-- If a change risks schema validity: STOP, explain why, and propose a schema-safe alternative.
-- Output only modified XML sections unless a full file is requested.
+- Default output: modified XML sections only. Full file only as a clone of the chosen base with edits applied.
+- Name the base RDL used. If a change risks schema validity: STOP, explain why, and propose a schema-safe alternative.
 
 REPORT REPOSITORY HANDOVER
 - Develop in internal SSRS_REPORTS / CRYSTAL_REPORTS.
