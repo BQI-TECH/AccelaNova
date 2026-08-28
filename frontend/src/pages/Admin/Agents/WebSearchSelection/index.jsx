@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Admin from "@/models/admin";
-import AccelanovaIcon from "@/media/logo/accelanova-icon.png";
+import AkiliIcon from "@/media/logo/accelanova-icon.png";
 import GoogleSearchIcon from "./icons/google.png";
 import SearchApiIcon from "./icons/searchapi.png";
 import SerperDotDevIcon from "./icons/serper.png";
@@ -34,7 +34,7 @@ const SEARCH_PROVIDERS = [
   {
     name: "Please make a selection",
     value: "none",
-    logo: AccelanovaIcon,
+    logo: AkiliIcon,
     options: () => <React.Fragment />,
     description:
       "Web search will be disabled until a provider and keys are provided.",

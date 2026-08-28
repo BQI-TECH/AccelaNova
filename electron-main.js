@@ -188,7 +188,7 @@ function createWindow() {
         height: 900,
         minWidth: 1200,
         minHeight: 800,
-        title: 'Accelanova',
+        title: 'Akili',
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,

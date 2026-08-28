@@ -212,7 +212,7 @@ function FeatureVerification({ children }) {
               <div className="py-7 px-9 space-y-4 flex-col">
                 <div className="w-full text-white text-md flex flex-col gap-y-4">
                   <p>
-                    Experimental features of Accelanova are features that we are
+                    Experimental features of Akili are features that we are
                     piloting and are <b>opt-in</b>. We proactively will
                     condition or warn you on any potential concerns should any
                     exist prior to approval of any feature.
@@ -232,7 +232,7 @@ function FeatureVerification({ children }) {
                         Increased cost or use of any connected LLM or embedding
                         provider.
                       </li>
-                      <li>Potential bugs or issues using Accelanova.</li>
+                      <li>Potential bugs or issues using Akili.</li>
                     </ul>
                   </div>
 
@@ -246,7 +246,7 @@ function FeatureVerification({ children }) {
                       <li>The feature being used is not currently stable.</li>
                       <li>
                         The feature may not be available in future versions,
-                        configurations, or subscriptions of Accelanova.
+                        configurations, or subscriptions of Akili.
                       </li>
                       <li>
                         Your privacy settings <b>will be honored</b> with use of

@@ -18,7 +18,7 @@ export default function CommunityHub() {
               </p>
             </div>
             <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
-              Share and collaborate with the Accelanova community.
+              Share and collaborate with the Akili community.
             </p>
           </div>
           <HubItems />

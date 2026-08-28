@@ -326,7 +326,7 @@ export default function LLMPreference({
     const data = {};
     const formData = new FormData(form);
     data.LLMProvider = selectedLLM;
-    // Default to Accelanova embedder and LanceDB
+    // Default to Akili embedder and LanceDB
     data.EmbeddingEngine = "native";
     data.VectorDB = "lancedb";
     for (var [key, value] of formData.entries()) data[key] = value;

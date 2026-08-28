@@ -166,12 +166,12 @@ function getDeploymentVersion() {
 }
 
 /**
- * Returns the user agent for the Accelanova deployment.
+ * Returns the user agent for the Akili deployment.
  * @returns {string} The user agent.
  */
 function getAccelanovaUserAgent() {
     const version = getDeploymentVersion() || "unknown";
-    return `Accelanova/${version}`;
+    return `Akili/${version}`;
 }
 
 module.exports = {

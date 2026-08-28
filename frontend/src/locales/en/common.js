@@ -6,7 +6,7 @@ const TRANSLATIONS = {
         },
         llm: {
             title: "LLM Preference",
-            description: "Accelanova can work with many LLM providers. This will be the service which handles chatting.",
+            description: "Akili can work with many LLM providers. This will be the service which handles chatting.",
         },
         userSetup: {
             title: "User Setup",
@@ -31,22 +31,22 @@ const TRANSLATIONS = {
             settingsHint: "These settings can be reconfigured at any time in the settings.",
         },
         survey: {
-            title: "Welcome to Accelanova",
-            description: "Help us make Accelanova built for your needs. Optional.",
+            title: "Welcome to Akili",
+            description: "Help us make Akili built for your needs. Optional.",
 
             email: "What's your email?",
-            useCase: "What will you use Accelanova for?",
+            useCase: "What will you use Akili for?",
             useCaseWork: "For work",
             useCasePersonal: "For personal use",
             useCaseOther: "Other",
-            comment: "How did you hear about Accelanova?",
+            comment: "How did you hear about Akili?",
             commentPlaceholder: "Reddit, Twitter, GitHub, YouTube, etc. - Let us know how you found us!",
             skip: "Skip Survey",
             thankYou: "Thank you for your feedback!",
         },
         workspace: {
             title: "Create your first workspace",
-            description: "Create your first workspace and get started with Accelanova.",
+            description: "Create your first workspace and get started with Akili.",
         },
     },
     common: {
@@ -124,15 +124,15 @@ const TRANSLATIONS = {
     },
 
     welcomeMessage: {
-        part1: "Welcome to Accelanova, Accelanova is an open-source AI tool by Mintplex Labs that turns anything into a trained chatbot you can query and chat with. Accelanova is a BYOK (bring-your-own-keys) software so there is no subscription, fee, or charges for this software outside of the services you want to use with it.",
-        part2: "Accelanova is the easiest way to put powerful AI products like OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB, and other services together in a neat package with no fuss to increase your productivity by 100x.",
-        part3: "Accelanova can run totally locally on your machine with little overhead you wont even notice it's there! No GPU needed. Cloud and on-premises installation is available as well.\nThe AI tooling ecosystem gets more powerful everyday. Accelanova makes it easy to use.",
+        part1: "Welcome to Akili, Akili is an open-source AI tool by Mintplex Labs that turns anything into a trained chatbot you can query and chat with. Akili is a BYOK (bring-your-own-keys) software so there is no subscription, fee, or charges for this software outside of the services you want to use with it.",
+        part2: "Akili is the easiest way to put powerful AI products like OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB, and other services together in a neat package with no fuss to increase your productivity by 100x.",
+        part3: "Akili can run totally locally on your machine with little overhead you wont even notice it's there! No GPU needed. Cloud and on-premises installation is available as well.\nThe AI tooling ecosystem gets more powerful everyday. Akili makes it easy to use.",
         githubIssue: "Create an issue on GitHub",
         user1: "How do I get started?!",
         part4: "It's simple. All collections are organized into buckets we call \"Workspaces\". Workspaces are buckets of files, documents, images, PDFs, and other files which will be transformed into something LLM's can understand and use in conversation.\n\nYou can add and remove files at anytime.",
         createWorkspace: "Create your first workspace",
         user2: "Is this like an AI dropbox or something? What about chatting? It is a chatbot isn't it?",
-        part5: "Accelanova is more than a smarter Dropbox.\n\nAccelanova offers two ways of talking with your data:\n\n<i>Query:</i> Your chats will return data or inferences found with the documents in your workspace it has access to. Adding more documents to the Workspace make it smarter! \n\n<i>Conversational:</i> Your documents + your on-going chat history both contribute to the LLM knowledge at the same time. Great for appending real-time text-based info or corrections and misunderstandings the LLM might have. \n\nYou can toggle between either mode \n<i>in the middle of chatting!</i>",
+        part5: "Akili is more than a smarter Dropbox.\n\nAkili offers two ways of talking with your data:\n\n<i>Query:</i> Your chats will return data or inferences found with the documents in your workspace it has access to. Adding more documents to the Workspace make it smarter! \n\n<i>Conversational:</i> Your documents + your on-going chat history both contribute to the LLM knowledge at the same time. Great for appending real-time text-based info or corrections and misunderstandings the LLM might have. \n\nYou can toggle between either mode \n<i>in the middle of chatting!</i>",
         user3: "Wow, this sounds amazing, let me try it out already!",
         part6: "Have Fun!",
         starOnGitHub: "Star on GitHub",
@@ -144,7 +144,7 @@ const TRANSLATIONS = {
         checklist: {
             title: "Getting Started",
             tasksLeft: "tasks left",
-            completed: "You're on your way to becoming an Accelanova expert!",
+            completed: "You're on your way to becoming an Akili expert!",
             dismiss: "close",
             tasks: {
                 create_workspace: {
@@ -246,7 +246,7 @@ const TRANSLATIONS = {
             add: "Add new message",
             save: "Save Messages",
             heading: "Explain to me",
-            body: "the benefits of Accelanova",
+            body: "the benefits of Akili",
         },
         pfp: {
             title: "Assistant Profile Image",
@@ -419,15 +419,15 @@ const TRANSLATIONS = {
     customization: {
         interface: {
             title: "UI Preferences",
-                description: "Set your UI preferences for Accelanova.",
+                description: "Set your UI preferences for Akili.",
         },
         branding: {
             title: "Branding & Whitelabeling",
-            description: "White-label your Accelanova instance with custom branding.",
+            description: "White-label your Akili instance with custom branding.",
         },
         chat: {
             title: "Chat",
-            description: "Set your chat preferences for Accelanova.",
+            description: "Set your chat preferences for Akili.",
             auto_submit: {
                 title: "Auto-Submit Speech Input",
                 description: "Automatically submit speech input after a period of silence",
@@ -464,7 +464,7 @@ const TRANSLATIONS = {
             },
             "display-language": {
                 title: "Display Language",
-                description: "Select the preferred language to render Accelanova's UI in - when translations are available.",
+                description: "Select the preferred language to render Akili's UI in - when translations are available.",
             },
             logo: {
                 title: "Brand Logo",
@@ -481,7 +481,7 @@ const TRANSLATIONS = {
                 system: "system",
                 user: "user",
                 message: "message",
-                assistant: "Accelanova Chat Assistant",
+                assistant: "Akili Chat Assistant",
                 "double-click": "Double click to edit...",
                 save: "Save Messages",
             },
@@ -509,7 +509,7 @@ const TRANSLATIONS = {
     // API Keys
     api: {
         title: "API Keys",
-        description: "API keys allow the holder to programmatically access and manage this Accelanova instance.",
+        description: "API keys allow the holder to programmatically access and manage this Akili instance.",
         link: "Read the API documentation",
         generate: "Generate New API Key",
         table: {
@@ -521,7 +521,7 @@ const TRANSLATIONS = {
 
     llm: {
         title: "LLM Preference",
-        description: "These are the credentials and settings for your preferred LLM chat & embedding provider. It is important that these keys are current and correct, or else Accelanova will not function properly.",
+        description: "These are the credentials and settings for your preferred LLM chat & embedding provider. It is important that these keys are current and correct, or else Akili will not function properly.",
         provider: "LLM Provider",
         providers: {
             azure_openai: {
@@ -540,7 +540,7 @@ const TRANSLATIONS = {
         title: "Transcription Model Preference",
         description: "These are the credentials and settings for your preferred transcription model provider. Its important these keys are current and correct or else media files and audio will not transcribe.",
         provider: "Transcription Provider",
-        "warn-start": "Using the local whisper model on machines with limited RAM or CPU can stall Accelanova when processing media files.",
+        "warn-start": "Using the local whisper model on machines with limited RAM or CPU can stall Akili when processing media files.",
         "warn-recommend": "We recommend at least 2GB of RAM and upload files <10Mb.",
         "warn-end": "The built-in model will automatically download on the first use.",
     },
@@ -548,7 +548,7 @@ const TRANSLATIONS = {
     embedding: {
         title: "Embedding Preference",
         "desc-start": "When using an LLM that does not natively support an embedding engine - you may need to additionally specify credentials to for embedding text.",
-        "desc-end": "Embedding is the process of turning text into vectors. These credentials are required to turn your files and prompts into a format which Accelanova can use to process.",
+        "desc-end": "Embedding is the process of turning text into vectors. These credentials are required to turn your files and prompts into a format which Akili can use to process.",
         provider: {
             title: "Embedding Provider",
         },
@@ -573,7 +573,7 @@ const TRANSLATIONS = {
     // Vector Database
     vector: {
         title: "Vector Database",
-        description: "These are the credentials and settings for how your Accelanova instance will function. It's important these keys are current and correct.",
+        description: "These are the credentials and settings for how your Akili instance will function. It's important these keys are current and correct.",
         provider: {
             title: "Vector Database Provider",
             description: "There is no configuration needed for LanceDB.",
@@ -621,7 +621,7 @@ const TRANSLATIONS = {
         },
         password: {
             title: "Password Protection",
-            description: "Protect your Accelanova instance with a password. If you forget this there is no recovery method so ensure you save this password.",
+            description: "Protect your Akili instance with a password. If you forget this there is no recovery method so ensure you save this password.",
             "password-label": "Instance Password",
         },
     },
@@ -641,7 +641,7 @@ const TRANSLATIONS = {
     // Privacy & Data-Handling
     privacy: {
         title: "Privacy & Data-Handling",
-        description: "This is your configuration for how connected third party providers and Accelanova handle your data.",
+        description: "This is your configuration for how connected third party providers and Akili handle your data.",
         llm: "LLM Selection",
         embedding: "Embedding Preference",
         vector: "Vector Database",
@@ -790,18 +790,18 @@ const TRANSLATIONS = {
             "placeholder-link": "https://example.com",
             fetching: "Fetching...",
             "fetch-website": "Fetch website",
-            "privacy-notice": "These files will be uploaded to the document processor running on this Accelanova instance. These files are not sent or shared with a third party.",
+            "privacy-notice": "These files will be uploaded to the document processor running on this Akili instance. These files are not sent or shared with a third party.",
         },
         pinning: {
             what_pinning: "What is document pinning?",
-            pin_explained_block1: "When you <b>pin</b> a document in Accelanova we will inject the entire content of the document into your prompt window for your LLM to fully comprehend.",
+            pin_explained_block1: "When you <b>pin</b> a document in Akili we will inject the entire content of the document into your prompt window for your LLM to fully comprehend.",
             pin_explained_block2: "This works best with <b>large-context models</b> or small files that are critical to its knowledge-base.",
-            pin_explained_block3: "If you are not getting the answers you desire from Accelanova by default then pinning is a great way to get higher quality answers in a click.",
+            pin_explained_block3: "If you are not getting the answers you desire from Akili by default then pinning is a great way to get higher quality answers in a click.",
             accept: "Okay, got it",
         },
         watching: {
             what_watching: "What does watching a document do?",
-            watch_explained_block1: "When you <b>watch</b> a document in Accelanova we will <i>automatically</i> sync your document content from it's original source on regular intervals. This will automatically update the content in every workspace where this file is managed.",
+            watch_explained_block1: "When you <b>watch</b> a document in Akili we will <i>automatically</i> sync your document content from it's original source on regular intervals. This will automatically update the content in every workspace where this file is managed.",
             watch_explained_block2: "This feature currently supports online-based content and will not be available for manually uploaded documents.",
             watch_explained_block3_start: "You can manage what documents are watched from the ",
             watch_explained_block3_link: "File manager",
@@ -980,7 +980,7 @@ const TRANSLATIONS = {
             generic: {
                 unauthenticated: {
                     title: "Authentication Required",
-                    description: "You need to authenticate with the Accelanova Community Hub before publishing items.",
+                    description: "You need to authenticate with the Akili Community Hub before publishing items.",
                     button: "Connect to Community Hub",
                 },
             },

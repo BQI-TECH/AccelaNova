@@ -7,7 +7,7 @@ const TRANSLATIONS = {
         },
         llm: {
             title: "Preferência de LLM",
-            description: "Accelanova funciona com vários provedores de LLM. Este será o serviço que lidará com os chats.",
+            description: "Akili funciona com vários provedores de LLM. Este será o serviço que lidará com os chats.",
         },
         userSetup: {
             title: "Configuração do Usuário",
@@ -31,21 +31,21 @@ const TRANSLATIONS = {
             settingsHint: "Estas configurações podem ser alteradas a qualquer momento.",
         },
         survey: {
-            title: "Bem-vindo ao Accelanova",
-            description: "Ajude-nos a melhorar o Accelanova. Opcional.",
+            title: "Bem-vindo ao Akili",
+            description: "Ajude-nos a melhorar o Akili. Opcional.",
             email: "Qual seu email?",
-            useCase: "Como você usará o Accelanova?",
+            useCase: "Como você usará o Akili?",
             useCaseWork: "Para trabalho",
             useCasePersonal: "Uso pessoal",
             useCaseOther: "Outro",
-            comment: "Como você conheceu o Accelanova?",
+            comment: "Como você conheceu o Akili?",
             commentPlaceholder: "Reddit, Twitter, GitHub, YouTube, etc. - Conte como nos encontrou!",
             skip: "Pular Pesquisa",
             thankYou: "Obrigado pelo seu feedback!",
         },
         workspace: {
             title: "Crie seu primeiro workspace",
-            description: "Crie seu primeiro workspace e comece a usar o Accelanova.",
+            description: "Crie seu primeiro workspace e comece a usar o Akili.",
         },
     },
     common: {
@@ -118,15 +118,15 @@ const TRANSLATIONS = {
         },
     },
     welcomeMessage: {
-        part1: "Bem-vindo ao Accelanova, uma ferramenta de IA open-source da Mintplex Labs que transforma qualquer conteúdo em um chatbot treinado. Accelanova é um software BYOK (bring-your-own-keys), sem taxas ou assinaturas.",
-        part2: "Accelanova é a maneira mais fácil de integrar poderosas ferramentas de IA como OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB e outros serviços em um pacote simples.",
-        part3: "Accelanova pode rodar localmente na sua máquina com baixo consumo de recursos. Sem GPU necessária. Disponível para instalação na nuvem ou on-premises.\nO ecossistema de IA evolui rapidamente. Accelanova facilita seu uso.",
+        part1: "Bem-vindo ao Akili, uma ferramenta de IA open-source da Mintplex Labs que transforma qualquer conteúdo em um chatbot treinado. Akili é um software BYOK (bring-your-own-keys), sem taxas ou assinaturas.",
+        part2: "Akili é a maneira mais fácil de integrar poderosas ferramentas de IA como OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB e outros serviços em um pacote simples.",
+        part3: "Akili pode rodar localmente na sua máquina com baixo consumo de recursos. Sem GPU necessária. Disponível para instalação na nuvem ou on-premises.\nO ecossistema de IA evolui rapidamente. Akili facilita seu uso.",
         githubIssue: "Criar issue no GitHub",
         user1: "Como começar?!",
         part4: 'É simples. As coleções são organizadas em "Workspaces". Workspaces são grupos de arquivos, documentos, imagens, PDFs e outros arquivos que serão transformados em algo que os LLMs possam entender e usar em conversas.\n\nVocê pode adicionar ou remover arquivos a qualquer momento.',
         createWorkspace: "Crie seu primeiro workspace",
         user2: "Isso é como um Dropbox com IA? E os chats? É um chatbot, certo?",
-        part5: "Accelanova é mais que um Dropbox inteligente.\n\nAccelanova oferece duas formas de interagir com seus dados:\n\n<i>Consulta:</i> Seus chats retornarão dados encontrados nos documentos do workspace.\n\n<i>Conversacional:</i> Seus documentos + histórico de chat contribuem para o conhecimento do LLM em tempo real.\n\nVocê pode alternar entre os modos <i>durante o chat!</i>",
+        part5: "Akili é mais que um Dropbox inteligente.\n\nAkili oferece duas formas de interagir com seus dados:\n\n<i>Consulta:</i> Seus chats retornarão dados encontrados nos documentos do workspace.\n\n<i>Conversacional:</i> Seus documentos + histórico de chat contribuem para o conhecimento do LLM em tempo real.\n\nVocê pode alternar entre os modos <i>durante o chat!</i>",
         user3: "Uau, isso parece incrível, quero testar agora!",
         part6: "Divirta-se!",
         starOnGitHub: "Estrelar no GitHub",
@@ -137,7 +137,7 @@ const TRANSLATIONS = {
         checklist: {
             title: "Primeiros Passos",
             tasksLeft: "tarefas restantes",
-            completed: "Você está no caminho para se tornar um expert em Accelanova!",
+            completed: "Você está no caminho para se tornar um expert em Akili!",
             dismiss: "fechar",
             tasks: {
                 create_workspace: {
@@ -238,7 +238,7 @@ const TRANSLATIONS = {
             add: "Adicionar mensagem",
             save: "Salvar Mensagens",
             heading: "Explique para mim",
-            body: "os benefícios do Accelanova",
+            body: "os benefícios do Akili",
         },
         pfp: {
             title: "Imagem do Assistente",
@@ -405,7 +405,7 @@ const TRANSLATIONS = {
         },
         branding: {
             title: "Marca & Etiqueta Branca",
-            description: "Personalize sua instância do Accelanova com sua marca.",
+            description: "Personalize sua instância do Akili com sua marca.",
         },
         chat: {
             title: "Chat",
@@ -518,7 +518,7 @@ const TRANSLATIONS = {
         title: "Preferência de Transcrição",
         description: "Credenciais e configurações do seu provedor de transcrição. Essas chaves devem estar corretas para processar arquivos de mídia.",
         provider: "Provedor de Transcrição",
-        "warn-start": "Usar o modelo local whisper em máquinas com RAM ou CPU limitada pode travar o Accelanova.",
+        "warn-start": "Usar o modelo local whisper em máquinas com RAM ou CPU limitada pode travar o Akili.",
         "warn-recommend": "Recomendamos pelo menos 2GB de RAM e arquivos <10Mb.",
         "warn-end": "O modelo interno será baixado automaticamente no primeiro uso.",
     },
@@ -587,7 +587,7 @@ const TRANSLATIONS = {
     },
     privacy: {
         title: "Privacidade & Dados",
-        description: "Configurações de como provedores terceiros e o Accelanova lidam com seus dados.",
+        description: "Configurações de como provedores terceiros e o Akili lidam com seus dados.",
         llm: "Seleção de LLM",
         embedding: "Preferência de Vínculo",
         vector: "Banco de Dados Vetorial",
@@ -734,7 +734,7 @@ const TRANSLATIONS = {
             "placeholder-link": "https://exemplo.com",
             fetching: "Buscando...",
             "fetch-website": "Buscar site",
-            "privacy-notice": "Esses arquivos são enviados ao processador local do Accelanova. Não são compartilhados com terceiros.",
+            "privacy-notice": "Esses arquivos são enviados ao processador local do Akili. Não são compartilhados com terceiros.",
         },
         pinning: {
             what_pinning: "O que é fixar documento?",

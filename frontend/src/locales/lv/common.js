@@ -7,7 +7,7 @@ const TRANSLATIONS = {
         },
         llm: {
             title: "LLM preferences",
-            description: "Accelanova var strādāt ar daudziem LLM pakalpojumu sniedzējiem. Šis būs pakalpojums, kas apstrādās sarunas.",
+            description: "Akili var strādāt ar daudziem LLM pakalpojumu sniedzējiem. Šis būs pakalpojums, kas apstrādās sarunas.",
         },
         userSetup: {
             title: "Lietotāja iestatīšana",
@@ -31,21 +31,21 @@ const TRANSLATIONS = {
             settingsHint: "Šos iestatījumus var pārkonfigurēt jebkurā laikā iestatījumos.",
         },
         survey: {
-            title: "Laipni lūgti Accelanova",
-            description: "Palīdziet mums veidot Accelanova atbilstoši jūsu vajadzībām. Neobligāti.",
+            title: "Laipni lūgti Akili",
+            description: "Palīdziet mums veidot Akili atbilstoši jūsu vajadzībām. Neobligāti.",
             email: "Kāds ir jūsu e-pasts?",
-            useCase: "Kam izmantosiet Accelanova?",
+            useCase: "Kam izmantosiet Akili?",
             useCaseWork: "Darbam",
             useCasePersonal: "Personīgai lietošanai",
             useCaseOther: "Citam nolūkam",
-            comment: "Kā jūs uzzinājāt par Accelanova?",
+            comment: "Kā jūs uzzinājāt par Akili?",
             commentPlaceholder: "Reddit, Twitter, GitHub, YouTube utt. - Ļaujiet mums zināt, kā jūs mūs atradāt!",
             skip: "Izlaist aptauju",
             thankYou: "Paldies par jūsu atsauksmi!",
         },
         workspace: {
             title: "Izveidojiet savu pirmo darba telpu",
-            description: "Izveidojiet savu pirmo darba telpu un sāciet darbu ar Accelanova.",
+            description: "Izveidojiet savu pirmo darba telpu un sāciet darbu ar Akili.",
         },
     },
     common: {
@@ -118,15 +118,15 @@ const TRANSLATIONS = {
         },
     },
     welcomeMessage: {
-        part1: "Laipni lūgti Accelanova, Accelanova ir Mintplex Labs izstrādāts atvērtā koda AI rīks, kas pārvērš jebko par apmācītu čatbotu, kuru varat izmantot vaicājumiem un sarunām. Accelanova ir BYOK (bring-your-own-keys) programmatūra, tāpēc nav abonēšanas, maksas vai papildu maksājumu par šo programmatūru, izņemot pakalpojumus, kurus vēlaties izmantot ar to.",
-        part2: "Accelanova ir vienkāršākais veids, kā apvienot spēcīgus AI produktus, piemēram, OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB un citus pakalpojumus, kārtīgā paketē bez liekas piepūles, lai palielinātu savu produktivitāti 100 reizes.",
-        part3: "Accelanova var darboties pilnībā lokāli jūsu datorā ar minimālu piepūli, jūs pat nepamanīsiet tā klātbūtni! GPU nav nepieciešams. Pieejama arī mākoņa un lokālā instalācija.\nAI rīku ekosistēma kļūst spēcīgāka ar katru dienu. Accelanova to padara viegli izmantojamu.",
+        part1: "Laipni lūgti Akili, Akili ir Mintplex Labs izstrādāts atvērtā koda AI rīks, kas pārvērš jebko par apmācītu čatbotu, kuru varat izmantot vaicājumiem un sarunām. Akili ir BYOK (bring-your-own-keys) programmatūra, tāpēc nav abonēšanas, maksas vai papildu maksājumu par šo programmatūru, izņemot pakalpojumus, kurus vēlaties izmantot ar to.",
+        part2: "Akili ir vienkāršākais veids, kā apvienot spēcīgus AI produktus, piemēram, OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB un citus pakalpojumus, kārtīgā paketē bez liekas piepūles, lai palielinātu savu produktivitāti 100 reizes.",
+        part3: "Akili var darboties pilnībā lokāli jūsu datorā ar minimālu piepūli, jūs pat nepamanīsiet tā klātbūtni! GPU nav nepieciešams. Pieejama arī mākoņa un lokālā instalācija.\nAI rīku ekosistēma kļūst spēcīgāka ar katru dienu. Akili to padara viegli izmantojamu.",
         githubIssue: "Izveidot problēmpieteikumu GitHub",
         user1: "Kā man sākt?!",
         part4: 'Tas ir vienkārši. Visas kolekcijas ir organizētas grupās, ko sauc par "Darba telpām". Darba telpas ir failu, dokumentu, attēlu, PDF un citu failu grupējumi, kas tiks pārveidoti par kaut ko, ko LLM var saprast un izmantot sarunā.\n\nJūs varat pievienot un noņemt failus jebkurā laikā.',
         createWorkspace: "Izveidojiet savu pirmo darba telpu",
         user2: "Vai tas ir kaut kas līdzīgs AI dropbox vai tamlīdzīgi? Kā ar sarunām? Vai tas ir čatbots?",
-        part5: "Accelanova ir vairāk nekā vienkārši gudrāks Dropbox.\n\nAccelanova piedāvā divus veidus, kā runāt ar saviem datiem:\n\n<i>Vaicājums:</i> Jūsu sarunas atgriezīs datus vai secinājumus, kas atrasti dokumentos jūsu darba telpā, kam tam ir piekļuve. Vairāk dokumentu pievienošana darba telpai padara to gudrāku! \n\n<i>Saruna:</i> Jūsu dokumenti + jūsu notiekošā sarunu vēsture abi vienlaikus veido LLM zināšanas. Lieliski piemērots reāllaika teksta informācijas vai korekciju un pārpratumu pievienošanai, kas varētu rasties LLM. \n\nJūs varat pārslēgties starp abiem režīmiem \n<i>sarunas vidū!</i>",
+        part5: "Akili ir vairāk nekā vienkārši gudrāks Dropbox.\n\nAkili piedāvā divus veidus, kā runāt ar saviem datiem:\n\n<i>Vaicājums:</i> Jūsu sarunas atgriezīs datus vai secinājumus, kas atrasti dokumentos jūsu darba telpā, kam tam ir piekļuve. Vairāk dokumentu pievienošana darba telpai padara to gudrāku! \n\n<i>Saruna:</i> Jūsu dokumenti + jūsu notiekošā sarunu vēsture abi vienlaikus veido LLM zināšanas. Lieliski piemērots reāllaika teksta informācijas vai korekciju un pārpratumu pievienošanai, kas varētu rasties LLM. \n\nJūs varat pārslēgties starp abiem režīmiem \n<i>sarunas vidū!</i>",
         user3: "Vau, tas izklausās lieliski, ļaujiet man to izmēģināt tūlīt!",
         part6: "Izbaudi!",
         starOnGitHub: "Zvaigzne GitHub",
@@ -137,7 +137,7 @@ const TRANSLATIONS = {
         checklist: {
             title: "Darba sākšana",
             tasksLeft: "atlikušie uzdevumi",
-            completed: "Jūs esat ceļā, lai kļūtu par Accelanova ekspertu!",
+            completed: "Jūs esat ceļā, lai kļūtu par Akili ekspertu!",
             dismiss: "aizvērt",
             tasks: {
                 create_workspace: {
@@ -238,7 +238,7 @@ const TRANSLATIONS = {
             add: "Pievienot jaunu ziņu",
             save: "Saglabāt ziņas",
             heading: "Izskaidro man",
-            body: "Accelanova priekšrocības",
+            body: "Akili priekšrocības",
         },
         pfp: {
             title: "Asistenta profila attēls",
@@ -401,15 +401,15 @@ const TRANSLATIONS = {
     customization: {
         interface: {
             title: "UI preferences",
-                description: "Iestatiet savas UI preferences Accelanova.",
+                description: "Iestatiet savas UI preferences Akili.",
         },
         branding: {
             title: "Zīmolrade un identitāte",
-            description: "Pielāgojiet savu Accelanova instanci ar pielāgotu zīmolradi.",
+            description: "Pielāgojiet savu Akili instanci ar pielāgotu zīmolradi.",
         },
         chat: {
             title: "Saruna",
-            description: "Iestatiet savas sarunas preferences Accelanova.",
+            description: "Iestatiet savas sarunas preferences Akili.",
             auto_submit: {
                 title: "Automātiski iesniegt runas ievadi",
                 description: "Automātiski iesniegt runas ievadi pēc klusuma perioda",
@@ -446,7 +446,7 @@ const TRANSLATIONS = {
             },
             "display-language": {
                 title: "Displeja valoda",
-                description: "Izvēlieties vēlamo valodu Accelanova lietotāja saskarnei - kad pieejami tulkojumi.",
+                description: "Izvēlieties vēlamo valodu Akili lietotāja saskarnei - kad pieejami tulkojumi.",
             },
             logo: {
                 title: "Zīmola logotips",
@@ -463,7 +463,7 @@ const TRANSLATIONS = {
                 system: "sistēma",
                 user: "lietotājs",
                 message: "ziņojums",
-                assistant: "Accelanova čata asistents",
+                assistant: "Akili čata asistents",
                 "double-click": "Dubultklikšķis, lai rediģētu...",
                 save: "Saglabāt ziņojumus",
             },
@@ -489,7 +489,7 @@ const TRANSLATIONS = {
     },
     api: {
         title: "API atslēgas",
-        description: "API atslēgas ļauj to īpašniekam programmatiski piekļūt un pārvaldīt šo Accelanova instanci.",
+        description: "API atslēgas ļauj to īpašniekam programmatiski piekļūt un pārvaldīt šo Akili instanci.",
         link: "Lasīt API dokumentāciju",
         generate: "Ģenerēt jaunu API atslēgu",
         table: {
@@ -500,7 +500,7 @@ const TRANSLATIONS = {
     },
     llm: {
         title: "LLM preferences",
-        description: "Šie ir akreditācijas dati un iestatījumi jūsu vēlamajam LLM čata un iegulšanas pakalpojuma sniedzējam. Ir svarīgi, lai šīs atslēgas būtu aktuālas un pareizas, pretējā gadījumā Accelanova nedarbosies pareizi.",
+        description: "Šie ir akreditācijas dati un iestatījumi jūsu vēlamajam LLM čata un iegulšanas pakalpojuma sniedzējam. Ir svarīgi, lai šīs atslēgas būtu aktuālas un pareizas, pretējā gadījumā Akili nedarbosies pareizi.",
         provider: "LLM pakalpojuma sniedzējs",
         providers: {
             azure_openai: {
@@ -518,14 +518,14 @@ const TRANSLATIONS = {
         title: "Transkripcijas modeļa preferences",
         description: "Šie ir akreditācijas dati un iestatījumi jūsu vēlamajam transkripcijas modeļa pakalpojuma sniedzējam. Ir svarīgi, lai šīs atslēgas būtu aktuālas un pareizas, pretējā gadījumā multivides faili un audio netiks transkribēti.",
         provider: "Transkripcijas pakalpojuma sniedzējs",
-        "warn-start": "Izmantojot lokālo whisper modeli iekārtās ar ierobežotu RAM vai CPU var apstādināt Accelanova, apstrādājot multivides failus.",
+        "warn-start": "Izmantojot lokālo whisper modeli iekārtās ar ierobežotu RAM vai CPU var apstādināt Akili, apstrādājot multivides failus.",
         "warn-recommend": "Mēs iesakām vismaz 2GB RAM un augšupielādēt failus <10Mb.",
         "warn-end": "Iebūvētais modelis automātiski lejupielādēsies pirmajā lietošanas reizē.",
     },
     embedding: {
         title: "Iegulšanas preferences",
         "desc-start": "Izmantojot LLM, kas neatbalsta iebūvētu iegulšanas dzinēju - jums var būt nepieciešams papildus norādīt akreditācijas datus teksta iegulšanai.",
-        "desc-end": "Iegulšana ir process, ar kuru teksts tiek pārveidots vektoros. Šie akreditācijas dati ir nepieciešami, lai pārveidotu jūsu failus un vaicājumus formātā, kuru Accelanova var izmantot apstrādei.",
+        "desc-end": "Iegulšana ir process, ar kuru teksts tiek pārveidots vektoros. Šie akreditācijas dati ir nepieciešami, lai pārveidotu jūsu failus un vaicājumus formātā, kuru Akili var izmantot apstrādei.",
         provider: {
             title: "Iegulšanas pakalpojuma sniedzējs",
         },
@@ -546,7 +546,7 @@ const TRANSLATIONS = {
     },
     vector: {
         title: "Vektoru datubāze",
-        description: "Šie ir akreditācijas dati un iestatījumi tam, kā darbosies jūsu Accelanova instance. Ir svarīgi, lai šīs atslēgas būtu aktuālas un pareizas.",
+        description: "Šie ir akreditācijas dati un iestatījumi tam, kā darbosies jūsu Akili instance. Ir svarīgi, lai šīs atslēgas būtu aktuālas un pareizas.",
         provider: {
             title: "Vektoru datubāzes pakalpojuma sniedzējs",
             description: "LanceDB nav nepieciešama konfigurācija.",
@@ -587,7 +587,7 @@ const TRANSLATIONS = {
     },
     privacy: {
         title: "Privātums un datu apstrāde",
-        description: "Šī ir jūsu konfigurācija tam, kā savienotie trešo pušu pakalpojumu sniedzēji un Accelanova apstrādā jūsu datus.",
+        description: "Šī ir jūsu konfigurācija tam, kā savienotie trešo pušu pakalpojumu sniedzēji un Akili apstrādā jūsu datus.",
         llm: "LLM izvēle",
         embedding: "Iegulšanas preferences",
         vector: "Vektoru datubāze",
@@ -734,18 +734,18 @@ const TRANSLATIONS = {
             "placeholder-link": "https://example.com",
             fetching: "Iegūst...",
             "fetch-website": "Iegūt vietni",
-            "privacy-notice": "Šie faili tiks augšupielādēti dokumentu apstrādātājā, kas darbojas šajā Accelanova instancē. Šie faili netiek nosūtīti vai kopīgoti ar trešo pusi.",
+            "privacy-notice": "Šie faili tiks augšupielādēti dokumentu apstrādātājā, kas darbojas šajā Akili instancē. Šie faili netiek nosūtīti vai kopīgoti ar trešo pusi.",
         },
         pinning: {
             what_pinning: "Kas ir dokumentu piespraušana?",
-            pin_explained_block1: "Kad jūs <b>piespraudiet</b> dokumentu Accelanova, mēs ievietosim visu dokumenta saturu jūsu uzvednes logā, lai jūsu LLM to pilnībā saprastu.",
+            pin_explained_block1: "Kad jūs <b>piespraudiet</b> dokumentu Akili, mēs ievietosim visu dokumenta saturu jūsu uzvednes logā, lai jūsu LLM to pilnībā saprastu.",
             pin_explained_block2: "Tas vislabāk darbojas ar <b>liela konteksta modeļiem</b> vai maziem failiem, kas ir kritiski tā zināšanu bāzei.",
-            pin_explained_block3: "Ja jūs nesaņemat vēlamās atbildes no Accelanova pēc noklusējuma, tad piespraušana ir lielisks veids, kā iegūt kvalitatīvākas atbildes ar vienu klikšķi.",
+            pin_explained_block3: "Ja jūs nesaņemat vēlamās atbildes no Akili pēc noklusējuma, tad piespraušana ir lielisks veids, kā iegūt kvalitatīvākas atbildes ar vienu klikšķi.",
             accept: "Labi, sapratu",
         },
         watching: {
             what_watching: "Ko dara dokumenta novērošana?",
-            watch_explained_block1: "Kad jūs <b>novērojat</b> dokumentu Accelanova, mēs <i>automātiski</i> sinhronizēsim jūsu dokumenta saturu no tā sākotnējā avota regulāros intervālos. Tas automātiski atjauninās saturu katrā darba vietā, kur šis fails tiek pārvaldīts.",
+            watch_explained_block1: "Kad jūs <b>novērojat</b> dokumentu Akili, mēs <i>automātiski</i> sinhronizēsim jūsu dokumenta saturu no tā sākotnējā avota regulāros intervālos. Tas automātiski atjauninās saturu katrā darba vietā, kur šis fails tiek pārvaldīts.",
             watch_explained_block2: "Šī funkcija pašlaik atbalsta tiešsaistes saturu un nebūs pieejama manuāli augšupielādētiem dokumentiem.",
             watch_explained_block3_start: "Jūs varat pārvaldīt, kuri dokumenti tiek novēroti no ",
             watch_explained_block3_link: "Failu pārvaldnieka",
@@ -942,7 +942,7 @@ const TRANSLATIONS = {
         },
         password: {
             title: "Aizsardzība ar paroli",
-            description: "Aizsargājiet savu Accelanova instanci ar paroli. Ja aizmirsīsiet šo paroli, nav atgūšanas metodes, tāpēc pārliecinieties, ka saglabājat šo paroli.",
+            description: "Aizsargājiet savu Akili instanci ar paroli. Ja aizmirsīsiet šo paroli, nav atgūšanas metodes, tāpēc pārliecinieties, ka saglabājat šo paroli.",
             "password-label": "Instances paroles",
         },
     },

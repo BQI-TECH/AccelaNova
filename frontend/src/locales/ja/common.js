@@ -7,7 +7,7 @@ const TRANSLATIONS = {
         },
         llm: {
             title: "LLMの設定",
-            description: "Accelanovaは多くのLLMプロバイダーと連携できます。これがチャットを処理するサービスになります。",
+            description: "Akiliは多くのLLMプロバイダーと連携できます。これがチャットを処理するサービスになります。",
         },
         userSetup: {
             title: "ユーザー設定",
@@ -31,21 +31,21 @@ const TRANSLATIONS = {
             settingsHint: "これらの設定は、設定画面でいつでも再構成できます。",
         },
         survey: {
-            title: "Accelanovaへようこそ",
-            description: "Accelanovaをあなたのニーズに合わせて構築するためにご協力ください。任意です。",
+            title: "Akiliへようこそ",
+            description: "Akiliをあなたのニーズに合わせて構築するためにご協力ください。任意です。",
             email: "メールアドレスは何ですか？",
-            useCase: "Accelanovaを何に使用しますか？",
+            useCase: "Akiliを何に使用しますか？",
             useCaseWork: "仕事用",
             useCasePersonal: "個人用",
             useCaseOther: "その他",
-            comment: "Accelanovaをどのように知りましたか？",
+            comment: "Akiliをどのように知りましたか？",
             commentPlaceholder: "Reddit、Twitter、GitHub、YouTubeなど - どのように見つけたか教えてください！",
             skip: "アンケートをスキップ",
             thankYou: "フィードバックありがとうございます！",
         },
         workspace: {
             title: "最初のワークスペースを作成する",
-            description: "最初のワークスペースを作成して、Accelanovaを始めましょう。",
+            description: "最初のワークスペースを作成して、Akiliを始めましょう。",
         },
     },
     common: {
@@ -118,15 +118,15 @@ const TRANSLATIONS = {
         },
     },
     welcomeMessage: {
-        part1: "Accelanovaへようこそ。AccelanovaはMintplex LabsによるオープンソースのAIツールで、あらゆるものをトレーニングされたチャットボットに変換し、クエリやチャットが可能です。AccelanovaはBYOK（Bring-Your-Own-Keys）ソフトウェアであり、このソフトウェアを使用するためのサブスクリプション、料金、または費用はありません。",
-        part2: "Accelanovaは、OpenAi、GPT-4、LangChain、PineconeDB、ChromaDBなどの強力なAI製品を簡単に統合し、手間をかけずに生産性を100倍に向上させる最も簡単な方法です。",
-        part3: "Accelanovaは、あなたのマシン上で完全にローカルで動作し、ほとんど負荷をかけません。GPUは必要ありません。クラウドおよびオンプレミスでのインストールも可能です。\nAIツールエコシステムは日々強力になっています。Accelanovaはそれを簡単に利用できるようにします。",
+        part1: "Akiliへようこそ。AkiliはMintplex LabsによるオープンソースのAIツールで、あらゆるものをトレーニングされたチャットボットに変換し、クエリやチャットが可能です。AkiliはBYOK（Bring-Your-Own-Keys）ソフトウェアであり、このソフトウェアを使用するためのサブスクリプション、料金、または費用はありません。",
+        part2: "Akiliは、OpenAi、GPT-4、LangChain、PineconeDB、ChromaDBなどの強力なAI製品を簡単に統合し、手間をかけずに生産性を100倍に向上させる最も簡単な方法です。",
+        part3: "Akiliは、あなたのマシン上で完全にローカルで動作し、ほとんど負荷をかけません。GPUは必要ありません。クラウドおよびオンプレミスでのインストールも可能です。\nAIツールエコシステムは日々強力になっています。Akiliはそれを簡単に利用できるようにします。",
         githubIssue: "GitHubで問題を作成",
         user1: "どうやって始めればいいの？",
         part4: "簡単です。すべてのコレクションは「ワークスペース」と呼ばれるバケットに整理されています。ワークスペースは、ファイル、ドキュメント、画像、PDFなどを含むバケットで、これらがLLMが理解し、会話で使用できるものに変換されます。\n\nいつでもファイルを追加および削除できます。",
         createWorkspace: "最初のワークスペースを作成",
         user2: "これはAI版のDropboxみたいなもの？チャットはどうなの？チャットボットなんでしょ？",
-        part5: "Accelanovaは単なるスマートなDropbox以上のものです。\n\nAccelanovaはデータと対話する2つの方法を提供します：\n\n<i>クエリ：</i> チャットは、ワークスペース内のドキュメントで見つかったデータや推論を返します。ワークスペースにドキュメントを追加することで、より賢くなります！\n\n<i>会話：</i> ドキュメントと進行中のチャット履歴の両方が同時にLLMの知識に貢献します。リアルタイムのテキストベースの情報や修正を追加するのに最適です。\n\nチャット中にどちらのモードにも切り替えることができます。",
+        part5: "Akiliは単なるスマートなDropbox以上のものです。\n\nAkiliはデータと対話する2つの方法を提供します：\n\n<i>クエリ：</i> チャットは、ワークスペース内のドキュメントで見つかったデータや推論を返します。ワークスペースにドキュメントを追加することで、より賢くなります！\n\n<i>会話：</i> ドキュメントと進行中のチャット履歴の両方が同時にLLMの知識に貢献します。リアルタイムのテキストベースの情報や修正を追加するのに最適です。\n\nチャット中にどちらのモードにも切り替えることができます。",
         user3: "すごい、試してみたい！",
         part6: "楽しんでください！",
         starOnGitHub: "GitHubでスターを付ける",
@@ -157,7 +157,7 @@ const TRANSLATIONS = {
             add: "新しいメッセージを追加",
             save: "メッセージを保存",
             heading: "説明してください",
-            body: "Accelanovaの利点",
+            body: "Akiliの利点",
         },
         pfp: {
             title: "アシスタントのプロフィール画像",
@@ -319,7 +319,7 @@ const TRANSLATIONS = {
     },
     api: {
         title: "APIキー",
-        description: "APIキーにより、プログラム経由でこのAccelanovaインスタンスにアクセスおよび管理できます。",
+        description: "APIキーにより、プログラム経由でこのAkiliインスタンスにアクセスおよび管理できます。",
         link: "APIドキュメントを読む",
         generate: "新しいAPIキーを生成",
         table: {
@@ -330,7 +330,7 @@ const TRANSLATIONS = {
     },
     llm: {
         title: "LLMの設定",
-        description: "これは、お好みのLLMチャットおよび埋め込みプロバイダー用の認証情報と設定です。これらのキーが最新かつ正確でない場合、Accelanovaは正しく動作しません。",
+        description: "これは、お好みのLLMチャットおよび埋め込みプロバイダー用の認証情報と設定です。これらのキーが最新かつ正確でない場合、Akiliは正しく動作しません。",
         provider: "LLMプロバイダー",
         providers: {
             azure_openai: {
@@ -348,14 +348,14 @@ const TRANSLATIONS = {
         title: "文字起こしモデルの設定",
         description: "これは、お好みの文字起こしモデルプロバイダー用の認証情報と設定です。これらのキーが最新かつ正確でない場合、メディアファイルや音声が正しく文字起こしされません。",
         provider: "文字起こしプロバイダー",
-        "warn-start": "RAMやCPUが限られたマシンでローカルのWhisperモデルを使用すると、メディアファイルの処理中にAccelanovaが停止する可能性があります。",
+        "warn-start": "RAMやCPUが限られたマシンでローカルのWhisperモデルを使用すると、メディアファイルの処理中にAkiliが停止する可能性があります。",
         "warn-recommend": "少なくとも2GBのRAMが推奨され、ファイルサイズは10Mb未満であることをお勧めします。",
         "warn-end": "組み込みモデルは初回使用時に自動的にダウンロードされます。",
     },
     embedding: {
         title: "埋め込み設定",
         "desc-start": "LLMがネイティブに埋め込みエンジンをサポートしていない場合、テキストの埋め込み用に追加の認証情報を指定する必要がある場合があります。",
-        "desc-end": "埋め込みとは、テキストをベクトルに変換するプロセスです。これらの認証情報は、ファイルやプロンプトをAccelanovaが処理できるフォーマットに変換するために必要です。",
+        "desc-end": "埋め込みとは、テキストをベクトルに変換するプロセスです。これらの認証情報は、ファイルやプロンプトをAkiliが処理できるフォーマットに変換するために必要です。",
         provider: {
             title: "埋め込みプロバイダー",
         },
@@ -376,7 +376,7 @@ const TRANSLATIONS = {
     },
     vector: {
         title: "ベクターデータベース設定",
-        description: "これは、Accelanovaインスタンスの動作方法用の認証情報と設定です。これらのキーが最新で正確であることが重要です。",
+        description: "これは、Akiliインスタンスの動作方法用の認証情報と設定です。これらのキーが最新で正確であることが重要です。",
         provider: {
             title: "ベクターデータベースプロバイダー",
             description: "LanceDBの場合、特に設定は必要ありません。",
@@ -417,7 +417,7 @@ const TRANSLATIONS = {
     },
     privacy: {
         title: "プライバシーとデータ処理",
-        description: "これは、接続されているサードパーティプロバイダーとAccelanovaがデータをどのように処理するかの設定です。",
+        description: "これは、接続されているサードパーティプロバイダーとAkiliがデータをどのように処理するかの設定です。",
         llm: "LLM選択",
         embedding: "埋め込み設定",
         vector: "ベクターデータベース",
@@ -553,18 +553,18 @@ const TRANSLATIONS = {
             "placeholder-link": "https://example.com",
             fetching: "取得中...",
             "fetch-website": "ウェブサイトを取得",
-            "privacy-notice": "これらのファイルは、このAccelanovaインスタンス上のドキュメント処理機能にアップロードされます。第三者に送信・共有されることはありません。",
+            "privacy-notice": "これらのファイルは、このAkiliインスタンス上のドキュメント処理機能にアップロードされます。第三者に送信・共有されることはありません。",
         },
         pinning: {
             what_pinning: "ドキュメントのピン留めとは？",
-            pin_explained_block1: "Accelanovaでドキュメントを<b>ピン留め</b>すると、その内容全体がプロンプトウィンドウに挿入され、LLMがしっかり理解できるようになります。",
+            pin_explained_block1: "Akiliでドキュメントを<b>ピン留め</b>すると、その内容全体がプロンプトウィンドウに挿入され、LLMがしっかり理解できるようになります。",
             pin_explained_block2: "<b>大きなコンテキストを持つモデル</b>や、重要な小さなファイルで特に効果的です。",
             pin_explained_block3: "デフォルトのままでは満足できる回答が得られない場合、ピン留めを活用するとより高品質な回答が得られます。",
             accept: "わかりました",
         },
         watching: {
             what_watching: "ドキュメントのウォッチとは？",
-            watch_explained_block1: "Accelanovaでドキュメントを<b>ウォッチ</b>すると、元のソースから定期的に内容が<i>自動的に</i>同期されます。管理しているすべてのワークスペースで内容が自動更新されます。",
+            watch_explained_block1: "Akiliでドキュメントを<b>ウォッチ</b>すると、元のソースから定期的に内容が<i>自動的に</i>同期されます。管理しているすべてのワークスペースで内容が自動更新されます。",
             watch_explained_block2: "この機能は現在オンラインベースのコンテンツのみ対応しており、手動アップロードしたドキュメントには利用できません。",
             watch_explained_block3_start: "ウォッチしているドキュメントの管理は",
             watch_explained_block3_link: "ファイルマネージャー",
@@ -754,7 +754,7 @@ const TRANSLATIONS = {
         checklist: {
             title: "はじめに",
             tasksLeft: "残りのタスク",
-            completed: "Accelanovaの達人への道を進んでいます！",
+            completed: "Akiliの達人への道を進んでいます！",
             dismiss: "閉じる",
             tasks: {
                 create_workspace: {
@@ -942,7 +942,7 @@ const TRANSLATIONS = {
         },
         password: {
             title: "パスワード保護",
-            description: "Accelanovaインスタンスをパスワードで保護します。これを忘れた場合、回復方法はないため、このパスワードを必ず保存してください。",
+            description: "Akiliインスタンスをパスワードで保護します。これを忘れた場合、回復方法はないため、このパスワードを必ず保存してください。",
             "password-label": "インスタンスパスワード",
         },
     },
