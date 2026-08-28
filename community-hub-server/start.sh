@@ -4,7 +4,7 @@
 # This script handles initial setup and starts the server
 
 echo "╔════════════════════════════════════════════════════════╗"
-echo "║   Accelanova Community Hub - Startup Script           ║"
+echo "║   Akili Community Hub - Startup Script           ║"
 echo "╚════════════════════════════════════════════════════════╝"
 echo ""
 

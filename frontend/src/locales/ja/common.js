@@ -118,7 +118,7 @@ const TRANSLATIONS = {
         },
     },
     welcomeMessage: {
-        part1: "Akiliへようこそ。AkiliはMintplex LabsによるオープンソースのAIツールで、あらゆるものをトレーニングされたチャットボットに変換し、クエリやチャットが可能です。AkiliはBYOK（Bring-Your-Own-Keys）ソフトウェアであり、このソフトウェアを使用するためのサブスクリプション、料金、または費用はありません。",
+        part1: "Akiliへようこそ。AkiliはBQI-TECHによるオープンソースのAIツールで、あらゆるものをトレーニングされたチャットボットに変換し、クエリやチャットが可能です。AkiliはBYOK（Bring-Your-Own-Keys）ソフトウェアであり、このソフトウェアを使用するためのサブスクリプション、料金、または費用はありません。",
         part2: "Akiliは、OpenAi、GPT-4、LangChain、PineconeDB、ChromaDBなどの強力なAI製品を簡単に統合し、手間をかけずに生産性を100倍に向上させる最も簡単な方法です。",
         part3: "Akiliは、あなたのマシン上で完全にローカルで動作し、ほとんど負荷をかけません。GPUは必要ありません。クラウドおよびオンプレミスでのインストールも可能です。\nAIツールエコシステムは日々強力になっています。Akiliはそれを簡単に利用できるようにします。",
         githubIssue: "GitHubで問題を作成",
@@ -130,7 +130,7 @@ const TRANSLATIONS = {
         user3: "すごい、試してみたい！",
         part6: "楽しんでください！",
         starOnGitHub: "GitHubでスターを付ける",
-        contact: "Mintplex Labsに連絡",
+        contact: "BQI-TECHに連絡",
     },
     "new-workspace": {
         title: "新しいワークスペース",

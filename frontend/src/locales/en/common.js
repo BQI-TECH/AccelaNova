@@ -124,7 +124,7 @@ const TRANSLATIONS = {
     },
 
     welcomeMessage: {
-        part1: "Welcome to Akili, Akili is an open-source AI tool by Mintplex Labs that turns anything into a trained chatbot you can query and chat with. Akili is a BYOK (bring-your-own-keys) software so there is no subscription, fee, or charges for this software outside of the services you want to use with it.",
+        part1: "Welcome to Akili, an open-source AI tool by BQI-TECH that turns anything into a trained chatbot you can query and chat with. Akili is a BYOK (bring-your-own-keys) software so there is no subscription, fee, or charges for this software outside of the services you want to use with it.",
         part2: "Akili is the easiest way to put powerful AI products like OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB, and other services together in a neat package with no fuss to increase your productivity by 100x.",
         part3: "Akili can run totally locally on your machine with little overhead you wont even notice it's there! No GPU needed. Cloud and on-premises installation is available as well.\nThe AI tooling ecosystem gets more powerful everyday. Akili makes it easy to use.",
         githubIssue: "Create an issue on GitHub",
@@ -136,7 +136,7 @@ const TRANSLATIONS = {
         user3: "Wow, this sounds amazing, let me try it out already!",
         part6: "Have Fun!",
         starOnGitHub: "Star on GitHub",
-        contact: "Contact Mintplex Labs",
+        contact: "Contact BQI-TECH",
     },
 
     "main-page": {

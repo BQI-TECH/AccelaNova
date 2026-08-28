@@ -1,4 +1,4 @@
-# Setting up `PGVector` for Accelanova
+# Setting up `PGVector` for Akili
 
 Setting up PGVector for anythingllm to use as your vector database is quite easy. At a minimum, you will need the following:
 
@@ -28,19 +28,19 @@ First, obtain a valid connection string for the user, credentials, and db you wa
 eg: `postgresql://dbuser:dbuserpass@localhost:5432/yourdb`
 
 > [!IMPORTANT]
-> If you have an existing table that you want to use as a vector database, Accelanova **requires** that the table be
+> If you have an existing table that you want to use as a vector database, Akili **requires** that the table be
 > at least minimally conform to the expected schema - this can be seen in the [index.js](./index.js) file.
 
-_optional_ - set a table name you wish to have Accelanova store vectors to. By default this is `anythingllm_vectors`
+_optional_ - set a table name you wish to have Akili store vectors to. By default this is `anythingllm_vectors`
 
 ## Common Questions
 
-### I cannot connect to the DB (Running Accelanova in Docker)
+### I cannot connect to the DB (Running Akili in Docker)
 
-If you are running Accelanova in Docker, you will need to ensure that the DB is accessible from the container.
+If you are running Akili in Docker, you will need to ensure that the DB is accessible from the container.
 If you are running your DB in another Docker container **or** on the host machine, you will need to ensure that the container can access the DB.
 
-`localhost` will not work in this case as it will attempt to connect to the DB _inside the Accelanova container_ instead of the host machine or another container.
+`localhost` will not work in this case as it will attempt to connect to the DB _inside the Akili container_ instead of the host machine or another container.
 
 You will need to use the `host.docker.internal` (or `172.17.0.1` on Linux/Ubuntu) address.
 
@@ -54,13 +54,13 @@ postgresql://dbuser:dbuserpass@localhost:5432/yourdb => postgresql://dbuser:dbus
 
 ### Can I use an existing table as a vector database?
 
-Yes, you can use an existing table as a vector database. However, Accelanova **requires** that the table be at least minimally conform to the expected schema - this can be seen in the [index.js](./index.js) file.
+Yes, you can use an existing table as a vector database. However, Akili **requires** that the table be at least minimally conform to the expected schema - this can be seen in the [index.js](./index.js) file.
 
-It is **absolutely critical** that the `embedding` column's `VECTOR(XXXX)` dimensions match the dimension of the embedder in Accelanova. The default embedding model is 384 dimensions. However, if you are using a custom embedder, you will need to ensure that the dimension value is set correctly.
+It is **absolutely critical** that the `embedding` column's `VECTOR(XXXX)` dimensions match the dimension of the embedder in Akili. The default embedding model is 384 dimensions. However, if you are using a custom embedder, you will need to ensure that the dimension value is set correctly.
 
 ### Validate the connection to the database
 
-When setting the connection string in or table name via the Accelanova UI, the following validations will be attempted:
+When setting the connection string in or table name via the Akili UI, the following validations will be attempted:
 
 - Validate the connection string
 - Validate the table name
@@ -69,17 +69,17 @@ When setting the connection string in or table name via the Accelanova UI, the f
 
 ### My embedding table is not present in the DB
 
-The embedding storage table is created by Accelanova **on the first upsert** of a vector. If you have not yet embedding any documents, the table will not be present in the DB.
+The embedding storage table is created by Akili **on the first upsert** of a vector. If you have not yet embedding any documents, the table will not be present in the DB.
 
 ### How do I reset my vector database?
 
 _at the workspace level in Settings > Vector Database_
 
-You can use the "Reset Vector Database" button in the Accelanova UI to reset your vector database. This will drop all vectors within that workspace, but the table will remain in the DB.
+You can use the "Reset Vector Database" button in the Akili UI to reset your vector database. This will drop all vectors within that workspace, but the table will remain in the DB.
 
 _reset the vector database at the db level_
 
-For this, you will need to `DROP TABLE` from the command line or however you manage your DB. Once the table is dropped, it will be recreated by Accelanova on the next upsert.
+For this, you will need to `DROP TABLE` from the command line or however you manage your DB. Once the table is dropped, it will be recreated by Akili on the next upsert.
 
 ## Troubleshooting
 
@@ -96,14 +96,14 @@ For this, you will need to `DROP TABLE` from the command line or however you man
 ### Cannot insert vector
 
 - Ensure the user has `INSERT` permissions in the database
-- Ensure the table has a dimension value set and this matches the dimension of the embedder in Accelanova
+- Ensure the table has a dimension value set and this matches the dimension of the embedder in Akili
 - Ensure the table has a vector column set
 
 ### Cannot query vector
 
 - Ensure the user has `SELECT` permissions in the database
 - Ensure the table has a vector column set
-- Ensure the table has a dimension value set and this matches the dimension of the embedder in Accelanova
+- Ensure the table has a dimension value set and this matches the dimension of the embedder in Akili
 
 ### "type 'vector' does not exist" issues with PGVector
 

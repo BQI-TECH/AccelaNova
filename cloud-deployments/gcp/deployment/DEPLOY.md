@@ -1,6 +1,6 @@
-# How to deploy a private Accelanova instance on GCP
+# How to deploy a private Akili instance on GCP
 
-With a GCP account you can easily deploy a private Accelanova instance on GCP. This will create a url that you can access from any browser over HTTP (HTTPS not supported). This single instance will run on your own keys and they will not be exposed - however if you want your instance to be protected it is highly recommend that you set a password once setup is complete.
+With a GCP account you can easily deploy a private Akili instance on GCP. This will create a url that you can access from any browser over HTTP (HTTPS not supported). This single instance will run on your own keys and they will not be exposed - however if you want your instance to be protected it is highly recommend that you set a password once setup is complete.
 
 The output of this cloudformation stack will be:
 
@@ -26,26 +26,26 @@ Open your terminal
 
 ```
 
-gcloud deployment-manager deployments create accelanova-deployment --config gcp/deployment/gcp_deploy_anything_llm.yaml
+gcloud deployment-manager deployments create akili-deployment --config gcp/deployment/gcp_deploy_anything_llm.yaml
 
 ```
 
 Once you execute these steps, the CLI will initiate the deployment process on GCP based on your configuration file. You can monitor the deployment status and view the outputs using the Google Cloud Console or the Deployment Manager CLI commands.
 
 ```
-gcloud compute instances get-serial-port-output accelanova-instance
+gcloud compute instances get-serial-port-output akili-instance
 ```
 
 ssh into the instance
 
 ```
-gcloud compute ssh accelanova-instance
+gcloud compute ssh akili-instance
 ```
 
 Delete the deployment
 
 ```
-gcloud deployment-manager deployments delete accelanova-deployment
+gcloud deployment-manager deployments delete akili-deployment
 ```
 
 ## Please read this notice before submitting issues about your deployment

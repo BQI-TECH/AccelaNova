@@ -3,7 +3,7 @@ const MongoDB = require('../database/mongodb');
 const UserModel = require('../models/UserMongo');
 const ItemModel = require('../models/ItemMongo');
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/accelanova-hub';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/akili-hub';
 
 async function seed() {
   console.log('Seeding database...');

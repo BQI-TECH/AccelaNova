@@ -1,7 +1,7 @@
 const express = require('express');
 
 /**
- * AnythingLLM Proxy routes - These mirror the endpoints that AnythingLLM backend provides
+ * Akili Proxy routes - These mirror the endpoints that Akili backend provides
  * These are used when the frontend calls the hub directly through the backend
  */
 function anythingllmProxyRoutes(itemModel, userModel, auth, validation, storage, baseUrl) {
@@ -39,7 +39,7 @@ function anythingllmProxyRoutes(itemModel, userModel, auth, validation, storage,
                 return res.status(404).json({ success: false, error: 'Item not found' });
             }
 
-            // Just return success - the actual application happens on AnythingLLM side
+            // Just return success - the actual application happens on Akili side
             res.json({ success: true, item, error: null });
         } catch (error) {
             console.error('Error applying item:', error);

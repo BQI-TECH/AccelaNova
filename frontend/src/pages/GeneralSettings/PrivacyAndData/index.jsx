@@ -188,14 +188,8 @@ function TelemetryLogs({ settings }) {
             All events do not record IP-address and contain{" "}
             <b>no identifying</b> content, settings, chats, or other non-usage
             based information. To see the list of event tags collected you can
-            look on{" "}
-            <a
-              href="https://github.com/search?q=repo%3AMintplex-Labs%2Faccelanova%20.sendTelemetry(&type=code"
-              className="underline text-blue-400"
-              target="_blank"
-            >
-              GitHub here
-            </a>
+            look in the codebase for{" "}
+            <code className="text-blue-400">Telemetry.sendTelemetry</code>
             .
           </p>
           <p className="text-theme-text-secondary text-xs rounded-lg w-96">

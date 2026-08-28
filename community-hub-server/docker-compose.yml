@@ -3,7 +3,7 @@ version: '3.8'
 services:
   community-hub:
     build: .
-    container_name: accelanova-community-hub
+    container_name: akili-community-hub
     ports:
       - "5001:5001"
     environment:
@@ -21,7 +21,7 @@ services:
       - hub-storage:/app/storage
     restart: unless-stopped
     networks:
-      - accelanova-network
+      - akili-network
 
 volumes:
   hub-data:
@@ -30,7 +30,7 @@ volumes:
     driver: local
 
 networks:
-  accelanova-network:
+  akili-network:
     driver: bridge
 
 

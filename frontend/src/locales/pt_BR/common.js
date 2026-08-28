@@ -118,7 +118,7 @@ const TRANSLATIONS = {
         },
     },
     welcomeMessage: {
-        part1: "Bem-vindo ao Akili, uma ferramenta de IA open-source da Mintplex Labs que transforma qualquer conteúdo em um chatbot treinado. Akili é um software BYOK (bring-your-own-keys), sem taxas ou assinaturas.",
+        part1: "Bem-vindo ao Akili, uma ferramenta de IA open-source da BQI-TECH que transforma qualquer conteúdo em um chatbot treinado. Akili é um software BYOK (bring-your-own-keys), sem taxas ou assinaturas.",
         part2: "Akili é a maneira mais fácil de integrar poderosas ferramentas de IA como OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB e outros serviços em um pacote simples.",
         part3: "Akili pode rodar localmente na sua máquina com baixo consumo de recursos. Sem GPU necessária. Disponível para instalação na nuvem ou on-premises.\nO ecossistema de IA evolui rapidamente. Akili facilita seu uso.",
         githubIssue: "Criar issue no GitHub",
@@ -130,7 +130,7 @@ const TRANSLATIONS = {
         user3: "Uau, isso parece incrível, quero testar agora!",
         part6: "Divirta-se!",
         starOnGitHub: "Estrelar no GitHub",
-        contact: "Contate a Mintplex Labs",
+        contact: "Contate a BQI-TECH",
     },
     "main-page": {
         noWorkspaceError: "Por favor, crie um workspace antes de iniciar um chat.",

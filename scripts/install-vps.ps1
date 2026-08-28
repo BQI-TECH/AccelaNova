@@ -16,7 +16,7 @@ param(
     [ValidateSet('install', 'resume', 'update', 'start', 'stop', 'scan')]
     [string]$Mode = 'install',
 
-    [string]$RepoUrl = 'https://github.com/BQI-TECH/AccelaNova.git',
+    [string]$RepoUrl = 'https://github.com/BQI-TECH/AccelaNova',
     [string]$RepoBranch = 'main',
     [string]$InstallDir = 'C:\Akili',
     [int]$ServerPort = 3001,

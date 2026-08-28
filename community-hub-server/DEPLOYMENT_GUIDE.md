@@ -1,4 +1,4 @@
-# Accelanova Community Hub - Complete Deployment Guide
+# Akili Community Hub - Complete Deployment Guide
 
 ## 🎉 Congratulations!
 
@@ -17,7 +17,7 @@ Your custom Community Hub is **fully functional** and ready for production! All 
 - ✓ Get Item by Import ID
 - ✓ Update Items
 - ✓ Delete Items
-- ✓ Apply Items (AnythingLLM Integration)
+- ✓ Apply Items (Akili Integration)
 - ✓ Firebase Cloud Functions Path Compatibility
 
 ### Web UI
@@ -61,11 +61,11 @@ The hub will start on `http://localhost:5001`
    - Password: `changeme123`
 3. You'll be redirected to `/me` where you can see and copy your API key
 
-### 3. Connect AnythingLLM to Your Hub
+### 3. Connect Akili to Your Hub
 
 #### Option A: Environment Variables (Recommended for Production)
 
-Add to your AnythingLLM `.env` file:
+Add to your Akili `.env` file:
 
 ```bash
 # In server/.env or server/.env.development
@@ -84,7 +84,7 @@ CommunityHub: {
 }
 ```
 
-### 4. Restart AnythingLLM Server
+### 4. Restart Akili Server
 
 ```bash
 cd server
@@ -93,7 +93,7 @@ yarn dev  # or npm run dev
 
 ### 5. Test the Integration
 
-Open AnythingLLM and go to:
+Open Akili and go to:
 
 ```
 Settings → Community Hub
@@ -130,7 +130,7 @@ You should see:
 | DELETE | `/v1/items/:itemId`              | Delete item               |
 | GET    | `/v1/:entityType/:entityId/pull` | Get specific item         |
 
-### AnythingLLM Integration Endpoints
+### Akili Integration Endpoints
 
 | Method | Path                      | Description             |
 | ------ | ------------------------- | ----------------------- |
@@ -232,7 +232,7 @@ This creates:
 
    - Use a reverse proxy (nginx, Apache)
    - Get SSL certificate (Let's Encrypt)
-   - Update AnythingLLM to use `https://`
+   - Update Akili to use `https://`
 
 4. **Rate Limiting**
    Current settings (in `.env`):
@@ -254,15 +254,15 @@ This creates:
 cd community-hub-server
 
 # Build image
-docker build -t accelanova-hub .
+docker build -t akili-hub .
 
 # Run container
 docker run -d \
   -p 5001:5001 \
   -e MONGODB_URI="your-mongodb-connection-string" \
   -e JWT_SECRET="your-jwt-secret" \
-  --name accelanova-hub \
-  accelanova-hub
+  --name akili-hub \
+  akili-hub
 ```
 
 ### Using Docker Compose
@@ -284,7 +284,7 @@ Expected response:
 ```json
 {
   "status": "ok",
-  "service": "Accelanova Community Hub",
+  "service": "Akili Community Hub",
   "version": "1.0.0",
   "timestamp": "2025-10-28T14:45:00.000Z"
 }
@@ -297,19 +297,19 @@ Expected response:
 tail -f community-hub-server/server.log
 
 # If running with Docker
-docker logs -f accelanova-hub
+docker logs -f akili-hub
 ```
 
 ## 🔧 Troubleshooting
 
-### AnythingLLM Can't Connect to Hub
+### Akili Can't Connect to Hub
 
-**Problem:** "Failed to fetch" errors in AnythingLLM
+**Problem:** "Failed to fetch" errors in Akili
 
 **Solutions:**
 
 1. Check hub is running: `curl http://localhost:5001/health`
-2. Verify environment variable in AnythingLLM:
+2. Verify environment variable in Akili:
    ```bash
    echo $COMMUNITY_HUB_API_URL
    # Should output: http://localhost:5001/v1
@@ -349,7 +349,7 @@ docker logs -f accelanova-hub
    node scripts/check-api-key.js admin@example.com
    ```
 
-### Items Not Appearing in AnythingLLM
+### Items Not Appearing in Akili
 
 **Problem:** Hub items don't show in Community Hub page
 
@@ -359,14 +359,14 @@ docker logs -f accelanova-hub
    ```bash
    curl http://localhost:5001/v1/explore
    ```
-2. Check AnythingLLM is configured correctly
+2. Check Akili is configured correctly
 3. Clear browser cache
 4. Check browser console for errors
 
 ## 📚 Additional Resources
 
 - [README.md](README.md) - Main documentation
-- [INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md) - AnythingLLM integration
+- [INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md) - Akili integration
 - [ENDPOINTS.md](ENDPOINTS.md) - Complete API reference
 - [QUICK_START.md](QUICK_START.md) - Quick setup guide
 
@@ -377,7 +377,7 @@ docker logs -f accelanova-hub
 - User authentication & authorization
 - Item management (CRUD operations)
 - Public item browsing
-- AnythingLLM integration endpoints
+- Akili integration endpoints
 - Web UI for login & profile
 - MongoDB database integration
 - Firebase path compatibility
@@ -400,7 +400,7 @@ docker logs -f accelanova-hub
 ## 🎯 Success Criteria - ALL MET! ✅
 
 - ✅ All 15 core tests passing
-- ✅ AnythingLLM can connect and browse items
+- ✅ Akili can connect and browse items
 - ✅ Users can create and manage items
 - ✅ Authentication and authorization working
 - ✅ Web UI functional
@@ -420,7 +420,7 @@ If you encounter issues:
 
 **Congratulations! Your Community Hub is production-ready!** 🎉
 
-Built with ❤️ for AnythingLLM
+Built with ❤️ for the Akili community
 
 
 

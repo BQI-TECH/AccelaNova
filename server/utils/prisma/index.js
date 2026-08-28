@@ -15,7 +15,7 @@ if (process.env.DESKTOP_APP === 'true' && process.env.STORAGE_DIR) {
   const path = require('path');
   // Ensure forward slashes for file URL even on Windows
   const storageDir = process.env.STORAGE_DIR.replace(/\\/g, '/');
-  const dbUrl = `file:${storageDir}/anythingllm.db`;
+  const dbUrl = `file:${storageDir}/akili.db`;
   
   console.log(`[Prisma] Running in Desktop mode. Using database at: ${dbUrl}`);
   

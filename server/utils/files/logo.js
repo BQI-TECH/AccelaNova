@@ -4,8 +4,8 @@ const { getType } = require("mime");
 const { v4 } = require("uuid");
 const { SystemSettings } = require("../../models/systemSettings");
 const { normalizePath, isWithin } = require(".");
-const LOGO_FILENAME = "accelanova.png";
-const LOGO_FILENAME_DARK = "accelanova-dark.png";
+const LOGO_FILENAME = "akili.png";
+const LOGO_FILENAME_DARK = "akili-dark.png";
 
 /**
  * Checks if the filename is the default logo filename for dark or light mode.

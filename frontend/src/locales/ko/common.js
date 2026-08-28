@@ -118,7 +118,7 @@ const TRANSLATIONS = {
         },
     },
     welcomeMessage: {
-        part1: "Akili에 오신 것을 환영합니다! Akili은 Mintplex Labs에서 개발한 오픈소스 AI 도구로, 어떤 것이든 학습된 챗봇으로 만들어 대화하고 질문할 수 있습니다. Akili은 BYOK(키 직접 제공) 방식의 소프트웨어로, 사용자가 원하는 외부 서비스 이용료 외에는 별도의 구독이나 비용이 없습니다.",
+        part1: "Akili에 오신 것을 환영합니다! Akili은 BQI-TECH에서 개발한 오픈소스 AI 도구로, 어떤 것이든 학습된 챗봇으로 만들어 대화하고 질문할 수 있습니다. Akili은 BYOK(키 직접 제공) 방식의 소프트웨어로, 사용자가 원하는 외부 서비스 이용료 외에는 별도의 구독이나 비용이 없습니다.",
         part2: "Akili은 OpenAI, GPT-4, LangChain, PineconeDB, ChromaDB 등 강력한 AI 서비스들을 손쉽게 하나로 묶어 생산성을 100배 높여주는 가장 쉬운 방법입니다.",
         part3: "Akili은 별도의 GPU 없이도 여러분의 컴퓨터에서 가볍게 완전히 로컬로 실행할 수 있습니다. 클라우드 및 온프레미스 설치도 지원합니다.\nAI 도구 생태계는 매일 더 강력해지고 있습니다. Akili은 이를 쉽게 활용할 수 있게 도와줍니다.",
         githubIssue: "GitHub에서 이슈 만들기",
@@ -130,7 +130,7 @@ const TRANSLATIONS = {
         user3: "와, 정말 대단하네요! 바로 써보고 싶어요!",
         part6: "즐겁게 사용하세요!",
         starOnGitHub: "GitHub에 스타 누르기",
-        contact: "Mintplex Labs에 문의하기",
+        contact: "BQI-TECH에 문의하기",
     },
     "main-page": {
         noWorkspaceError: "채팅을 시작하기 전에 워크스페이스를 먼저 만들어주세요.",

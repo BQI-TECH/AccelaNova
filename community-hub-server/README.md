@@ -1,6 +1,6 @@
-# Accelanova Community Hub API Server
+# Akili Community Hub API Server
 
-A custom, self-hosted community hub API server for Accelanova/AnythingLLM. This allows you to create your own marketplace for sharing system prompts, slash commands, agent skills, and agent flows.
+A custom, self-hosted community hub API server for Akili. This allows you to create your own marketplace for sharing system prompts, slash commands, agent skills, and agent flows.
 
 ## Features
 
@@ -98,11 +98,11 @@ INITIAL_ADMIN_EMAIL=admin@example.com
 INITIAL_ADMIN_PASSWORD=changeme123
 ```
 
-## Connecting to Accelanova/AnythingLLM
+## Connecting to Akili
 
-### Update the AnythingLLM Server
+### Update the Akili Server
 
-In your AnythingLLM server code, modify `server/models/communityHub.js`:
+In your Akili server code, modify `server/models/communityHub.js`:
 
 ```javascript
 apiBase: process.env.COMMUNITY_HUB_API_URL ||
@@ -125,7 +125,7 @@ If hosting remotely, update `BASE_URL` in the hub's `.env`:
 BASE_URL=https://your-domain.com
 ```
 
-And in AnythingLLM:
+And in Akili:
 
 ```bash
 COMMUNITY_HUB_API_URL=https://your-domain.com/v1
@@ -350,8 +350,8 @@ MIT License - Feel free to use and modify for your needs.
 For issues related to:
 
 - **This Hub Server**: Create an issue in this repository
-- **AnythingLLM Integration**: Refer to AnythingLLM documentation
-- **General Questions**: Check the AnythingLLM community
+- **Akili Integration**: Refer to Akili documentation
+- **General Questions**: Check the Akili community
 
 ## Roadmap
 
@@ -366,7 +366,7 @@ For issues related to:
 
 ---
 
-Made with ❤️ for the Accelanova/AnythingLLM community
+Made with ❤️ for the Akili community
 
 
 

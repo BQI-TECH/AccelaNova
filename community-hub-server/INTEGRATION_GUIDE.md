@@ -1,6 +1,6 @@
-# Integration Guide: Connecting Your Hub to Accelanova/AnythingLLM
+# Integration Guide: Connecting Your Hub to Akili
 
-This guide shows you how to connect your custom Community Hub to your Accelanova/AnythingLLM instance.
+This guide shows you how to connect your custom Community Hub to your Akili instance.
 
 ## Step 1: Start Your Community Hub
 
@@ -37,7 +37,7 @@ You should see:
 ```json
 {
   "status": "ok",
-  "service": "Accelanova Community Hub",
+  "service": "Akili Community Hub",
   "version": "1.0.0"
 }
 ```
@@ -63,13 +63,13 @@ curl -X POST http://localhost:5001/v1/auth/login \
   -d '{"email":"admin@example.com","password":"changeme123"}'
 ```
 
-## Step 4: Update AnythingLLM Server
+## Step 4: Update Akili Server
 
-There are two ways to connect AnythingLLM to your hub:
+There are two ways to connect Akili to your hub:
 
 ### Method A: Environment Variable (Recommended)
 
-Add this to your AnythingLLM server's `.env`:
+Add this to your Akili server's `.env`:
 
 ```bash
 # For local development
@@ -79,11 +79,11 @@ COMMUNITY_HUB_API_URL=http://localhost:5001/v1
 COMMUNITY_HUB_API_URL=https://your-hub-domain.com/v1
 ```
 
-Then restart AnythingLLM server.
+Then restart Akili server.
 
 ### Method B: Modify Source Code
 
-Edit `server/models/communityHub.js` in your AnythingLLM directory:
+Edit `server/models/communityHub.js` in your Akili directory:
 
 ```javascript
 const CommunityHub = {
@@ -97,9 +97,9 @@ const CommunityHub = {
 };
 ```
 
-## Step 5: Configure Hub Connection in AnythingLLM UI
+## Step 5: Configure Hub Connection in Akili UI
 
-1. Start your AnythingLLM instance
+1. Start your Akili instance
 2. Go to **Settings** → **Community Hub** (or similar section)
 3. Enter your connection key: `ahub_abc123...`
 4. Save settings
@@ -134,7 +134,7 @@ You'll get a response like:
 }
 ```
 
-### Import in AnythingLLM
+### Import in Akili
 
 The import ID will be:
 
@@ -142,11 +142,11 @@ The import ID will be:
 allm-community-id:system-prompt:abc-123-def-456
 ```
 
-Use this in AnythingLLM's import feature!
+Use this in Akili's import feature!
 
-## Step 7: Browse Items from AnythingLLM
+## Step 7: Browse Items from Akili
 
-In AnythingLLM, you should now be able to:
+In Akili, you should now be able to:
 
 - Browse community items
 - See your created items
@@ -155,7 +155,7 @@ In AnythingLLM, you should now be able to:
 
 ## Troubleshooting
 
-### Hub Not Accessible from AnythingLLM
+### Hub Not Accessible from Akili
 
 **If on same machine:**
 
@@ -173,7 +173,7 @@ In AnythingLLM, you should now be able to:
 
 ### CORS Errors
 
-Add AnythingLLM's URL to hub's `.env`:
+Add Akili's URL to hub's `.env`:
 
 ```bash
 ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001,http://your-anythingllm-url
@@ -241,15 +241,15 @@ server {
 }
 ```
 
-3. **Update AnythingLLM:**
+3. **Update Akili:**
 
 ```bash
 COMMUNITY_HUB_API_URL=https://hub.yourdomain.com/v1
 ```
 
-### Using with Multiple AnythingLLM Instances
+### Using with Multiple Akili Instances
 
-You can use one hub for multiple AnythingLLM instances:
+You can use one hub for multiple Akili instances:
 
 1. Each instance connects with same or different connection keys
 2. Add all instance URLs to `ALLOWED_ORIGINS`
@@ -284,7 +284,7 @@ Each team member gets their own connection key.
 If you encounter issues:
 
 1. Check hub logs: `docker-compose logs -f` or console output
-2. Check AnythingLLM logs
+2. Check Akili logs
 3. Test API directly with curl
 4. Verify network connectivity
 5. Check CORS and firewall settings
@@ -298,18 +298,18 @@ cd community-hub-server
 docker-compose up -d
 ```
 
-**AnythingLLM Server (3001):**
+**Akili Server (3001):**
 
 ```bash
-cd anything-llm/server
+cd Akili/server
 # Add to .env: COMMUNITY_HUB_API_URL=http://localhost:5001/v1
 yarn start
 ```
 
-**AnythingLLM Frontend (3000):**
+**Akili Frontend (3000):**
 
 ```bash
-cd anything-llm/frontend
+cd Akili/frontend
 yarn start
 ```
 

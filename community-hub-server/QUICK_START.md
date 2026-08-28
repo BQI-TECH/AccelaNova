@@ -64,23 +64,23 @@ curl -X POST http://localhost:5001/v1/auth/login \
   -d '{"email":"admin@example.com","password":"changeme123"}'
 ```
 
-Look for `connectionKey` in the response - this is what you'll use in AnythingLLM!
+Look for `connectionKey` in the response - this is what you'll use in Akili!
 
 ### From Seed Output:
 
 Check the terminal output after running the seed script.
 
-## Connect to AnythingLLM
+## Connect to Akili
 
-1. Add to your AnythingLLM server's `.env`:
+1. Add to your Akili server's `.env`:
 
    ```bash
    COMMUNITY_HUB_API_URL=http://localhost:5001/v1
    ```
 
-2. Restart AnythingLLM server
+2. Restart Akili server
 
-3. In AnythingLLM UI, go to Settings → Community Hub
+3. In Akili UI, go to Settings → Community Hub
 
 4. Enter your connection key
 
@@ -114,7 +114,7 @@ node client-example.js
 
 Change `PORT` in `.env` file
 
-### Can't connect from AnythingLLM?
+### Can't connect from Akili?
 
 Check CORS settings in `.env`:
 

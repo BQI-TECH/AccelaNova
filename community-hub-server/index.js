@@ -27,7 +27,7 @@ const anythingllmProxyRoutes = require('./routes/anythingllm-proxy');
 
 // Configuration
 const PORT = process.env.PORT || 5001;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/accelanova-hub';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/akili-hub';
 const STORAGE_PATH = process.env.STORAGE_PATH || './storage/bundles';
 const BASE_URL = process.env.BASE_URL || `http://localhost:${PORT}`;
 
@@ -112,7 +112,7 @@ app.get('/health', (req, res) => {
     if (acceptsJson) {
         return res.json({
             status: 'ok',
-            service: 'Accelanova Community Hub',
+            service: 'Akili Community Hub',
             version: '1.0.0',
             timestamp: new Date().toISOString()
         });
@@ -140,7 +140,7 @@ app.use('/v1', itemRoutes(itemModel, userModel, auth, validation, {
     generateDownloadUrl: storage.generateDownloadUrl
 }, BASE_URL));
 
-// AnythingLLM proxy routes (for frontend direct calls)
+// Akili proxy routes (for frontend direct calls)
 app.use('/community-hub', anythingllmProxyRoutes(itemModel, userModel, auth, validation, {
     upload: uploadMiddleware,
     deleteFile: storage.deleteFile,
@@ -165,7 +165,7 @@ app.use('/api/settings', profileRoutes(userModel, auth));
 // API Info endpoint (only for /api path)
 app.get('/api', (req, res) => {
     res.json({
-        name: 'Accelanova Community Hub API',
+        name: 'Akili Community Hub API',
         version: '1.0.0',
         endpoints: {
             health: '/health',
@@ -219,7 +219,7 @@ async function startServer() {
         const server = app.listen(PORT, () => {
             console.log('╔════════════════════════════════════════════════════════╗');
             console.log('║                                                        ║');
-            console.log('║      Accelanova Community Hub API Server              ║');
+            console.log('║      Akili Community Hub API Server              ║');
             console.log('║                                                        ║');
             console.log('╚════════════════════════════════════════════════════════╝');
             console.log('');

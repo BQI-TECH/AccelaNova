@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import AkiliIcon from "@/media/logo/accelanova-icon.png";
+import AkiliIcon from "@/media/logo/akili-icon.png";
 import WorkspaceLLMItem from "./WorkspaceLLMItem";
 import { AVAILABLE_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference";
 import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";

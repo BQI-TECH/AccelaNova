@@ -1,10 +1,10 @@
 {
-  "name": "accelanova-server",
+  "name": "akili-server",
   "version": "1.8.54",
   "description": "Server endpoints to process or create content for chatting",
   "main": "index.js",
   "type": "commonjs",
-  "author": "Timothy Carambat (Mintplex Labs)",
+  "author": "BQI-TECH",
   "license": "MIT",
   "private": false,
   "engines": {

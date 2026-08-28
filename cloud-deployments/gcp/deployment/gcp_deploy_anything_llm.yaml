@@ -30,15 +30,15 @@ resources:
               sudo systemctl enable docker  
               sudo systemctl start docker  
 
-              mkdir -p /home/anythingllm
-              touch /home/anythingllm/.env
-              sudo chown -R ubuntu:ubuntu /home/anythingllm
+              mkdir -p /home/akili
+              touch /home/akili/.env
+              sudo chown -R ubuntu:ubuntu /home/akili
                
-              sudo docker pull mintplexlabs/anythingllm
-              sudo docker run -d -p 3001:3001 --cap-add SYS_ADMIN -v /home/anythingllm:/app/server/storage -v /home/anythingllm/.env:/app/server/.env -e STORAGE_DIR="/app/server/storage" mintplexlabs/anythingllm
+              sudo docker pull bqitech/akili
+              sudo docker run -d -p 3001:3001 --cap-add SYS_ADMIN -v /home/akili:/app/server/storage -v /home/akili/.env:/app/server/.env -e STORAGE_DIR="/app/server/storage" bqitech/akili
               echo "Container ID: $(sudo docker ps --latest --quiet)"  
 
               export ONLINE=$(curl -Is http://localhost:3001/api/ping | head -n 1|cut -d$' ' -f2)  
               echo "Health check: $ONLINE"  
 
-              echo "Setup complete! Accelanova instance is now online!"
+              echo "Setup complete! Akili instance is now online!"

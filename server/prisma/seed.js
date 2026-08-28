@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 async function main() {
     const settings = [
         { label: "multi_user_mode", value: "false" },
-        { label: "logo_filename", value: "accelanova.png" },
+        { label: "logo_filename", value: "akili.png" },
     ];
 
     for (let setting of settings) {

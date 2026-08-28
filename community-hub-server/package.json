@@ -1,7 +1,7 @@
 {
-  "name": "accelanova-community-hub",
+  "name": "akili-community-hub",
   "version": "1.0.0",
-  "description": "Custom Community Hub API for Accelanova/AnythingLLM",
+  "description": "Custom Community Hub API for Akili",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

@@ -1,10 +1,10 @@
 {
-  "name": "accelanova-document-collector",
+  "name": "akili-document-collector",
   "version": "1.8.53",
   "description": "Document collector server endpoints",
   "main": "index.js",
   "type": "commonjs",
-  "author": "Timothy Carambat (Mintplex Labs)",
+  "author": "BQI-TECH",
   "license": "MIT",
   "private": false,
   "engines": {

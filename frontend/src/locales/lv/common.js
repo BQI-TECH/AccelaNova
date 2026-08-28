@@ -118,7 +118,7 @@ const TRANSLATIONS = {
         },
     },
     welcomeMessage: {
-        part1: "Laipni lūgti Akili, Akili ir Mintplex Labs izstrādāts atvērtā koda AI rīks, kas pārvērš jebko par apmācītu čatbotu, kuru varat izmantot vaicājumiem un sarunām. Akili ir BYOK (bring-your-own-keys) programmatūra, tāpēc nav abonēšanas, maksas vai papildu maksājumu par šo programmatūru, izņemot pakalpojumus, kurus vēlaties izmantot ar to.",
+        part1: "Laipni lūgti Akili, Akili ir BQI-TECH izstrādāts atvērtā koda AI rīks, kas pārvērš jebko par apmācītu čatbotu, kuru varat izmantot vaicājumiem un sarunām. Akili ir BYOK (bring-your-own-keys) programmatūra, tāpēc nav abonēšanas, maksas vai papildu maksājumu par šo programmatūru, izņemot pakalpojumus, kurus vēlaties izmantot ar to.",
         part2: "Akili ir vienkāršākais veids, kā apvienot spēcīgus AI produktus, piemēram, OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB un citus pakalpojumus, kārtīgā paketē bez liekas piepūles, lai palielinātu savu produktivitāti 100 reizes.",
         part3: "Akili var darboties pilnībā lokāli jūsu datorā ar minimālu piepūli, jūs pat nepamanīsiet tā klātbūtni! GPU nav nepieciešams. Pieejama arī mākoņa un lokālā instalācija.\nAI rīku ekosistēma kļūst spēcīgāka ar katru dienu. Akili to padara viegli izmantojamu.",
         githubIssue: "Izveidot problēmpieteikumu GitHub",
@@ -130,7 +130,7 @@ const TRANSLATIONS = {
         user3: "Vau, tas izklausās lieliski, ļaujiet man to izmēģināt tūlīt!",
         part6: "Izbaudi!",
         starOnGitHub: "Zvaigzne GitHub",
-        contact: "Sazināties ar Mintplex Labs",
+        contact: "Sazināties ar BQI-TECH",
     },
     "main-page": {
         noWorkspaceError: "Lūdzu izveidojiet darba telpu pirms sarunas sākšanas.",

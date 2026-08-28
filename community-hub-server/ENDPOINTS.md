@@ -8,7 +8,7 @@ The hub supports multiple path formats for compatibility:
 
 1. **Standard Paths**: `/v1/*`
 2. **Firebase Cloud Functions Paths**: `/anythingllm-hub/us-central1/external/v1/*`
-3. **AnythingLLM Proxy Paths**: `/community-hub/*`
+3. **Akili Proxy Paths**: `/community-hub/*`
 
 ## Public Endpoints (No Authentication Required)
 
@@ -212,7 +212,7 @@ node client-example.js
 For more information, see:
 
 - [README.md](README.md) - Main documentation
-- [INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md) - Integration with AnythingLLM
+- [INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md) - Integration with Akili
 - [QUICK_START.md](QUICK_START.md) - Quick start guide
 
 

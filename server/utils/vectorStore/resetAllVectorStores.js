@@ -26,7 +26,7 @@ async function resetAllVectorStores({ vectorDbKey }) {
         });
 
         console.log(
-            "Resetting accelanova managed vector namespaces for",
+            "Resetting Akili managed vector namespaces for",
             vectorDbKey
         );
         const VectorDb = getVectorDbClass(vectorDbKey);

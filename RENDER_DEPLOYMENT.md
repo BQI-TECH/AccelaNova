@@ -1,6 +1,6 @@
-# Deploying Accelanova to Render using Docker
+# Deploying Akili to Render using Docker
 
-This guide will help you deploy Accelanova to Render using Docker.
+This guide will help you deploy Akili to Render using Docker.
 
 ## Prerequisites
 
@@ -19,7 +19,7 @@ This guide will help you deploy Accelanova to Render using Docker.
 
 ### Step 2: Configure the Service
 
-1. **Name**: `accelanova` (or your preferred name)
+1. **Name**: `akili` (or your preferred name)
 2. **Region**: Choose closest to your users (e.g., `Oregon`, `Frankfurt`, `Singapore`)
 3. **Branch**: `main` (or your default branch)
 4. **Root Directory**: Leave empty (root of repository)
@@ -35,9 +35,9 @@ This guide will help you deploy Accelanova to Render using Docker.
 
 1. In Render Dashboard, click **"New +"** → **"PostgreSQL"**
 2. Configure:
-   - **Name**: `accelanova-db`
-   - **Database**: `accelanova`
-   - **User**: `accelanova`
+   - **Name**: `akili-db`
+   - **Database**: `akili`
+   - **User**: `akili`
    - **Region**: Same as your web service
    - **Plan**: Starter (free tier available) or higher
 3. Click **"Create Database"**
@@ -88,7 +88,7 @@ ANTHROPIC_MODEL_PREF=claude-2
 ```
 VECTOR_DB=pinecone
 PINECONE_API_KEY=your-pinecone-api-key
-PINECONE_INDEX=accelanova-main
+PINECONE_INDEX=akili-main
 ```
 
 **For LanceDB (default, no config needed):**
@@ -146,15 +146,15 @@ This will create all services defined in `render.yaml`.
 ```bash
 # Create PostgreSQL database
 render databases create \
-  --name accelanova-db \
-  --database accelanova \
-  --user accelanova \
+  --name akili-db \
+  --database akili \
+  --user akili \
   --plan starter \
   --region oregon
 
 # Create web service
 render services create web \
-  --name accelanova \
+  --name akili \
   --dockerfilePath ./docker/Dockerfile \
   --dockerContext . \
   --plan standard \
@@ -251,6 +251,6 @@ render services deploy <service-id>
 
 - [Render Documentation](https://render.com/docs)
 - [Render Docker Guide](https://render.com/docs/docker)
-- [Accelanova Documentation](https://docs.accelanova.com)
+- [Akili Documentation](https://github.com/BQI-TECH/AccelaNova)
 
 

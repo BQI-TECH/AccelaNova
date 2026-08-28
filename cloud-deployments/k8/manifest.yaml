@@ -159,10 +159,10 @@ spec:
             - name: GID
               value: "1000"
           volumeMounts:
-            - name: accelanova-server-storage-volume-mount
+            - name: akili-server-storage-volume-mount
               mountPath: /storage
       volumes:
-        - name: accelanova-server-storage-volume-mount
+        - name: akili-server-storage-volume-mount
           persistentVolumeClaim:
             claimName: accelanova-volume-claim
 ---

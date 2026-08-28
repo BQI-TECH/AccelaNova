@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Accelanova Agent Skill Plugin Manifest Schema",
+  "title": "Akili Agent Skill Plugin Manifest Schema",
   "type": "object",
   "properties": {
     "active": {
@@ -13,7 +13,7 @@
     },
     "name": {
       "type": "string",
-      "description": "The human-readable name of the skill displayed in the Accelanova UI."
+      "description": "The human-readable name of the skill displayed in the Akili UI."
     },
     "schema": {
       "type": "string",

@@ -115,7 +115,7 @@ export default function Survey({ setHeader, setForwardBtn, setBackBtn }) {
               {t("onboarding.survey.thankYou")}
             </p>
             <a
-              href={paths.mailToMintplex()}
+              href={paths.mailToSupport()}
               className="text-sky-400 underline text-xs"
             >
               support@geotechcompany.us

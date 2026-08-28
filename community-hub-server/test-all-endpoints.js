@@ -313,9 +313,9 @@ async function testUpdateItem() {
     }
 }
 
-// Test 11: Apply Item (for AnythingLLM integration)
+// Test 11: Apply Item (for Akili integration)
 async function testApplyItem() {
-    logTest('Apply Item (AnythingLLM Integration)');
+    logTest('Apply Item (Akili Integration)');
 
     if (!testItemIds.systemPrompt) {
         logWarning('Skipping - no test item to apply');

@@ -1,7 +1,7 @@
 // Check for Electron-specific API base URL first
 const ELECTRON_API_BASE = typeof window !== 'undefined' && window.__ELECTRON_API_BASE__;
 export const API_BASE = ELECTRON_API_BASE || import.meta.env.VITE_API_BASE || "/api";
-export const ONBOARDING_SURVEY_URL = "https://onboarding.anythingllm.com";
+export const ONBOARDING_SURVEY_URL = "https://akili.bqitech.com";
 
 export const AUTH_USER = "anythingllm_user";
 export const AUTH_TOKEN = "anythingllm_authToken";

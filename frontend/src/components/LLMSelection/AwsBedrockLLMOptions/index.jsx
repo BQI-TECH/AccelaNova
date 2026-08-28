@@ -15,16 +15,7 @@ export default function AwsBedrockLLMOptions({ settings }) {
           <div className="gap-x-2 flex items-center">
             <Info size={40} />
             <p className="text-base">
-              You should use a properly defined IAM user for inferencing.
-              <br />
-              <a
-                href="https://docs.anythingllm.com/setup/llm-configuration/cloud/aws-bedrock"
-                target="_blank"
-                className="underline flex gap-x-1 items-center"
-              >
-                Read more on how to use AWS Bedrock in Akili
-                <ArrowSquareOut size={14} />
-              </a>
+              Use a properly scoped IAM user for inferencing with AWS Bedrock.
             </p>
           </div>
         </div>

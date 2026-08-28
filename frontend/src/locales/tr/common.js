@@ -118,7 +118,7 @@ const TRANSLATIONS = {
         },
     },
     welcomeMessage: {
-        part1: "Akili'e hoş geldiniz. Akili, Mintplex Labs tarafından geliştirilen açık kaynaklı bir yapay zeka aracıdır ve her şeyi, sorgulayabileceğiniz ve sohbet edebileceğiniz eğitimli bir chatbota dönüştürür. Akili, BYOK (kendi anahtarlarınızı getirin) yazılımıdır; bu nedenle, kullanmak istediğiniz hizmetler dışında herhangi bir abonelik, ücret ya da ek masraf yoktur.",
+        part1: "Akili'e hoş geldiniz. Akili, BQI-TECH tarafından geliştirilen açık kaynaklı bir yapay zeka aracıdır ve her şeyi, sorgulayabileceğiniz ve sohbet edebileceğiniz eğitimli bir chatbota dönüştürür. Akili, BYOK (kendi anahtarlarınızı getirin) yazılımıdır; bu nedenle, kullanmak istediğiniz hizmetler dışında herhangi bir abonelik, ücret ya da ek masraf yoktur.",
         part2: "Akili, OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB ve benzeri güçlü yapay zeka ürünlerini zahmetsizce, düzenli bir paket içinde bir araya getirmenin en kolay yoludur; böylece verimliliğinizi 100 kat artırabilirsiniz.",
         part3: "Akili tamamen yerel olarak makinenizde çok az kaynakla çalışabilir—orada olduğunu bile fark etmezsiniz! GPU gerekmez. Bulut veya şirket içi (on-premises) kurulum da mevcuttur.\nYapay zeka araç ekosistemi her geçen gün daha da güçleniyor. Akili bu gücü kolayca kullanmanızı sağlar.",
         githubIssue: "GitHub'da bir sorun oluşturun",
@@ -130,7 +130,7 @@ const TRANSLATIONS = {
         user3: "Vay, harika görünüyor. Hemen denemek istiyorum!",
         part6: "İyi eğlenceler!",
         starOnGitHub: "GitHub'da Yıldız Verin",
-        contact: "Mintplex Labs ile İletişime Geçin",
+        contact: "BQI-TECH ile İletişime Geçin",
     },
     "new-workspace": {
         title: "Yeni Çalışma Alanı",

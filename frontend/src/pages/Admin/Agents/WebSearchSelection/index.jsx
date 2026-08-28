@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Admin from "@/models/admin";
-import AkiliIcon from "@/media/logo/accelanova-icon.png";
+import AkiliIcon from "@/media/logo/akili-icon.png";
 import GoogleSearchIcon from "./icons/google.png";
 import SearchApiIcon from "./icons/searchapi.png";
 import SerperDotDevIcon from "./icons/serper.png";

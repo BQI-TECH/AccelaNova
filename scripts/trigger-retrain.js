@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 /**
- * Call Accelanova retrain-vector-db API. Use from cron, GitHub Actions, or manually.
+ * Call Akili retrain-vector-db API. Use from cron, GitHub Actions, or manually.
  *
  * Env:
  *   ACCELANOVA_URL - e.g. https://your-app.onrender.com (no trailing slash)
- *   API_KEY       - Accelanova API key (Bearer)
+ *   API_KEY       - Akili API key (Bearer)
  *
  * Optional body (default: github + runSyncNow):
  *   source: 'github' | 'all'

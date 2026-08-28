@@ -59,9 +59,9 @@ async function getDiskStorage() {
  * Returns the model tag based on the provider set in the environment.
  * This information is used to identify the parent model for the system
  * so that we can prioritize the correct model and types for future updates
- * as well as build features in Accelanova directly for a specific model or capabilities.
+ * as well as build features in Akili directly for a specific model or capabilities.
  *
- * Disable with  {@link https://github.com/Mintplex-Labs/accelanova?tab=readme-ov-file#telemetry--privacy|Disable Telemetry}
+ * Disable telemetry by setting DISABLE_TELEMETRY=true in server/.env
  * @returns {string} The model tag.
  */
 function getModelTag() {
@@ -169,7 +169,7 @@ function getDeploymentVersion() {
  * Returns the user agent for the Akili deployment.
  * @returns {string} The user agent.
  */
-function getAccelanovaUserAgent() {
+function getAkiliUserAgent() {
     const version = getDeploymentVersion() || "unknown";
     return `Akili/${version}`;
 }
@@ -178,5 +178,5 @@ module.exports = {
     utilEndpoints,
     getGitVersion,
     getModelTag,
-    getAccelanovaUserAgent,
+    getAkiliUserAgent,
 };

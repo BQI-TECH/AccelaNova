@@ -118,7 +118,7 @@ const TRANSLATIONS = {
         },
     },
     welcomeMessage: {
-        part1: "歡迎使用 Akili，Akili 是由 Mintplex Labs 開發的開源 AI 工具，它能將任何內容轉換成可供查詢和對話的訓練模型對話機器人。Akili 採用 BYOK（自備金鑰）軟體模式，除了您想使用的服務之外，本軟體不收取任何訂閱費、費用或其他費用。",
+        part1: "歡迎使用 Akili，Akili 是由 BQI-TECH 開發的開源 AI 工具，它能將任何內容轉換成可供查詢和對話的訓練模型對話機器人。Akili 採用 BYOK（自備金鑰）軟體模式，除了您想使用的服務之外，本軟體不收取任何訂閱費、費用或其他費用。",
         part2: "Akili 是將 OpenAI、GPT-4、LangChain、PineconeDB、ChromaDB 和其他強大 AI 產品整合在一起的最簡單方法，它能透過簡潔的套件，輕鬆地將您的生產力提高 100 倍。",
         part3: "Akili 可以完全在您的本機電腦上執行，而且使用極少的資源，您甚至不會注意到它的存在！不需要 GPU。同時也支援雲端和企業內部部署。\nAI 工具生態系統日新月異，Akili 讓使用變得更加簡單。",
         githubIssue: "在 GitHub 上建立 issue ",
@@ -130,7 +130,7 @@ const TRANSLATIONS = {
         user3: "哇，這聽起來很棒，讓我馬上試試看！",
         part6: "祝您使用愉快！",
         starOnGitHub: "在 GitHub 上給我們星星",
-        contact: "聯絡 Mintplex Labs",
+        contact: "聯絡 BQI-TECH",
     },
     "new-workspace": {
         title: "新增工作區",

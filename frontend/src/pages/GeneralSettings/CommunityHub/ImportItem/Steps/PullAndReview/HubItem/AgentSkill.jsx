@@ -80,14 +80,9 @@ export default function AgentSkill({ item, settings, setStep }) {
               This skill is not verified.
             </p>
           )}
-          <a
-            href="https://docs.anythingllm.com/community-hub/faq#verification"
-            target="_blank"
-            className="text-xs font-mono text-blue-500 hover:underline"
-            rel="noreferrer"
-          >
-            Learn more &rarr;
-          </a>
+          <p className="text-xs font-mono text-theme-text-secondary">
+            Verified skills are reviewed by the community hub maintainers.
+          </p>
         </div>
       </div>
       <div className="flex flex-col gap-y-[25px] text-white/80 light:text-theme-text-secondary text-sm">

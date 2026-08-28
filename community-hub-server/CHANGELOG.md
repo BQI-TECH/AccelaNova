@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to the Accelanova Community Hub project will be documented in this file.
+All notable changes to the Akili Community Hub project will be documented in this file.
 
 ## [1.0.0] - 2024-10-28
 
@@ -11,7 +11,7 @@ All notable changes to the Accelanova Community Hub project will be documented i
 - Support for system prompts, slash commands, agent skills, and agent flows
 - Public/private item visibility
 - Admin verification system
-- RESTful API endpoints matching AnythingLLM client expectations
+- RESTful API endpoints matching Akili client expectations
 - SQLite database with migration system
 - File upload support for agent skill bundles
 - Download tracking and analytics
@@ -22,7 +22,7 @@ All notable changes to the Accelanova Community Hub project will be documented i
 - Comprehensive documentation
 - Example client and test suite
 - Automated setup scripts (start.sh, start.bat)
-- Integration guide for AnythingLLM
+- Integration guide for Akili
 
 ### Security
 

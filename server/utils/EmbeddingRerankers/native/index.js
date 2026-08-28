@@ -7,9 +7,9 @@ class NativeEmbeddingReranker {
   static #transformers = null;
   static #initializationPromise = null;
 
-  // This is a folder that Mintplex Labs hosts for those who cannot capture the HF model download
-  // endpoint for various reasons. This endpoint is not guaranteed to be active or maintained
-  // and may go offline at any time at Mintplex Labs's discretion.
+  // Hosted mirror for users who cannot download the HuggingFace model directly.
+  // This endpoint is not guaranteed to be active or maintained
+  // and may go offline at any time at BQI-TECH's discretion.
   #fallbackHost = "https://cdn.anythingllm.com/support/models/";
 
   constructor() {

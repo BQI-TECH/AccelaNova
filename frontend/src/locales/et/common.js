@@ -118,7 +118,7 @@ const TRANSLATIONS = {
         },
     },
     welcomeMessage: {
-        part1: "Tere tulemast Akili-i! See on Mintplex Labsi avatud lähtekoodiga AI-tööriist, mis muudab kõik failid koolitatud juturobotiks, kellega saad vestelda. Akili on BYOK-tarkvara, seega puudub igasugune tellimus- või litsentsitasu, välja arvatud kasutatavate teenuste kulud.",
+        part1: "Tere tulemast Akili-i! See on BQI-TECHi avatud lähtekoodiga AI-tööriist, mis muudab kõik failid koolitatud juturobotiks, kellega saad vestelda. Akili on BYOK-tarkvara, seega puudub igasugune tellimus- või litsentsitasu, välja arvatud kasutatavate teenuste kulud.",
         part2: "Akili on lihtsaim viis kombineerida võimsad AI-teenused nagu OpenAI, GPT-4, LangChain, PineconeDB, ChromaDB jpt ilma vaevata, tõstes sinu produktiivsust kordades.",
         part3: "Akili võib töötada täielikult lokaalselt sinu masinas minimaalse ressursikasutusega – GPU-d pole vaja. Samuti on saadaval pilve- ja kohapealsed paigaldised.\nAI-ökosüsteem muutub iga päevaga võimekamaks ja Akili teeb selle kasutamise lihtsaks.",
         githubIssue: "Loo GitHubis probleem",
@@ -130,7 +130,7 @@ const TRANSLATIONS = {
         user3: "Võimas! Las ma proovin kohe ära!",
         part6: "Head kasutamist!",
         starOnGitHub: "Tähista GitHubis",
-        contact: "Võta ühendust Mintplex Labsiga",
+        contact: "Võta ühendust BQI-TECHiga",
     },
     "main-page": {
         noWorkspaceError: "Enne vestlust loo tööruum.",

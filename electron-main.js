@@ -594,8 +594,8 @@ async function startServer() {
 
     if (!usingExternalDatabase) {
         // Ensure the SQLite database exists. If not, copy the pre-migrated template from resources.
-        // In production (ASAR), the template should be in resources/app.asar/server/storage/anythingllm.db
-        const dbName = 'anythingllm.db';
+        // In production (ASAR), the template should be in resources/app.asar/server/storage/akili.db
+        const dbName = 'akili.db';
         const targetDbPath = path.join(storageDir, dbName);
 
         if (!existsSync(targetDbPath)) {

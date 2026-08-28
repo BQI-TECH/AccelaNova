@@ -11,15 +11,7 @@ export default function ImportedSkillList({
       <div className="text-theme-text-secondary text-center text-xs flex flex-col gap-y-2">
         <p>No imported skills found</p>
         <p>
-          Learn about agent skills in the{" "}
-          <a
-            href="https://docs.anythingllm.com/agent/custom/developer-guide"
-            target="_blank"
-            className="text-theme-text-secondary underline hover:text-cta-button"
-          >
-            Akili Agent Docs
-          </a>
-          .
+          Import custom agent skills from the Community Hub or build them in Agent Builder.
         </p>
       </div>
     );

@@ -4,7 +4,7 @@ import showToast from "@/utils/toast";
 import LLMItem from "@/components/LLMSelection/LLMItem";
 import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
 import CTAButton from "@/components/lib/CTAButton";
-import AkiliIcon from "@/media/logo/accelanova-icon.png";
+import AkiliIcon from "@/media/logo/akili-icon.png";
 import BrowserNative from "@/components/SpeechToText/BrowserNative";
 
 const PROVIDERS = [

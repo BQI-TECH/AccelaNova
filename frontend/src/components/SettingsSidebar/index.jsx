@@ -186,7 +186,7 @@ export default function SettingsSidebar() {
 }
 
 function SupportEmail() {
-  const [supportEmail, setSupportEmail] = useState(paths.mailToMintplex());
+  const [supportEmail, setSupportEmail] = useState(paths.mailToSupport());
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -195,7 +195,7 @@ function SupportEmail() {
       setSupportEmail(
         supportEmail?.email
           ? `mailto:${supportEmail.email}`
-          : paths.mailToMintplex()
+          : paths.mailToSupport()
       );
     };
     fetchSupportEmail();
@@ -460,7 +460,7 @@ function AppVersion() {
   if (isLoading) return null;
   return (
     <Link
-      to={`https://github.com/Mintplex-Labs/accelanova/releases/tag/v${version}`}
+      to={`https://github.com/BQI-TECH/AccelaNova/releases/tag/v${version}`}
       target="_blank"
       rel="noreferrer"
       className="text-theme-text-secondary light:opacity-80 opacity-50 text-xs mx-3"

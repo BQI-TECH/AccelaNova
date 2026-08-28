@@ -1,8 +1,7 @@
 import { createContext, useEffect, useState } from "react";
-import Akili from "./media/logo/accelanova.png";
-import AkiliDark from "./media/logo/accelanova-dark.png";
-import DefaultLoginLogoLight from "./media/illustrations/login-logo.svg";
-import DefaultLoginLogoDark from "./media/illustrations/login-logo-light.svg";
+import Akili from "./media/logo/akili.png";
+import AkiliDark from "./media/logo/akili-dark.png";
+import AkiliLoginLogo from "./media/logo/akili-icon.png";
 import System from "./models/system";
 
 export const REFETCH_LOGO_EVENT = "refetch-logo";
@@ -12,10 +11,7 @@ export function LogoProvider({ children }) {
   const [logo, setLogo] = useState("");
   const [loginLogo, setLoginLogo] = useState("");
   const [isCustomLogo, setIsCustomLogo] = useState(false);
-  const DefaultLoginLogo =
-    localStorage.getItem("theme") !== "default"
-      ? DefaultLoginLogoDark
-      : DefaultLoginLogoLight;
+  const DefaultLoginLogo = AkiliLoginLogo;
 
   async function fetchInstanceLogo() {
     try {

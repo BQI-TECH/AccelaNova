@@ -1,8 +1,8 @@
-# Native models used by Accelanova
+# Native models used by Akili
 
 This folder is specifically created as a local cache and storage folder that is used for native models that can run on a CPU.
 
-Currently, Accelanova uses this folder for the following parts of the application.
+Currently, Akili uses this folder for the following parts of the application.
 
 ## Embedding
 
@@ -12,7 +12,7 @@ If you are using the `native` embedding engine your vector database should be co
 
 ## Audio/Video transcription
 
-Accelanova allows you to upload various audio and video formats as source documents. In all cases the audio tracks will be transcribed by a locally running ONNX model **whisper-small** built by [Xenova on HuggingFace.co](https://huggingface.co/Xenova/whisper-small). The model is a smaller version of the OpenAI Whisper model. Given the model runs locally on CPU, larger files will result in longer transcription times.
+Akili allows you to upload various audio and video formats as source documents. In all cases the audio tracks will be transcribed by a locally running ONNX model **whisper-small** built by [Xenova on HuggingFace.co](https://huggingface.co/Xenova/whisper-small). The model is a smaller version of the OpenAI Whisper model. Given the model runs locally on CPU, larger files will result in longer transcription times.
 
 Once transcribed you can embed these transcriptions into your workspace like you would any other file!
 

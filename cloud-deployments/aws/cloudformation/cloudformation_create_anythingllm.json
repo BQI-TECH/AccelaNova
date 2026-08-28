@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "Create a stack that runs Accelanova on a single instance",
+    "Description": "Create a stack that runs Akili on a single instance",
     "Parameters": {
         "InstanceType": {
             "Description": "EC2 instance type",
@@ -81,15 +81,15 @@
                                 "sudo iptables -A OUTPUT -m owner ! --uid-owner root -d 169.254.169.254 -j DROP\n",
                                 "sudo systemctl enable docker\n",
                                 "sudo systemctl start docker\n",
-                                "mkdir -p /home/ec2-user/accelanova\n",
-                                "touch /home/ec2-user/accelanova/.env\n",
-                                "sudo chown ec2-user:ec2-user -R /home/ec2-user/accelanova\n",
-                                "docker pull mintplexlabs/accelanova\n",
-                                "docker run -d -p 3001:3001 --cap-add SYS_ADMIN -v /home/ec2-user/accelanova:/app/server/storage -v /home/ec2-user/accelanova/.env:/app/server/.env -e STORAGE_DIR=\"/app/server/storage\" mintplexlabs/accelanova\n",
+                                "mkdir -p /home/ec2-user/akili\n",
+                                "touch /home/ec2-user/akili/.env\n",
+                                "sudo chown ec2-user:ec2-user -R /home/ec2-user/akili\n",
+                                "docker pull bqitech/akili\n",
+                                "docker run -d -p 3001:3001 --cap-add SYS_ADMIN -v /home/ec2-user/akili:/app/server/storage -v /home/ec2-user/akili/.env:/app/server/.env -e STORAGE_DIR=\"/app/server/storage\" bqitech/akili\n",
                                 "echo \"Container ID: $(sudo docker ps --latest --quiet)\"\n",
                                 "ONLINE=$(curl -Is http://localhost:3001/api/ping | head -n 1 | cut -d$' ' -f2)\n",
                                 "echo \"Health check: $ONLINE\"\n",
-                                "echo \"Success! Accelanova instance is now online!\"\n",
+                                "echo \"Success! Akili instance is now online!\"\n",
                                 "\n",
                                 "--//--\n"
                             ]
@@ -101,7 +101,7 @@
         "AccelanovaInstanceSecurityGroup": {
             "Type": "AWS::EC2::SecurityGroup",
             "Properties": {
-                "GroupDescription": "Accelanova Instance Security Group",
+                "GroupDescription": "Akili Instance Security Group",
                 "SecurityGroupIngress": [{
                         "IpProtocol": "tcp",
                         "FromPort": "22",
@@ -126,13 +126,13 @@
     },
     "Outputs": {
         "ServerIp": {
-            "Description": "IP address of the Accelanova instance",
+            "Description": "IP address of the Akili instance",
             "Value": {
                 "Fn::GetAtt": ["AccelanovaInstance", "PublicIp"]
             }
         },
         "ServerURL": {
-            "Description": "URL of the Accelanova server",
+            "Description": "URL of the Akili server",
             "Value": {
                 "Fn::Join": [
                     "", [

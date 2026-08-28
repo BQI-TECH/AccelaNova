@@ -1,4 +1,4 @@
-# Push AccelaNova to GitHub in smaller batches (useful for large history or slow connections)
+# Push Akili to GitHub in smaller batches (useful for large history or slow connections)
 # Run in PowerShell: .\push-in-bits.ps1
 
 $ErrorActionPreference = "Stop"

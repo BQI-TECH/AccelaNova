@@ -1,6 +1,6 @@
-# Accelanova Scripting Agent – Flow Builder Setup
+# Akili Scripting Agent – Flow Builder Setup
 
-Use these settings in the **Accelanova Flow Builder** to create a scripting agent that follows your knowledge base (Accela report development, Civic Platform scripting, SQL/RDL, and canonical docs).
+Use these settings in the **Akili Flow Builder** to create a scripting agent that follows your knowledge base (Accela report development, Civic Platform scripting, SQL/RDL, and canonical docs).
 
 ---
 
@@ -88,7 +88,7 @@ Keep the default **Flow Complete** block at the end. No extra configuration.
 ## 5. Publish and use
 
 1. **Save** the flow, then **Publish**.
-2. Ensure the workspace/knowledge base that contains your scripting guides and cheatsheets is the one your Accelanova chat uses (same embeddings/KB as the agent).
+2. Ensure the workspace/knowledge base that contains your scripting guides and cheatsheets is the one your Akili chat uses (same embeddings/KB as the agent).
 3. In chat, when users ask for report SQL, RDL, scripting, or Accela automation, the agent can invoke this flow; the LLM instruction above will run with the KB context and the user’s request in `${user_request}`.
 
 ---

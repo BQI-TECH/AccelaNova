@@ -50,22 +50,22 @@ export default {
         },
     },
     github: () => {
-        return "https://github.com/Mintplex-Labs/accelanova";
+        return "https://github.com/BQI-TECH/AccelaNova";
     },
     discord: () => {
         return "https://discord.com/invite/6UyHPeGZAC";
     },
     docs: () => {
-        return "https://docs.anythingllm.com";
+        return "https://github.com/BQI-TECH/AccelaNova";
     },
     chatModes: () => {
-        return "https://docs.anythingllm.com/features/chat-modes";
+        return "https://github.com/BQI-TECH/AccelaNova";
     },
-    mailToMintplex: () => {
+    mailToSupport: () => {
         return "mailto:support@geotechcompany.us";
     },
     hosting: () => {
-        return "https://my.mintplexlabs.com/aio-checkout?product=anythingllm";
+        return "https://akili.bqitech.com";
     },
     workspace: {
         chat: (slug, options = {}) => {
@@ -180,7 +180,7 @@ export default {
         website: () => {
             return import.meta.env.DEV ?
                 `http://localhost:5001` :
-                `https://hub.anythingllm.com`;
+                `http://localhost:5001`;
         },
         /**
          * View more items of a given type on the community hub.
@@ -207,17 +207,16 @@ export default {
             return `${this.website()}/me`;
         },
         noPrivateItems: () => {
-            return "https://docs.anythingllm.com/community-hub/faq#no-private-items";
+            return "mailto:support@geotechcompany.us";
         },
     },
 
-    // TODO: Migrate all docs.anythingllm.com links to the new docs.
     documentation: {
         mobileIntroduction: () => {
-            return "https://docs.anythingllm.com/mobile/overview";
+            return "https://github.com/BQI-TECH/AccelaNova";
         },
         contextWindows: () => {
-            return "https://docs.anythingllm.com/chatting-with-documents/introduction#you-exceed-the-context-window---what-now";
+            return "https://github.com/BQI-TECH/AccelaNova";
         },
     },
 

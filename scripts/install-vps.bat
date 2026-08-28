@@ -26,9 +26,9 @@ REM NEVER append another scripts\ segment — ps1 must sit next to this bat.
 set "SCRIPT_DIR=%~dp0"
 set "PS_SCRIPT=%SCRIPT_DIR%install-vps.ps1"
 
-set "REPO_URL=https://github.com/BQI-TECH/AccelaNova.git"
+set "REPO_URL=https://github.com/BQI-TECH/AccelaNova"
 set "REPO_BRANCH=main"
-REM Existing installs on C:\Accelanova: set INSTALL_DIR=C:\Accelanova (no migration required).
+REM Existing installs on C:\Akili: set INSTALL_DIR=C:\Akili (no migration required).
 set "INSTALL_DIR=C:\Akili"
 set "SERVER_PORT=3001"
 set "COLLECTOR_PORT=8888"
