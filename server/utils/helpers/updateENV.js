@@ -1134,6 +1134,8 @@ function dumpENV() {
 
     "STORAGE_DIR",
     "SERVER_PORT",
+    // Prisma datasource — must persist or Multi-User / DB calls fail after dumpENV
+    "DATABASE_URL",
     // For persistent data encryption
     "SIG_KEY",
     "SIG_SALT",

@@ -1,3 +1,5 @@
+const path = require("path");
+const fs = require("fs");
 const { PrismaClient } = require("@prisma/client");
 
 // npx prisma introspect
@@ -7,32 +9,47 @@ const { PrismaClient } = require("@prisma/client");
 
 const logLevels = ["error", "info", "warn"]; // add "query" to debug query logs
 
-let prisma;
+/**
+ * Resolve a SQLite file URI for this app.
+ * Prefer an explicit DATABASE_URL; otherwise pick an existing DB under STORAGE_DIR
+ * (or the default server/storage path) so desktop renames don't break installs.
+ */
+function resolveSqliteDatabaseUrl() {
+  if (process.env.DATABASE_URL && String(process.env.DATABASE_URL).trim()) {
+    return String(process.env.DATABASE_URL).trim();
+  }
 
-// Desktop / local check and database path override to ensure writable location.
-// We standardize on SQLite for this build, so DATABASE_URL is treated as a `file:` URI.
-if (process.env.DESKTOP_APP === 'true' && process.env.STORAGE_DIR) {
-  const path = require('path');
-  // Ensure forward slashes for file URL even on Windows
-  const storageDir = process.env.STORAGE_DIR.replace(/\\/g, '/');
-  const dbUrl = `file:${storageDir}/akili.db`;
-  
-  console.log(`[Prisma] Running in Desktop mode. Using database at: ${dbUrl}`);
-  
-  prisma = new PrismaClient({
-    log: logLevels,
-    datasources: {
-      db: {
-        url: dbUrl,
-      },
-    },
-  });
-} else {
-  // Fallback for non-desktop/server environments: still allow DATABASE_URL to
-  // control the datasource, but this project expects SQLite by default.
-  prisma = new PrismaClient({
-    log: logLevels,
-  });
+  const storageDir = process.env.STORAGE_DIR
+    ? path.resolve(process.env.STORAGE_DIR)
+    : path.resolve(__dirname, "../../storage");
+
+  const candidates = ["akili.db", "anythingllm.db", "accelanova.db"];
+  let dbFile = path.join(storageDir, candidates[0]);
+  for (const name of candidates) {
+    const candidate = path.join(storageDir, name);
+    if (fs.existsSync(candidate)) {
+      dbFile = candidate;
+      break;
+    }
+  }
+
+  // Prisma file URLs need forward slashes on Windows.
+  return `file:${dbFile.replace(/\\/g, "/")}`;
 }
+
+const databaseUrl = resolveSqliteDatabaseUrl();
+// schema.prisma uses env("DATABASE_URL") — keep process.env in sync even when
+// we also pass datasources.url, so Prisma never throws "Environment variable not found".
+process.env.DATABASE_URL = databaseUrl;
+console.log(`[Prisma] Using database at: ${databaseUrl}`);
+
+const prisma = new PrismaClient({
+  log: logLevels,
+  datasources: {
+    db: {
+      url: databaseUrl,
+    },
+  },
+});
 
 module.exports = prisma;

@@ -594,17 +594,25 @@ async function startServer() {
 
     if (!usingExternalDatabase) {
         // Ensure the SQLite database exists. If not, copy the pre-migrated template from resources.
-        // In production (ASAR), the template should be in resources/app.asar/server/storage/akili.db
-        const dbName = 'akili.db';
-        const targetDbPath = path.join(storageDir, dbName);
+        // Prefer akili.db; fall back to legacy anythingllm.db for existing installs.
+        const preferredDbName = 'akili.db';
+        const legacyDbNames = ['anythingllm.db', 'accelanova.db'];
+        const existingLegacy = legacyDbNames
+            .map((name) => path.join(storageDir, name))
+            .find((candidate) => existsSync(candidate));
+        const targetDbPath = existsSync(path.join(storageDir, preferredDbName))
+            ? path.join(storageDir, preferredDbName)
+            : (existingLegacy || path.join(storageDir, preferredDbName));
 
         if (!existsSync(targetDbPath)) {
             console.log(`Database not found at ${targetDbPath}. Initializing from template...`);
             try {
                 // Packaged builds ship a fresh template under desktop-template/ (no local dev data).
                 const templateCandidates = [
-                    path.join(__dirname, 'server', 'storage', 'desktop-template', dbName),
-                    path.join(__dirname, 'server', 'storage', dbName),
+                    path.join(__dirname, 'server', 'storage', 'desktop-template', preferredDbName),
+                    path.join(__dirname, 'server', 'storage', preferredDbName),
+                    path.join(__dirname, 'server', 'storage', 'desktop-template', 'anythingllm.db'),
+                    path.join(__dirname, 'server', 'storage', 'anythingllm.db'),
                 ];
                 const templateDbPath = templateCandidates.find((candidate) => existsSync(candidate));
                 if (templateDbPath) {

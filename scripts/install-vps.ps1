@@ -8,8 +8,21 @@
   InstallDir. Never stops IIS/nginx/Apache. Default: no firewall changes for 80/443.
 .PARAMETER Mode
   install | resume | update | start | stop | scan
+.PARAMETER PullOnStart
+  false | check | always — git sync before start (default false). check pulls only when behind origin.
+.PARAMETER PullIfRepoExists
+  false | check | always — git sync when install/resume/update finds an existing repo (default check).
+.PARAMETER RebuildOnPull
+  When true and a pull occurred during start, run deps/build/migrate before starting services.
+.PARAMETER PullForce
+  When true, attempt pull even if the repo has diverged from origin (set by start --pull).
+.PARAMETER PullFailPolicy
+  continue | fail — when git fetch/pull fails during install/resume/start sync (default continue).
+  continue logs a warning and proceeds with local code; fail aborts the installer.
 .NOTES
   Keep this file beside install-vps.bat. The .bat is the only entry point operators run.
+  Default InstallDir is C:\Akili. Legacy VPS installs at C:\Accelanova are auto-migrated
+  to InstallDir when AUTO_MIGRATE_LEGACY_DIR=true (default in install-vps.bat).
 #>
 [CmdletBinding()]
 param(
@@ -39,9 +52,20 @@ param(
     [string]$InstallAsService = 'false',
     [string]$Yes = 'false',
 
+    # PullOnStart: false | check | always — git sync before start mode only.
+    [string]$PullOnStart = 'false',
+    # PullIfRepoExists: false | check | always — git sync when repo already at InstallDir (install/resume/update).
+    [string]$PullIfRepoExists = 'check',
+    [string]$RebuildOnPull = 'false',
+    [string]$PullForce = 'false',
+    [string]$PullFailPolicy = 'continue',
+
     [string]$NssmPath = 'C:\Tools\nssm\nssm.exe',
     [string]$ServiceName = 'Akili',
-    [string]$ServiceDisplay = 'Akili AI Server'
+    [string]$ServiceDisplay = 'Akili AI Server',
+
+    # When true, rename C:\Accelanova (and other known legacy paths) into InstallDir.
+    [string]$AutoMigrateLegacyDir = 'true'
 )
 
 Set-StrictMode -Version Latest
@@ -50,6 +74,26 @@ $ErrorActionPreference = 'Stop'
 function ConvertTo-BoolFlag([string]$Value) {
     if ([string]::IsNullOrWhiteSpace($Value)) { return $false }
     return @('1', 'true', 'yes', 'y', 'on') -contains ($Value.Trim().ToLowerInvariant())
+}
+
+function Resolve-PullOnStartMode {
+    param([string]$Value)
+    if ([string]::IsNullOrWhiteSpace($Value)) { return 'false' }
+    switch ($Value.Trim().ToLowerInvariant()) {
+        { $_ -in @('false', '0', 'no', 'off', 'never') } { return 'false' }
+        { $_ -in @('check', 'sync', 'auto', 'if-needed', 'ifneeded') } { return 'check' }
+        { $_ -in @('true', 'always', '1', 'yes', 'on', 'pull') } { return 'always' }
+        default { return 'false' }
+    }
+}
+
+function Resolve-PullFailPolicy {
+    param([string]$Value)
+    if ([string]::IsNullOrWhiteSpace($Value)) { return 'continue' }
+    switch ($Value.Trim().ToLowerInvariant()) {
+        { $_ -in @('fail', 'stop', 'error', 'abort') } { return 'fail' }
+        default { return 'continue' }
+    }
 }
 
 # Convert bat-passed "true"/"false" strings once; never use [switch]/[bool] from cmd.exe.
@@ -63,7 +107,17 @@ $script:Flags = @{
     ExposeFirewall    = ConvertTo-BoolFlag $ExposeFirewall
     InstallAsService  = ConvertTo-BoolFlag $InstallAsService
     Yes               = ConvertTo-BoolFlag $Yes
-    Resume            = ($Mode -eq 'resume')
+    RebuildOnPull     = ConvertTo-BoolFlag $RebuildOnPull
+    PullForce             = ConvertTo-BoolFlag $PullForce
+    AutoMigrateLegacyDir  = ConvertTo-BoolFlag $AutoMigrateLegacyDir
+    Resume                = ($Mode -eq 'resume')
+}
+
+$script:PullOnStartMode = Resolve-PullOnStartMode -Value $PullOnStart
+$script:PullIfRepoExistsMode = Resolve-PullOnStartMode -Value $PullIfRepoExists
+$script:PullFailPolicy = Resolve-PullFailPolicy -Value $PullFailPolicy
+if ([string]::IsNullOrWhiteSpace($PullIfRepoExists) -and ($Mode -in @('install', 'resume', 'update'))) {
+    $script:PullIfRepoExistsMode = 'check'
 }
 
 if ($script:Flags.Resume) {
@@ -74,6 +128,7 @@ $script:ChosenServerPort = $ServerPort
 $script:ChosenCollectorPort = $CollectorPort
 $script:OtherAppsFound = $false
 $script:PortConflictResolved = $false
+$script:PortsResolvedThisRun = $false
 
 # Normalize early so drive-root parents (C:\) never hit broken New-Item paths.
 $InstallDir = [System.IO.Path]::GetFullPath($InstallDir.Trim().TrimEnd('\', '/'))
@@ -90,12 +145,8 @@ function Initialize-Directory {
     }
 }
 
-# Log under TEMP until clone succeeds so InstallDir stays empty for git clone.
-# If the repo already exists (update/start), log under InstallDir\logs immediately.
+# Log under TEMP until InstallDir is resolved (legacy migration may run first).
 $script:LogDir = Join-Path $env:TEMP 'Akili-install-logs'
-if (Test-Path -LiteralPath (Join-Path $InstallDir '.git')) {
-    $script:LogDir = Join-Path $InstallDir 'logs'
-}
 Initialize-Directory $script:LogDir
 
 $RunStamp = Get-Date -Format 'yyyy-MM-dd_HH-mm-ss'
@@ -221,21 +272,80 @@ function Get-EnvKeyValue {
 
 function Get-SqliteDatabaseUrl {
     param([string]$StorageDir)
-    $normalized = [System.IO.Path]::GetFullPath($StorageDir).Replace('\', '/').TrimEnd('/')
-    return "file:$normalized/akili.db"
+    $storageFull = [System.IO.Path]::GetFullPath($StorageDir)
+    Initialize-Directory $storageFull
+    $candidates = @('akili.db', 'anythingllm.db', 'accelanova.db')
+    $dbFile = Join-Path $storageFull $candidates[0]
+    foreach ($name in $candidates) {
+        $candidate = Join-Path $storageFull $name
+        if (Test-Path -LiteralPath $candidate) {
+            $dbFile = $candidate
+            break
+        }
+    }
+    $normalized = [System.IO.Path]::GetFullPath($dbFile).Replace('\', '/')
+    return "file:$normalized"
+}
+
+function Test-DatabaseUrlNeedsRewrite {
+    param(
+        [string]$ExistingUrl,
+        [string]$StorageDir
+    )
+    if ([string]::IsNullOrWhiteSpace($ExistingUrl)) { return $true }
+    # Prefer absolute file: URLs under the install storage dir.
+    if ($ExistingUrl -match '(?i)^file:\.\.?/') { return $true }
+    if ($ExistingUrl -match '(?i)^file:storage/') { return $true }
+    if ($ExistingUrl -notmatch '(?i)^file:') { return $false }
+
+    $pathPart = $ExistingUrl -replace '(?i)^file:', ''
+    # Relative or non-rooted Windows paths need rewrite.
+    if ($pathPart -match '^[A-Za-z]:/') { return $false }
+    if ($pathPart.StartsWith('/')) { return $false }
+    return $true
 }
 
 function Ensure-DatabaseUrl {
     param([string]$ServerEnv, [string]$StorageDir)
     $existing = Get-EnvKeyValue -Path $ServerEnv -Key 'DATABASE_URL'
-    if ($existing) {
-        Write-Log 'DATABASE_URL already set in server\.env'
+    if ($existing -and -not (Test-DatabaseUrlNeedsRewrite -ExistingUrl $existing -StorageDir $StorageDir)) {
+        Write-Log "DATABASE_URL already set in server\.env ($existing)"
         return $existing
     }
     $dbUrl = Get-SqliteDatabaseUrl -StorageDir $StorageDir
     Set-EnvKey -Path $ServerEnv -Key 'DATABASE_URL' -Value $dbUrl
-    Write-Log "Set DATABASE_URL=$dbUrl"
+    if ($existing) {
+        Write-Log "Rewrote DATABASE_URL from '$existing' to '$dbUrl'"
+    }
+    else {
+        Write-Log "Set DATABASE_URL=$dbUrl"
+    }
     return $dbUrl
+}
+
+function Ensure-ServerRuntimeEnv {
+    # Make sure STORAGE_DIR + DATABASE_URL exist before node starts (install/update/start).
+    $serverEnv = Join-Path $InstallDir 'server\.env'
+    $storageDir = Join-Path $InstallDir 'server\storage'
+    if (-not (Test-Path -LiteralPath $serverEnv)) {
+        if (Test-Path -LiteralPath (Join-Path $InstallDir 'server\.env.example')) {
+            Copy-Item (Join-Path $InstallDir 'server\.env.example') $serverEnv
+            Write-Log 'Created server\.env from example (start path)'
+        }
+        else {
+            throw "Missing server\.env at $serverEnv — run install/update first"
+        }
+    }
+    Set-EnvKey -Path $serverEnv -Key 'STORAGE_DIR' -Value $storageDir
+    $dbUrl = Ensure-DatabaseUrl -ServerEnv $serverEnv -StorageDir $storageDir
+    Set-EnvKey -Path $serverEnv -Key 'SERVER_PORT' -Value "$($script:ChosenServerPort)"
+    Set-EnvKey -Path $serverEnv -Key 'COLLECTOR_PORT' -Value "$($script:ChosenCollectorPort)"
+    Initialize-Directory $storageDir
+    return [pscustomobject]@{
+        ServerEnv   = $serverEnv
+        StorageDir  = $storageDir
+        DatabaseUrl = $dbUrl
+    }
 }
 
 function Test-PathUnderInstall {
@@ -330,17 +440,96 @@ function Get-ServicePresence {
     return $found
 }
 
-function Test-OwnerIsAkili {
-    param([int]$ProcessId, [string]$PathOrCmd)
-    if (Test-PathUnderInstall $PathOrCmd) { return $true }
+function Get-ProcessCommandLineSafe {
+    param([int]$ProcessId)
     try {
         $cim = Get-CimInstance Win32_Process -Filter "ProcessId=$ProcessId" -ErrorAction SilentlyContinue
-        if ($cim -and $cim.CommandLine -and ($cim.CommandLine -like "*$InstallDir*")) {
-            return $true
-        }
+        if ($cim -and $cim.CommandLine) { return $cim.CommandLine }
     }
     catch { }
+    return ''
+}
+
+function Get-AkiliStopPaths {
+    $paths = [System.Collections.Generic.List[string]]::new()
+    $install = [System.IO.Path]::GetFullPath($InstallDir.Trim().TrimEnd('\', '/'))
+    [void]$paths.Add($install)
+    foreach ($legacy in (Get-LegacyInstallCandidates -TargetDir $install)) {
+        if (Test-Path -LiteralPath $legacy) {
+            $normalized = [System.IO.Path]::GetFullPath($legacy)
+            if (-not ($paths -contains $normalized)) {
+                [void]$paths.Add($normalized)
+            }
+        }
+    }
+    return [string[]]$paths.ToArray()
+}
+
+function Test-ProcessIsAkili {
+    param(
+        [int]$ProcessId,
+        [string]$PathOrCmd = '',
+        [string[]]$SearchPaths = @()
+    )
+    if ([string]::IsNullOrWhiteSpace($PathOrCmd)) {
+        $PathOrCmd = Get-ProcessPathSafe -ProcessId $ProcessId
+    }
+    $cmd = $PathOrCmd
+    $cmdLine = Get-ProcessCommandLineSafe -ProcessId $ProcessId
+    if ($cmdLine) { $cmd = "$cmd $cmdLine" }
+
+    $paths = if ($SearchPaths.Count -gt 0) { $SearchPaths } else { @(Get-AkiliStopPaths) }
+    foreach ($root in $paths) {
+        if ([string]::IsNullOrWhiteSpace($root)) { continue }
+        $normalized = [System.IO.Path]::GetFullPath($root.Trim().TrimEnd('\', '/'))
+        if ($cmd -like "*$normalized*") { return $true }
+        $fwd = $normalized.Replace('\', '/')
+        if ($cmd -like "*$fwd*") { return $true }
+        foreach ($marker in @('server\index.js', 'collector\index.js', 'server/index.js', 'collector/index.js')) {
+            $full = Join-Path $normalized $marker
+            if ($cmd -like "*$full*") { return $true }
+            $fullFwd = $full.Replace('\', '/')
+            if ($cmd -like "*$fullFwd*") { return $true }
+        }
+    }
     return $false
+}
+
+function Get-AkiliProcessDisplayPath {
+    param([int]$ProcessId, [string]$PathOrCmd = '')
+    $path = $PathOrCmd
+    if ([string]::IsNullOrWhiteSpace($path)) {
+        $path = Get-ProcessPathSafe -ProcessId $ProcessId
+    }
+    $cmdLine = Get-ProcessCommandLineSafe -ProcessId $ProcessId
+    $combined = "$path $cmdLine".Trim()
+    foreach ($root in (Get-AkiliStopPaths)) {
+        if ([string]::IsNullOrWhiteSpace($root)) { continue }
+        $normalized = [System.IO.Path]::GetFullPath($root.Trim().TrimEnd('\', '/'))
+        if ($combined -like "*$normalized*") { return $normalized }
+        $fwd = $normalized.Replace('\', '/')
+        if ($combined -like "*$fwd*") { return $normalized }
+        foreach ($marker in @('server\index.js', 'collector\index.js', 'server/index.js', 'collector/index.js')) {
+            $full = Join-Path $normalized $marker
+            if ($combined -like "*$full*") { return $normalized }
+            $fullFwd = $full.Replace('\', '/')
+            if ($combined -like "*$fullFwd*") { return $normalized }
+        }
+    }
+    if (Test-PathUnderInstall $path) { return $path }
+    return $path
+}
+
+function Test-OwnerIsAkili {
+    param([int]$ProcessId, [string]$PathOrCmd)
+    $path = $PathOrCmd
+    if ([string]::IsNullOrWhiteSpace($path)) {
+        $path = Get-ProcessPathSafe -ProcessId $ProcessId
+    }
+    if (Test-PathUnderInstall $path) { return $true }
+    $cmdLine = Get-ProcessCommandLineSafe -ProcessId $ProcessId
+    $combined = "$path $cmdLine".Trim()
+    return Test-ProcessIsAkili -ProcessId $ProcessId -PathOrCmd $combined -SearchPaths @(Get-AkiliStopPaths)
 }
 
 function Find-NextFreePort {
@@ -408,12 +597,18 @@ function Show-VpsOccupancyReport {
             $path = Get-ProcessPathSafe -ProcessId $owner.Pid
             $ours = Test-OwnerIsAkili -ProcessId $owner.Pid -PathOrCmd $path
             if (-not $ours) { $script:OtherAppsFound = $true }
+            $displayPath = if ($ours) {
+                Get-AkiliProcessDisplayPath -ProcessId $owner.Pid -PathOrCmd $path
+            }
+            else {
+                $path
+            }
             $rows += [pscustomobject]@{
                 Port    = $port
                 Status  = 'IN USE'
                 Pid     = $owner.Pid
                 Process = $procName
-                Path    = $path
+                Path    = $displayPath
                 Ours    = $(if ($ours) { 'Akili' } else { 'OTHER' })
             }
         }
@@ -497,10 +692,14 @@ function Resolve-PortsSafely {
     if ($serverOwnerForeign) {
         $script:ChosenServerPort = Find-NextFreePort -Preferred $ServerPort -ListenMap $ListenMap
         Write-Log "SERVER_PORT $ServerPort is used by another app - using $($script:ChosenServerPort) instead" 'WARN'
+        Write-Log "Akili will listen on http://localhost:$($script:ChosenServerPort) ($ServerPort was in use)" 'WARN'
         $script:PortConflictResolved = $true
     }
     else {
         $script:ChosenServerPort = $ServerPort
+        if ($ListenMap.ContainsKey($ServerPort)) {
+            Write-Log "Port $ServerPort is in use by Akili — will stop and reuse this port on start"
+        }
     }
 
     $avoid = @($script:ChosenServerPort)
@@ -508,13 +707,18 @@ function Resolve-PortsSafely {
         $script:ChosenCollectorPort = Find-NextFreePort -Preferred $CollectorPort -ListenMap $ListenMap -AlsoAvoid $avoid
         if ($script:ChosenCollectorPort -ne $CollectorPort) {
             Write-Log "COLLECTOR_PORT $CollectorPort unavailable - using $($script:ChosenCollectorPort) instead" 'WARN'
+            Write-Log "Collector will listen on port $($script:ChosenCollectorPort) ($CollectorPort was in use)" 'WARN'
             $script:PortConflictResolved = $true
         }
     }
     else {
         $script:ChosenCollectorPort = $CollectorPort
+        if ($ListenMap.ContainsKey($CollectorPort)) {
+            Write-Log "Port $CollectorPort is in use by Akili — will stop and reuse this port on start"
+        }
     }
 
+    $script:PortsResolvedThisRun = $true
     Save-ChosenPorts
 }
 
@@ -556,6 +760,10 @@ function Confirm-ContinueIfBusy {
 }
 
 function Read-SavedPorts {
+    # Resolve-PortsSafely is authoritative for install/resume/update/start this run.
+    # Do not let a stale chosen-ports.json (e.g. 3002) override a reclaimed configured port (3001).
+    if ($script:PortsResolvedThisRun) { return }
+
     $portFile = Join-Path $InstallDir 'logs\chosen-ports.json'
     if (Test-Path $portFile) {
         try {
@@ -567,14 +775,138 @@ function Read-SavedPorts {
     }
 }
 
-function Stop-AkiliProcesses {
-    Write-Log "Stopping Akili node processes under $InstallDir only" 'STEP'
-    Get-CimInstance Win32_Process -Filter "Name='node.exe'" -ErrorAction SilentlyContinue |
-        Where-Object { $_.CommandLine -and ($_.CommandLine -like "*$InstallDir*") } |
-        ForEach-Object {
-            Write-Log "Stopping Akili node PID $($_.ProcessId)"
-            Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue
+function Stop-ProcessGracefully {
+    param(
+        [int]$ProcessId,
+        [string]$Reason
+    )
+    if ($ProcessId -le 0) { return }
+    try {
+        $proc = Get-Process -Id $ProcessId -ErrorAction SilentlyContinue
+        if (-not $proc) { return }
+        Write-Log "Stopping $Reason PID $ProcessId ($($proc.ProcessName))"
+        Stop-Process -Id $ProcessId -ErrorAction SilentlyContinue
+        $deadline = (Get-Date).AddSeconds(5)
+        while ((Get-Date) -lt $deadline) {
+            if (-not (Get-Process -Id $ProcessId -ErrorAction SilentlyContinue)) { return }
+            Start-Sleep -Milliseconds 200
         }
+        Stop-Process -Id $ProcessId -Force -ErrorAction SilentlyContinue
+        Write-Log "Force-stopped PID $ProcessId"
+    }
+    catch {
+        Stop-Process -Id $ProcessId -Force -ErrorAction SilentlyContinue
+    }
+}
+
+function Get-ListenersOnPort {
+    param([int]$Port)
+    $listeners = [System.Collections.Generic.List[object]]::new()
+    try {
+        Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction Stop |
+            ForEach-Object { [void]$listeners.Add($_) }
+    }
+    catch {
+        $map = Get-ListeningPortMap
+        if ($map.ContainsKey($Port)) {
+            foreach ($owner in $map[$Port]) {
+                [void]$listeners.Add([pscustomobject]@{
+                    OwningProcess = $owner.Pid
+                    LocalPort     = $Port
+                })
+            }
+        }
+    }
+    return @($listeners.ToArray())
+}
+
+function Stop-AkiliListeners {
+    param([int[]]$Ports = @())
+
+    $portList = if ($Ports.Count -gt 0) {
+        @($Ports | Where-Object { $_ -gt 0 } | Select-Object -Unique)
+    }
+    else {
+        @($ServerPort, $CollectorPort, $script:ChosenServerPort, $script:ChosenCollectorPort) |
+            Where-Object { $_ -gt 0 } |
+            Select-Object -Unique
+    }
+    if ($portList.Count -eq 0) { return }
+
+    Write-Log "Stopping Akili listeners on port(s): $($portList -join ', ')" 'STEP'
+    $stopPaths = Get-AkiliStopPaths
+    $stoppedPids = @{}
+
+    foreach ($port in $portList) {
+        foreach ($conn in (Get-ListenersOnPort -Port $port)) {
+            $procId = [int]$conn.OwningProcess
+            if ($procId -le 0 -or $stoppedPids.ContainsKey($procId)) { continue }
+
+            $path = Get-ProcessPathSafe -ProcessId $procId
+            $cmdLine = Get-ProcessCommandLineSafe -ProcessId $procId
+            $combined = "$path $cmdLine".Trim()
+
+            if (Test-ProcessIsAkili -ProcessId $procId -PathOrCmd $combined -SearchPaths $stopPaths) {
+                Stop-ProcessGracefully -ProcessId $procId -Reason "Akili listener on port $port"
+                $stoppedPids[$procId] = $true
+            }
+            else {
+                Write-Log "Port $port held by non-Akili PID $procId ($path) - will not stop" 'WARN'
+            }
+        }
+    }
+}
+
+function Assert-ServerPortAvailableForStart {
+    $port = $script:ChosenServerPort
+    $stopPaths = Get-AkiliStopPaths
+
+    foreach ($conn in (Get-ListenersOnPort -Port $port)) {
+        $procId = [int]$conn.OwningProcess
+        if ($procId -le 0) { continue }
+        $path = Get-ProcessPathSafe -ProcessId $procId
+        if (-not (Test-ProcessIsAkili -ProcessId $procId -PathOrCmd $path -SearchPaths $stopPaths)) {
+            throw @"
+Cannot start Akili: port $port is in use by a non-Akili process (PID $procId, $path).
+Stop that application, choose a different SERVER_PORT, or re-run install to remap ports.
+"@
+        }
+    }
+}
+
+function Prepare-AkiliForStart {
+    Read-SavedPorts
+    Stop-AkiliListeners
+    Stop-AkiliProcesses
+    Start-Sleep -Milliseconds 500
+    Assert-ServerPortAvailableForStart
+}
+
+function Stop-AkiliProcessesUnderPath {
+    param([string]$Path)
+    if ([string]::IsNullOrWhiteSpace($Path)) { return }
+    $root = [System.IO.Path]::GetFullPath($Path.Trim().TrimEnd('\', '/'))
+    Get-CimInstance Win32_Process -Filter "Name='node.exe'" -ErrorAction SilentlyContinue |
+        Where-Object { $_.CommandLine -and ($_.CommandLine -like "*$root*") } |
+        ForEach-Object {
+            Stop-ProcessGracefully -ProcessId $_.ProcessId -Reason "Akili node under $root"
+        }
+}
+
+function Stop-AkiliProcesses {
+    param([string[]]$ExtraPaths = @())
+    $paths = @(Get-AkiliStopPaths)
+    foreach ($extra in $ExtraPaths) {
+        if ([string]::IsNullOrWhiteSpace($extra)) { continue }
+        $normalized = [System.IO.Path]::GetFullPath($extra.Trim().TrimEnd('\', '/'))
+        if ($paths -notcontains $normalized) {
+            $paths += $normalized
+        }
+    }
+    Write-Log "Stopping Akili node processes under: $($paths -join ', ')" 'STEP'
+    foreach ($p in ($paths | Select-Object -Unique)) {
+        Stop-AkiliProcessesUnderPath -Path $p
+    }
 }
 
 function Test-Prerequisites {
@@ -655,27 +987,358 @@ function Remove-PartialInstallDir {
     Remove-Item -LiteralPath $Path -Recurse -Force -ErrorAction Stop
 }
 
+function Get-LegacyInstallCandidates {
+    param([string]$TargetDir)
+    $target = [System.IO.Path]::GetFullPath($TargetDir.Trim().TrimEnd('\', '/'))
+    $known = @(
+        'C:\Accelanova'
+    )
+    $seen = @{}
+    $result = [System.Collections.Generic.List[string]]::new()
+    foreach ($candidate in $known) {
+        $normalized = [System.IO.Path]::GetFullPath($candidate.Trim().TrimEnd('\', '/'))
+        if ($normalized -ieq $target) { continue }
+        if ($seen.ContainsKey($normalized.ToLowerInvariant())) { continue }
+        $seen[$normalized.ToLowerInvariant()] = $true
+        [void]$result.Add($normalized)
+    }
+    return [string[]]$result.ToArray()
+}
+
+function Move-LegacyInstallDirectory {
+    param(
+        [string]$SourceDir,
+        [string]$TargetDir
+    )
+    $source = [System.IO.Path]::GetFullPath($SourceDir.Trim().TrimEnd('\', '/'))
+    $target = [System.IO.Path]::GetFullPath($TargetDir.Trim().TrimEnd('\', '/'))
+    $parent = Split-Path -Parent $target
+    Initialize-Directory $parent
+
+    Write-Log "Migrating install from $source to $target" 'STEP'
+    try {
+        Move-Item -LiteralPath $source -Destination $target -Force -ErrorAction Stop
+    }
+    catch {
+        Write-Log "Move-Item failed ($($_.Exception.Message)); trying robocopy /MOVE" 'WARN'
+        $robocopyArgs = @(
+            $source,
+            $target,
+            '/E', '/MOVE', '/R:2', '/W:2', '/NFL', '/NDL', '/NJH', '/NJS', '/NC', '/NS'
+        )
+        & robocopy @robocopyArgs 2>&1 | ForEach-Object { Write-Log "$_" }
+        $rc = Get-ExitCode
+        if ($rc -ge 8) {
+            throw "robocopy /MOVE failed with exit code $rc while migrating $source to $target"
+        }
+        if (Test-Path -LiteralPath $source) {
+            Remove-PartialInstallDir -Path $source -Reason 'leftover after robocopy /MOVE'
+        }
+    }
+
+    if (-not (Test-GitRepoComplete -Path $target)) {
+        throw "Migration finished but $target is not a complete git repository"
+    }
+}
+
+function Update-EnvPathsAfterMigration {
+    param(
+        [string]$InstallPath,
+        [string]$OldPath
+    )
+    $newRoot = [System.IO.Path]::GetFullPath($InstallPath.Trim().TrimEnd('\', '/'))
+    $oldRoot = [System.IO.Path]::GetFullPath($OldPath.Trim().TrimEnd('\', '/'))
+    if ($newRoot -ieq $oldRoot) { return }
+
+    $oldVariants = @(
+        $oldRoot,
+        ($oldRoot -replace '\\', '/'),
+        ($oldRoot -replace '/', '\')
+    ) | Select-Object -Unique
+
+    $envFiles = @(
+        (Join-Path $newRoot 'server\.env')
+        (Join-Path $newRoot 'frontend\.env')
+        (Join-Path $newRoot 'collector\.env')
+    )
+
+    foreach ($envFile in $envFiles) {
+        if (-not (Test-Path -LiteralPath $envFile)) { continue }
+        $content = Get-Content -LiteralPath $envFile -Raw -ErrorAction Stop
+        $updated = $content
+        foreach ($variant in $oldVariants) {
+            if ([string]::IsNullOrWhiteSpace($variant)) { continue }
+            $updated = [regex]::Replace(
+                $updated,
+                [regex]::Escape($variant),
+                $newRoot,
+                [System.Text.RegularExpressions.RegexOptions]::IgnoreCase
+            )
+        }
+        if ($updated -ne $content) {
+            Set-Content -LiteralPath $envFile -Value $updated -NoNewline -ErrorAction Stop
+            Write-Log "Updated legacy paths in $envFile"
+        }
+    }
+}
+
+function Resolve-InstallDirectory {
+    param(
+        [string]$TargetDir,
+        [bool]$AutoMigrate
+    )
+
+    $target = [System.IO.Path]::GetFullPath($TargetDir.Trim().TrimEnd('\', '/'))
+
+    if (Test-GitRepoComplete -Path $target) {
+        Write-Log "Using existing install at $target" 'INFO'
+        return $target
+    }
+
+    if (-not $AutoMigrate) {
+        Write-Log "AutoMigrateLegacyDir=false; using InstallDir as configured: $target" 'INFO'
+        return $target
+    }
+
+    $legacyFound = $null
+    foreach ($legacy in (Get-LegacyInstallCandidates -TargetDir $target)) {
+        if (Test-GitRepoComplete -Path $legacy) {
+            $legacyFound = $legacy
+            break
+        }
+    }
+
+    if (-not $legacyFound) {
+        return $target
+    }
+
+    Write-Log "Found legacy install at $legacyFound (target: $target)" 'INFO'
+
+    Stop-AkiliListeners -Ports @($ServerPort, $CollectorPort)
+    Stop-AkiliProcessesUnderPath -Path $legacyFound
+    Stop-AkiliProcessesUnderPath -Path $target
+
+    $targetExists = Test-Path -LiteralPath $target
+    if (-not $targetExists) {
+        Move-LegacyInstallDirectory -SourceDir $legacyFound -TargetDir $target
+        Update-EnvPathsAfterMigration -InstallPath $target -OldPath $legacyFound
+        Write-Log "Legacy install migrated to $target" 'INFO'
+        return $target
+    }
+
+    if (Test-InstallDirIsInstallerNoiseOnly -Path $target) {
+        Remove-PartialInstallDir -Path $target -Reason 'empty before legacy migration'
+        Move-LegacyInstallDirectory -SourceDir $legacyFound -TargetDir $target
+        Update-EnvPathsAfterMigration -InstallPath $target -OldPath $legacyFound
+        Write-Log "Legacy install migrated to $target" 'INFO'
+        return $target
+    }
+
+    if (Test-GitRepoComplete -Path $target) {
+        throw @"
+
+Both install directories have complete git repositories:
+  Target: $target
+  Legacy: $legacyFound
+
+Set INSTALL_DIR to one path, or delete one folder, then re-run.
+"@
+    }
+
+    throw @"
+
+Install directory exists but is incomplete: $target
+Legacy install found at: $legacyFound
+
+Delete $target, set INSTALL_DIR=$legacyFound, or finish migration manually.
+"@
+}
+
+function Invoke-ResolveInstallDirectorySelfTest {
+    $failures = [System.Collections.Generic.List[string]]::new()
+    function Assert-Test {
+        param([bool]$Condition, [string]$Message)
+        if (-not $Condition) { [void]$failures.Add($Message) }
+    }
+
+    $candidates = Get-LegacyInstallCandidates -TargetDir 'C:\Akili'
+    Assert-Test ($candidates -contains 'C:\Accelanova') 'Get-LegacyInstallCandidates should include C:\Accelanova'
+    Assert-Test ($candidates -notcontains 'C:\Akili') 'Get-LegacyInstallCandidates should exclude the target dir'
+
+    $noLegacy = @(Get-LegacyInstallCandidates -TargetDir 'C:\Accelanova')
+    Assert-Test ($noLegacy.Count -eq 0) 'When target is C:\Accelanova, no legacy candidates should remain'
+
+    Assert-Test ((Resolve-PullOnStartMode -Value 'check') -eq 'check') 'Resolve-PullOnStartMode should accept check'
+    Assert-Test ((Resolve-PullOnStartMode -Value 'false') -eq 'false') 'Resolve-PullOnStartMode should accept false'
+    Assert-Test ((Resolve-PullOnStartMode -Value 'always') -eq 'always') 'Resolve-PullOnStartMode should accept always'
+    Assert-Test ((Resolve-PullOnStartMode -Value 'sync') -eq 'check') 'Resolve-PullOnStartMode should map sync to check'
+
+    $tempRoot = Join-Path $env:TEMP ("Akili-installer-selftest-{0}" -f ([guid]::NewGuid().ToString('N')))
+    $targetDir = Join-Path $tempRoot 'target'
+    $serverEnv = Join-Path $targetDir 'server\.env'
+    try {
+        Initialize-Directory (Split-Path -Parent $serverEnv)
+        Set-Content -LiteralPath $serverEnv -Value "STORAGE_DIR=C:\Accelanova\server\storage`nDATABASE_URL=`"file:C:/Accelanova/server/storage/akili.db`"" -NoNewline
+        Update-EnvPathsAfterMigration -InstallPath $targetDir -OldPath 'C:\Accelanova'
+        $envText = Get-Content -LiteralPath $serverEnv -Raw
+        Assert-Test ($envText -notmatch 'Accelanova') 'Update-EnvPathsAfterMigration should replace Accelanova paths'
+        Assert-Test ($envText -match 'server[/\\]storage') 'Update-EnvPathsAfterMigration should preserve storage path suffix'
+    }
+    finally {
+        if (Test-Path -LiteralPath $tempRoot) {
+            Remove-Item -LiteralPath $tempRoot -Recurse -Force -ErrorAction SilentlyContinue
+        }
+    }
+
+    if ($failures.Count -gt 0) {
+        foreach ($failure in $failures) {
+            Write-Host "[FAIL] $failure" -ForegroundColor Red
+        }
+        throw ("Resolve-InstallDirectory self-test failed ({0} assertion(s))" -f $failures.Count)
+    }
+
+    Write-Host '[OK] Resolve-InstallDirectory self-test passed' -ForegroundColor Green
+}
+
 function Get-CloneAuthHint {
     param([string]$GitOutput)
     $text = "$GitOutput"
-    if ($text -match '(?i)(authentication failed|could not read Username|Invalid username or password|403|401 Unauthorized|Repository not found|remote:.*not found)') {
-        return @"
-
-This looks like a private-repo or auth failure.
-Fix options:
-  1. Run: gh auth login   (then re-run this installer)
-  2. Use a PAT in REPO_URL: https://<TOKEN>@github.com/BQI-TECH/AccelaNova.git
-  3. Use SSH and a deploy key: git@github.com:BQI-TECH/AccelaNova.git
-"@
+    if ($text -match '(?i)(authentication failed|could not read Username|Invalid username or password|403|401 Unauthorized|Repository not found|remote:.*not found|terminal prompts disabled|Permission denied \(publickey\))') {
+        return Get-PrivateRepoAuthHint
     }
-    if ($text -match '(?i)(timed out|SSL|Connection reset|Failed to connect|unable to access|HTTP/2|RPC failed|early EOF|unexpected disconnect)') {
+    if ($text -match '(?i)(timed out|timeout|SSL|Connection reset|Failed to connect|unable to access|HTTP/2|RPC failed|early EOF|unexpected disconnect|Could not resolve host)') {
         return @"
 
-Network/timeout during clone (repo pack is large; shallow clone should help).
+Network/timeout during git operation (repo pack is large; shallow clone should help).
 If HTTPS keeps failing, set REPO_URL to the SSH form: git@github.com:BQI-TECH/AccelaNova.git
 "@
     }
     return ''
+}
+
+function Get-PrivateRepoAuthHint {
+    return @"
+
+Private repo options:
+  git config credential.helper manager
+  gh auth login
+  Or set REPO_URL=https://TOKEN@github.com/BQI-TECH/AccelaNova.git
+  Or use SSH: git@github.com:BQI-TECH/AccelaNova.git
+"@
+}
+
+function Get-GitSyncFailureKind {
+    param(
+        [string]$Output,
+        [int]$ExitCode
+    )
+    $text = "$Output"
+    if ($text -match '(?i)(authentication failed|could not read Username|Invalid username or password|403|401|Repository not found|terminal prompts disabled|Permission denied \(publickey\)|remote:.*not found)') {
+        return 'auth'
+    }
+    if ($text -match '(?i)(timed out|timeout|SSL|Connection reset|Failed to connect|unable to access|HTTP/2|RPC failed|early EOF|unexpected disconnect|Could not resolve host)') {
+        return 'network'
+    }
+    if ($ExitCode -ne 0 -and [string]::IsNullOrWhiteSpace($text)) {
+        return 'other'
+    }
+    return 'other'
+}
+
+function Invoke-GitCommand {
+    param([string[]]$GitArgs)
+
+    $lines = [System.Collections.Generic.List[string]]::new()
+    $prevEap = $ErrorActionPreference
+    try {
+        # Git writes progress to stderr; never let that terminate the script when exit code is 0.
+        $ErrorActionPreference = 'Continue'
+        & git @GitArgs 2>&1 | ForEach-Object {
+            $text = if ($_ -is [System.Management.Automation.ErrorRecord]) {
+                if ($_.Exception -and $_.Exception.Message) { $_.Exception.Message }
+                else { "$_" }
+            }
+            else {
+                "$_"
+            }
+            if (-not [string]::IsNullOrWhiteSpace($text)) {
+                [void]$lines.Add($text)
+                Write-CommandOutputLine $text
+            }
+        }
+        $exitCode = Get-ExitCode
+    }
+    finally {
+        $ErrorActionPreference = $prevEap
+    }
+
+    $output = ($lines -join "`n")
+    return [pscustomobject]@{
+        ExitCode = $exitCode
+        Output   = $output
+        Ok       = ($exitCode -eq 0)
+    }
+}
+
+function Invoke-GitCommandWithNetworkRetry {
+    param(
+        [string[]]$GitArgs,
+        [string]$Stage
+    )
+
+    $result = Invoke-GitCommand -GitArgs $GitArgs
+    if ($result.Ok) { return $result }
+
+    $kind = Get-GitSyncFailureKind -Output $result.Output -ExitCode $result.ExitCode
+    if ($kind -eq 'network') {
+        Write-Log "Network error during git $Stage; retrying once..." 'WARN'
+        Start-Sleep -Seconds 3
+        $result = Invoke-GitCommand -GitArgs $GitArgs
+    }
+    return $result
+}
+
+function Handle-GitSyncFailure {
+    param(
+        [string]$Stage,
+        [pscustomobject]$Result
+    )
+
+    $kind = Get-GitSyncFailureKind -Output $Result.Output -ExitCode $Result.ExitCode
+    $detail = if ($Result.Output) { $Result.Output.Trim() } else { "(exit code $($Result.ExitCode); no output)" }
+
+    $summary = switch ($kind) {
+        'auth' { "git $Stage failed (authentication/authorization)" }
+        'network' { "git $Stage failed (network/timeout)" }
+        default { "git $Stage failed" }
+    }
+
+    $hint = Get-CloneAuthHint -GitOutput $Result.Output
+    if ($kind -eq 'auth' -and [string]::IsNullOrWhiteSpace($hint)) {
+        $hint = Get-PrivateRepoAuthHint
+    }
+
+    if ($script:PullFailPolicy -eq 'fail') {
+        throw "$summary`n$detail$hint"
+    }
+
+    Write-Log "Could not pull updates ($summary); continuing with local code" 'WARN'
+    if ($detail) { Write-Log $detail 'WARN' }
+    if ($hint) {
+        foreach ($hintLine in ($hint.Trim() -split "`n")) {
+            if (-not [string]::IsNullOrWhiteSpace($hintLine)) {
+                Write-Log $hintLine.Trim() 'WARN'
+            }
+        }
+    }
+
+    return [pscustomobject]@{
+        Pulled       = $false
+        Skipped      = $false
+        SyncFailed   = $true
+        FailureKind  = $kind
+        FailureStage = $Stage
+    }
 }
 
 function Set-CloneGitEnvironment {
@@ -755,12 +1418,14 @@ function Initialize-Repository {
         }
         Write-Log "Skipping clone (repository already present at $InstallDir)" 'INFO'
         Move-InstallLogToInstallDir
+        Sync-ExistingRepository
         return
     }
 
     if (Test-GitRepoComplete -Path $InstallDir) {
         Write-Log "Skipping clone (repository already exists at $InstallDir)" 'INFO'
         Move-InstallLogToInstallDir
+        Sync-ExistingRepository
         return
     }
 
@@ -858,22 +1523,161 @@ Pick another INSTALL_DIR in install-vps.bat, or delete this folder and re-run.
     Save-ChosenPorts
 }
 
+function Sync-ExistingRepository {
+    param(
+        [ValidateSet('false', 'check', 'always')]
+        [string]$SyncMode = $script:PullIfRepoExistsMode,
+        [switch]$ForcePull
+    )
+
+    Write-Log "Repository already at $InstallDir — checking for updates..." 'INFO'
+    if ($SyncMode -eq 'false') {
+        Write-Log 'Skipping git sync (PULL_IF_REPO_EXISTS=false)' 'INFO'
+        return [pscustomobject]@{ Pulled = $false; Skipped = $true }
+    }
+
+    return Sync-RepositoryIfNeeded -SyncMode $SyncMode -ForcePull:$ForcePull
+}
+
+function Sync-RepositoryIfNeeded {
+    param(
+        [ValidateSet('false', 'check', 'always')]
+        [string]$SyncMode,
+        [switch]$ForcePull
+    )
+
+    if ($SyncMode -eq 'false') {
+        return [pscustomobject]@{ Pulled = $false; Skipped = $true }
+    }
+
+    Write-Log "Syncing repository (mode=$SyncMode)" 'STEP'
+
+    if (-not (Test-GitRepoComplete -Path $InstallDir)) {
+        Write-Log "Skipping git sync: $InstallDir is not a complete git repository" 'WARN'
+        return [pscustomobject]@{ Pulled = $false; Skipped = $true }
+    }
+
+    Set-CloneGitEnvironment
+
+    Push-Location $InstallDir
+    try {
+        $fetchResult = Invoke-GitCommandWithNetworkRetry -GitArgs @('fetch', 'origin', $RepoBranch) -Stage 'fetch'
+        if (-not $fetchResult.Ok) {
+            return Handle-GitSyncFailure -Stage 'fetch' -Result $fetchResult
+        }
+
+        $checkoutResult = Invoke-GitCommand -GitArgs @('checkout', $RepoBranch)
+        if (-not $checkoutResult.Ok) {
+            return Handle-GitSyncFailure -Stage "checkout $RepoBranch" -Result $checkoutResult
+        }
+
+        $remoteRef = "origin/$RepoBranch"
+        $revListResult = Invoke-GitCommand -GitArgs @('rev-list', '--left-right', '--count', "HEAD...$remoteRef")
+        if (-not $revListResult.Ok) {
+            return Handle-GitSyncFailure -Stage "compare HEAD to $remoteRef" -Result $revListResult
+        }
+
+        $countLine = $revListResult.Output.Trim()
+        $counts = @($countLine -split '\s+' | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
+        if ($counts.Count -lt 2) {
+            if ($script:PullFailPolicy -eq 'fail') {
+                throw "Unexpected rev-list output: $countLine"
+            }
+            Write-Log "Could not compare HEAD to $remoteRef ($countLine); continuing with local code" 'WARN'
+            return [pscustomobject]@{ Pulled = $false; Skipped = $false; SyncFailed = $true; FailureKind = 'other' }
+        }
+
+        $ahead = [int]$counts[0]
+        $behind = [int]$counts[1]
+
+        if ($behind -eq 0) {
+            if ($ahead -gt 0) {
+                Write-Log "Repository is ahead of $remoteRef by $ahead commit(s). Skipping pull." 'WARN'
+            }
+            else {
+                Write-Log 'Already up to date'
+            }
+            return [pscustomobject]@{ Pulled = $false; Skipped = $false; Ahead = $ahead; Behind = $behind }
+        }
+
+        if ($SyncMode -eq 'check' -and $ahead -gt 0) {
+            if ($ForcePull) {
+                Write-Log "Repository diverged ($ahead ahead, $behind behind). Force pull requested." 'WARN'
+            }
+            else {
+                Write-Log "Repository diverged ($ahead ahead, $behind behind). Skipping pull. Run 'install-vps.bat update' or 'install-vps.bat start --pull'." 'WARN'
+                return [pscustomobject]@{ Pulled = $false; Skipped = $false; Ahead = $ahead; Behind = $behind }
+            }
+        }
+
+        if ($SyncMode -eq 'always' -and $ahead -gt 0 -and -not $ForcePull) {
+            Write-Log "Repository diverged ($ahead ahead, $behind behind). Skipping pull without --pull / PullForce. Run 'install-vps.bat update' or 'install-vps.bat start --pull'." 'WARN'
+            return [pscustomobject]@{ Pulled = $false; Skipped = $false; Ahead = $ahead; Behind = $behind }
+        }
+
+        Write-Log "Pulling $behind commit(s) from origin/$RepoBranch"
+        $pullResult = Invoke-GitCommandWithNetworkRetry -GitArgs @('pull', 'origin', $RepoBranch) -Stage 'pull'
+        if (-not $pullResult.Ok) {
+            return Handle-GitSyncFailure -Stage 'pull' -Result $pullResult
+        }
+
+        $headResult = Invoke-GitCommand -GitArgs @('log', '-1', '--pretty=format:%h %s')
+        $head = if ($headResult.Ok) { $headResult.Output.Trim() } else { '(unknown)' }
+        Write-Log "Pulled $behind commit(s) from origin/$RepoBranch. HEAD is now $head"
+        return [pscustomobject]@{ Pulled = $true; Skipped = $false; Ahead = $ahead; Behind = $behind }
+    }
+    finally {
+        Pop-Location
+    }
+}
+
+function Invoke-PostPullRebuild {
+    Write-Log 'Running post-pull rebuild (REBUILD_ON_PULL=true)' 'STEP'
+    Test-Prerequisites
+    Read-SavedPorts
+    Stop-AkiliListeners
+    Stop-AkiliProcesses
+    Initialize-EnvFiles
+    if ($script:Flags.InstallDeps) { Install-Dependencies }
+    if ($script:Flags.BuildFrontend) { Publish-Frontend }
+    if ($script:Flags.RunMigrations) { Invoke-DatabaseMigrations }
+}
+
 function Update-Repository {
     Write-Log 'Updating repository' 'STEP'
     if (-not (Test-Path (Join-Path $InstallDir '.git'))) {
         throw "No git repo at $InstallDir. Run install mode first."
     }
 
+    Stop-AkiliListeners
     Stop-AkiliProcesses
+
+    Set-CloneGitEnvironment
 
     Push-Location $InstallDir
     try {
-        git fetch origin $RepoBranch 2>&1 | Tee-Object -FilePath $script:LogFile -Append | Out-Null
-        if ((Get-ExitCode) -ne 0) { throw 'git fetch failed' }
-        git checkout $RepoBranch 2>&1 | Tee-Object -FilePath $script:LogFile -Append | Out-Null
-        git pull origin $RepoBranch 2>&1 | Tee-Object -FilePath $script:LogFile -Append | Out-Null
-        if ((Get-ExitCode) -ne 0) { throw 'git pull failed' }
-        $head = git log -1 --pretty=format:'%h'
+        $fetchResult = Invoke-GitCommandWithNetworkRetry -GitArgs @('fetch', 'origin', $RepoBranch) -Stage 'fetch'
+        if (-not $fetchResult.Ok) {
+            $hint = Get-CloneAuthHint -GitOutput $fetchResult.Output
+            $detail = if ($fetchResult.Output) { $fetchResult.Output.Trim() } else { "(exit code $($fetchResult.ExitCode))" }
+            throw "git fetch failed`n$detail$hint"
+        }
+
+        $checkoutResult = Invoke-GitCommand -GitArgs @('checkout', $RepoBranch)
+        if (-not $checkoutResult.Ok) {
+            $detail = if ($checkoutResult.Output) { $checkoutResult.Output.Trim() } else { "(exit code $($checkoutResult.ExitCode))" }
+            throw "git checkout $RepoBranch failed`n$detail"
+        }
+
+        $pullResult = Invoke-GitCommandWithNetworkRetry -GitArgs @('pull', 'origin', $RepoBranch) -Stage 'pull'
+        if (-not $pullResult.Ok) {
+            $hint = Get-CloneAuthHint -GitOutput $pullResult.Output
+            $detail = if ($pullResult.Output) { $pullResult.Output.Trim() } else { "(exit code $($pullResult.ExitCode))" }
+            throw "git pull failed`n$detail$hint"
+        }
+
+        $headResult = Invoke-GitCommand -GitArgs @('log', '-1', '--pretty=format:%h')
+        $head = if ($headResult.Ok) { $headResult.Output.Trim() } else { '(unknown)' }
         Write-Log "HEAD is now $head"
     }
     finally {
@@ -1104,6 +1908,64 @@ function Publish-Frontend {
     Copy-FrontendToPublic
 }
 
+function Stop-AkiliWindowsServices {
+    foreach ($svcName in @("$ServiceName-Server", "$ServiceName-Collector", $ServiceName)) {
+        $svc = Get-Service -Name $svcName -ErrorAction SilentlyContinue
+        if (-not $svc) { continue }
+        if ($svc.Status -eq 'Stopped') { continue }
+        try {
+            Write-Log "Stopping Windows service $svcName"
+            Stop-Service -Name $svcName -Force -ErrorAction Stop
+        }
+        catch {
+            Write-Log "Could not stop service $svcName : $($_.Exception.Message)" 'WARN'
+        }
+    }
+}
+
+function Unlock-PrismaQueryEngine {
+    param([string]$ServerDir)
+    $enginePath = Join-Path $ServerDir 'node_modules\.prisma\client\query_engine-windows.dll.node'
+    if (-not (Test-Path -LiteralPath $enginePath)) { return }
+    try {
+        $item = Get-Item -LiteralPath $enginePath -ErrorAction Stop
+        $item.Attributes = 'Normal'
+    }
+    catch { }
+    # If still locked, rename aside so prisma generate can write a fresh copy.
+    try {
+        $bak = "$enginePath.locked-$(Get-Date -Format 'yyyyMMddHHmmss')"
+        Move-Item -LiteralPath $enginePath -Destination $bak -Force -ErrorAction Stop
+        Write-Log "Moved locked Prisma engine aside: $bak" 'WARN'
+    }
+    catch {
+        Write-Log "Prisma engine still locked: $($_.Exception.Message)" 'WARN'
+    }
+}
+
+function Invoke-PrismaGenerateWithRetry {
+    param([string]$ServerDir)
+    $maxAttempts = 3
+    for ($attempt = 1; $attempt -le $maxAttempts; $attempt++) {
+        try {
+            Invoke-Logged -WorkDir $ServerDir -Command @('npx', 'prisma', 'generate', '--schema=./prisma/schema.prisma')
+            return
+        }
+        catch {
+            $msg = "$_"
+            $isLock = $msg -match '(?i)EPERM|EBUSY|operation not permitted|cannot access|being used by another process'
+            if (-not $isLock -or $attempt -eq $maxAttempts) { throw }
+            Write-Log "Prisma generate hit a file lock (attempt $attempt/$maxAttempts). Stopping Akili and retrying..." 'WARN'
+            Stop-AkiliWindowsServices
+            Stop-AkiliListeners
+            Stop-AkiliProcesses
+            Start-Sleep -Seconds 2
+            Unlock-PrismaQueryEngine -ServerDir $ServerDir
+            Start-Sleep -Seconds 1
+        }
+    }
+}
+
 function Invoke-DatabaseMigrations {
     Write-Log 'Running Prisma generate and migrate deploy' 'STEP'
     $serverDir = Join-Path $InstallDir 'server'
@@ -1113,11 +1975,20 @@ function Invoke-DatabaseMigrations {
         $storageDir = Join-Path $serverDir 'storage'
     }
     Initialize-Directory $storageDir
+
+    # Prisma generate replaces query_engine-windows.dll.node — that fails with EPERM
+    # while node/Akili still has the DLL loaded.
+    Write-Log 'Stopping Akili before Prisma generate (unlocks query engine DLL)'
+    Stop-AkiliWindowsServices
+    Stop-AkiliListeners
+    Stop-AkiliProcesses
+    Start-Sleep -Seconds 2
+
     $dbUrl = Ensure-DatabaseUrl -ServerEnv $serverEnv -StorageDir $storageDir
     $prevDbUrl = $env:DATABASE_URL
     $env:DATABASE_URL = $dbUrl
     try {
-        Invoke-Logged -WorkDir $serverDir -Command @('npx', 'prisma', 'generate', '--schema=./prisma/schema.prisma')
+        Invoke-PrismaGenerateWithRetry -ServerDir $serverDir
         Invoke-Logged -WorkDir $serverDir -Command @('npx', 'prisma', 'migrate', 'deploy', '--schema=./prisma/schema.prisma')
     }
     finally {
@@ -1148,7 +2019,8 @@ function Add-FirewallRule {
 
 function Start-AkiliServices {
     Write-Log 'Starting Akili server and collector' 'STEP'
-    Read-SavedPorts
+    Prepare-AkiliForStart
+    $runtime = Ensure-ServerRuntimeEnv
 
     if ($script:Flags.InstallAsService -and (Test-Path $NssmPath)) {
         $serverSvc = "$ServiceName-Server"
@@ -1161,12 +2033,11 @@ function Start-AkiliServices {
         Write-Log 'Windows services not registered. Set InstallAsService during install.' 'WARN'
     }
 
-    Stop-AkiliProcesses
-
     $serverLog = Join-Path $script:LogDir 'server.log'
     $collectorLog = Join-Path $script:LogDir 'collector.log'
 
-    $serverArgs = "/c set NODE_ENV=production&& set SERVER_PORT=$($script:ChosenServerPort)&& set COLLECTOR_PORT=$($script:ChosenCollectorPort)&& node index.js >> `"$serverLog`" 2>&1"
+    # Pass DATABASE_URL + STORAGE_DIR explicitly so Prisma works even if dumpENV wiped .env earlier.
+    $serverArgs = "/c set NODE_ENV=production&& set SERVER_PORT=$($script:ChosenServerPort)&& set COLLECTOR_PORT=$($script:ChosenCollectorPort)&& set STORAGE_DIR=$($runtime.StorageDir)&& set DATABASE_URL=$($runtime.DatabaseUrl)&& node index.js >> `"$serverLog`" 2>&1"
     Start-Process -FilePath 'cmd.exe' -ArgumentList $serverArgs -WorkingDirectory (Join-Path $InstallDir 'server') -WindowStyle Hidden
 
     $collectorArgs = "/c set NODE_ENV=production&& set COLLECTOR_PORT=$($script:ChosenCollectorPort)&& node index.js >> `"$collectorLog`" 2>&1"
@@ -1184,11 +2055,24 @@ function Register-WindowsServices {
         throw "NSSM not found at $NssmPath. Download from https://nssm.cc/"
     }
 
-    Stop-AkiliProcesses
+    Prepare-AkiliForStart
+    $runtime = Ensure-ServerRuntimeEnv
 
     $pairs = @(
-        @{ Name = "$ServiceName-Server"; Dir = 'server'; Log = 'server.log'; Title = "$ServiceDisplay (Server)"; Extra = "set SERVER_PORT=$($script:ChosenServerPort)&& set COLLECTOR_PORT=$($script:ChosenCollectorPort)&&" },
-        @{ Name = "$ServiceName-Collector"; Dir = 'collector'; Log = 'collector.log'; Title = "$ServiceDisplay (Collector)"; Extra = "set COLLECTOR_PORT=$($script:ChosenCollectorPort)&&" }
+        @{
+            Name  = "$ServiceName-Server"
+            Dir   = 'server'
+            Log   = 'server.log'
+            Title = "$ServiceDisplay (Server)"
+            Extra = "set SERVER_PORT=$($script:ChosenServerPort)&& set COLLECTOR_PORT=$($script:ChosenCollectorPort)&& set STORAGE_DIR=$($runtime.StorageDir)&& set DATABASE_URL=$($runtime.DatabaseUrl)&&"
+        },
+        @{
+            Name  = "$ServiceName-Collector"
+            Dir   = 'collector'
+            Log   = 'collector.log'
+            Title = "$ServiceDisplay (Collector)"
+            Extra = "set COLLECTOR_PORT=$($script:ChosenCollectorPort)&&"
+        }
     )
 
     foreach ($svc in $pairs) {
@@ -1208,6 +2092,16 @@ function Register-WindowsServices {
     Write-Log "Registered and started $ServiceName-Server and $ServiceName-Collector"
 }
 
+if ($env:AKILI_INSTALLER_SELFTEST -eq '1') {
+    Invoke-ResolveInstallDirectorySelfTest
+    exit 0
+}
+
+$InstallDir = Resolve-InstallDirectory -TargetDir $InstallDir -AutoMigrate $script:Flags.AutoMigrateLegacyDir
+if (Test-Path -LiteralPath (Join-Path $InstallDir '.git')) {
+    Move-InstallLogToInstallDir
+}
+
 # -----------------------------------------------------------------------------
 Write-Host ''
 Write-Host '============================================================' -ForegroundColor Cyan
@@ -1217,6 +2111,12 @@ Write-Host ''
 Write-Log "Mode: $Mode"
 Write-Log "Install dir: $InstallDir"
 Write-Log "Repo: $RepoUrl branch=$RepoBranch depth=$CloneDepth retries=$CloneRetries"
+if ($Mode -eq 'start') {
+    Write-Log "Pull on start: $($script:PullOnStartMode) rebuildOnPull=$($script:Flags.RebuildOnPull) pullForce=$($script:Flags.PullForce) pullFailPolicy=$($script:PullFailPolicy)"
+}
+elseif ($Mode -in @('install', 'resume', 'update')) {
+    Write-Log "Pull if repo exists: $($script:PullIfRepoExistsMode) pullFailPolicy=$($script:PullFailPolicy)"
+}
 Write-Log "Log file: $script:LogFile"
 
 try {
@@ -1244,14 +2144,24 @@ try {
 
     switch ($Mode) {
         'stop' {
+            Read-SavedPorts
+            Stop-AkiliListeners
             Stop-AkiliProcesses
-            Write-Log 'Stopped Akili node processes under InstallDir (if any)'
+            Write-Log 'Stopped Akili listeners and node processes (InstallDir + legacy paths)'
             exit 0
         }
         'start' {
             if (-not (Test-Path (Join-Path $InstallDir 'server\index.js'))) {
                 throw "Install not found at $InstallDir. Run install first."
             }
+            if ($script:PullOnStartMode -ne 'false') {
+                $syncResult = Sync-RepositoryIfNeeded -SyncMode $script:PullOnStartMode -ForcePull:$script:Flags.PullForce
+                if ($syncResult.Pulled -and $script:Flags.RebuildOnPull) {
+                    Invoke-PostPullRebuild
+                }
+            }
+            # Always repair STORAGE_DIR / DATABASE_URL before start (fixes Multi-User Prisma errors).
+            Ensure-ServerRuntimeEnv | Out-Null
             Start-AkiliServices
             exit 0
         }
@@ -1262,6 +2172,7 @@ try {
                 throw "Resume requires an existing install at $InstallDir with a valid .git repository. Run install first."
             }
             Move-InstallLogToInstallDir
+            Sync-ExistingRepository
             Read-SavedPorts
             Initialize-EnvFiles
             if ($script:Flags.InstallDeps) {
