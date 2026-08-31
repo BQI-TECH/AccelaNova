@@ -1539,6 +1539,41 @@ function Sync-ExistingRepository {
     return Sync-RepositoryIfNeeded -SyncMode $SyncMode -ForcePull:$ForcePull
 }
 
+function Clear-NodeModulesGitBlockers {
+    <#
+      Remote removed tracked collector/node_modules. Local VPS checkouts often still
+      have dirty files under those paths, which makes `git pull` abort. Discard only
+      node_modules (and a blocking collector/.gitignore) — yarn reinstalls deps later.
+    #>
+    Write-Log 'Clearing local node_modules git changes so pull cannot be blocked' 'STEP'
+
+    $paths = @(
+        'collector/node_modules',
+        'server/node_modules',
+        'frontend/node_modules',
+        'node_modules'
+    )
+
+    foreach ($rel in $paths) {
+        $full = Join-Path $InstallDir $rel
+        # Discard tracked modifications (required before pull can delete them).
+        $null = Invoke-GitCommand -GitArgs @('checkout', '--', $rel)
+        $null = Invoke-GitCommand -GitArgs @('clean', '-fd', '--', $rel)
+        if (Test-Path -LiteralPath $full) {
+            try {
+                Write-Log "Removing $rel from disk (will be restored by yarn install)"
+                Remove-Item -LiteralPath $full -Recurse -Force -ErrorAction Stop
+            }
+            catch {
+                Write-Log "Could not fully remove ${rel}: $($_.Exception.Message)" 'WARN'
+            }
+        }
+    }
+
+    # Often dirty alongside the node_modules untrack commit.
+    $null = Invoke-GitCommand -GitArgs @('checkout', '--', 'collector/.gitignore')
+}
+
 function Sync-RepositoryIfNeeded {
     param(
         [ValidateSet('false', 'check', 'always')]
@@ -1616,7 +1651,13 @@ function Sync-RepositoryIfNeeded {
         }
 
         Write-Log "Pulling $behind commit(s) from origin/$RepoBranch"
+        Clear-NodeModulesGitBlockers
         $pullResult = Invoke-GitCommandWithNetworkRetry -GitArgs @('pull', 'origin', $RepoBranch) -Stage 'pull'
+        if (-not $pullResult.Ok -and ($pullResult.Output -match '(?i)node_modules|would be overwritten by merge')) {
+            Write-Log 'Pull blocked by local node_modules; clearing again and retrying once' 'WARN'
+            Clear-NodeModulesGitBlockers
+            $pullResult = Invoke-GitCommandWithNetworkRetry -GitArgs @('pull', 'origin', $RepoBranch) -Stage 'pull'
+        }
         if (-not $pullResult.Ok) {
             return Handle-GitSyncFailure -Stage 'pull' -Result $pullResult
         }
@@ -1669,7 +1710,14 @@ function Update-Repository {
             throw "git checkout $RepoBranch failed`n$detail"
         }
 
+        Write-Log "Pulling latest from origin/$RepoBranch"
+        Clear-NodeModulesGitBlockers
         $pullResult = Invoke-GitCommandWithNetworkRetry -GitArgs @('pull', 'origin', $RepoBranch) -Stage 'pull'
+        if (-not $pullResult.Ok -and ($pullResult.Output -match '(?i)node_modules|would be overwritten by merge')) {
+            Write-Log 'Pull blocked by local node_modules; clearing again and retrying once' 'WARN'
+            Clear-NodeModulesGitBlockers
+            $pullResult = Invoke-GitCommandWithNetworkRetry -GitArgs @('pull', 'origin', $RepoBranch) -Stage 'pull'
+        }
         if (-not $pullResult.Ok) {
             $hint = Get-CloneAuthHint -GitOutput $pullResult.Output
             $detail = if ($pullResult.Output) { $pullResult.Output.Trim() } else { "(exit code $($pullResult.ExitCode))" }
